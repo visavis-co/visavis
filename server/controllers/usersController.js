@@ -1,4 +1,6 @@
 const { Client } = require('pg');
+const bcrypt = require('bcryptjs');
+const userController = {};
 
 /***********************************************/
 //
@@ -29,17 +31,32 @@ const { Client } = require('pg');
 // );
 //
 
-async function createUser(req, res) {
+userController.createUser = async (req, res, next) => {
   // connect to db
   const client = new Client();
   await client.connect();
 
-  // get stuff
-  //const allItems = await client.query('SELECT * FROM stuff');
+  // get variables from req.body
+  const { email, fullName, password } = req.body;
 
-  // send back the menu items organized by category
-  res.send(allItems);
+	console.log('userController.createUser -> req.body', req.body)
+
+  // check for valid user input
+  if (!email || !fullName || !password) throw new Error('Invalid user input');
+
+  // hash the password
+  var salt = bcrypt.genSaltSync(10);
+  var hashed = bcrypt.hashSync(password, salt);
+
+  // insert new user into database. Return that new user's id
+  const ret = await client.query(
+    'INSERT INTO users(email, fullName, password, pictureUrl, matchable) VALUES( $1, $2, $3, $4, $5) RETURNING id',
+    [email, fullName, hashed, 'default-profile.jpg', 'true']
+  );
+
+  res.locals.newUserId = ret.rows[0].id;
   await client.end();
+  next();
 }
 
-module.exports = { createUser };
+module.exports = userController;
