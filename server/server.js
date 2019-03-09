@@ -4,6 +4,7 @@ const path = require('path');
 const app = express();
 const user = require('./controllers/usersController');
 const bodyParser = require('body-parser');
+const email = require('./controllers/emailController');
 
 app.use(bodyParser.json());
 
