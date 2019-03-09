@@ -2,7 +2,6 @@ import * as types from '../constants/actionTypes';
 
 const initialState = {
   isLoggedIn: false,
-  // currentPage: 'loginPage',
 }
 
 const userReducer = (state = initialState, action) => {
@@ -11,7 +10,7 @@ const userReducer = (state = initialState, action) => {
         return {
           ...state,
           isLoggedIn: true,
-          // currentPage: 'matchPage'
+          // how to tell the router where to move to ?
         }
 
     default:

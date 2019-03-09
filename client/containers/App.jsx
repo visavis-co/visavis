@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import * as actions from "../actions/actions";
 import { connect } from 'react-redux';
-// import other components
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+// import other child components
 import Login from '../components/Login.jsx';
+import Home from '../components/Home.jsx';
+import MatchDetails from '../components/MatchDetails.jsx';
+import Signup from '../components/Signup.jsx';
 
 const mapStateToProps = (store) => ({
   isLoggedIn: store.user.isLoggedIn,
@@ -22,23 +26,21 @@ class App extends Component {
   }
 
   render() {
-    const { logIn, isLoggedIn, currentPage } = this.props;
+    const { logIn, isLoggedIn } = this.props;
     return (
       <Router>
         <Switch>
-          <Route exact path="/" component={home} />
-          {/* private route => should check if user is authenticated before rendering */}
-          <Route path="/login" component={login} />
-          <Route path="/signup" component={signup} />
-          <Route path="/match" component={matches} />
+          <Route exact path="/" render={() => {!isLoggedIn ? <Redirect to="/login" /> : <Home />}}/>
+
+          <Route path="/login" render={() => {isLoggedIn ? <Redirect to="/" /> : <Login logIn={logIn} isLoggedIn={isLoggedIn} />}}/>
+
+          <Route path="/signup" render={() => {isLoggedIn ? <Redirect to="/" /> : <Signup />}}/>
+
+          <Route path="/match" render={() => {!isLoggedIn ? <Redirect to="/login" /> : <MatchDetails />}} />
         </Switch>
       </Router>
     )
   }
 }
-
-{currentPage == 'loginPage' && 
-<Login logIn={logIn} isLoggedIn={isLoggedIn}/>}
-<Route path='/admin' render={props => (<Admin menu={this.props.menu} />)} />
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
