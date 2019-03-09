@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Home from '../components/Home'
-import { fetchStuff } from '../actions/actions'
+// import { fetchStuff } from '../actions/actions'
 
 // Get menu prop from redux store
-const mapStateToProps = state => ({
-  stuff: state.app.stuff,
+const mapStateToProps = store => ({
+  stuff: store.user.stuff,
+});
+
+const mapDispatchToProps = store => ({
+
 });
 
 
@@ -15,10 +19,10 @@ class App extends Component {
     super(props);
   }
 
-  componentDidMount() {
-    // Fetch menu data
-    this.props.dispatch(fetchStuff());
-  }
+  // componentDidMount() {
+  //   // Fetch menu data
+  //   this.props.dispatch(fetchStuff());
+  // }
 
 
   render(props) {
@@ -28,4 +32,4 @@ class App extends Component {
     }
   }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
