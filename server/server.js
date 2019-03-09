@@ -10,12 +10,13 @@ const nodemailer = require('nodemailer');
 
 // configures a thing that will send emails
 const transporter = nodemailer.createTransport({
-  host: 'smtp.ethereal.email',
-  port: '587',
+  host: 'smtp.gmail.com',
+  port: '465',
+  secure: true,
   //name: process.env.emailName,
   auth: {
-    user: process.env.emailUser,
-    pass: process.env.emailPass
+    user: process.env.gmailUser,
+    pass: process.env.gmailPass
   }
 })
 
@@ -26,18 +27,19 @@ const transporter = nodemailer.createTransport({
 //  }
 
 // Test run! TODO: remove
-mailMatch({fullName: 'tang', email: 'eytang8@gmail.com'},{fullName: 'tang2', email:'eytang8@gmail.com.'})
+mailMatch({fullName: 'tang', email: 'eytang8@gmail.com'},{fullName: 'tang2', email:'eytang8@gmail.com'})
 
 function mailMatch(userA, userB){
-  console.log(`sending email to ${userA} and ${userB}`)
+  console.log(process.env.gmailPass);
+  console.log(`sending email to ${userA.fullName} and ${userB.fullName}`)
   const emailA = {
-    from:`${process.env.emailName} <test@test.com>`,
+    from:`"hello@visavis.com" <${process.env.gmailUser}>`,
     to: `${userA.fullName} <${userA.email}>`,
     subject: `${userA.fullName}, you've got a match!`,
     html: `<p>you've been matched! <a href='#'>click to view your match</a></p>`
   }
   const emailB = {
-    from:`${process.env.emailName} <test@test.com>`,
+    from:`"hello@visavis.com" <${process.env.gmailUser}>`,
     to: `${userB.fullName} <${userB.email}>`,
     subject: `${userB.fullName}, you've got a match!`,
     html: `<p>you've been matched! <a href='#'>click to view your match</a></p>`
@@ -53,28 +55,6 @@ function mailMatch(userA, userB){
     console.log('info', info)
   })
 }
-
-app.use(bodyParser.json());
-
-/**
- * API - get
- */
-app.get('/api/stuff', db.getStuff);
-
-
-// statically serve everything in the build folder on the route '/build'
-app.use('/build', express.static(path.join(__dirname, '../build')));
-app.use('/client', express.static(path.join(__dirname, '../client')));
-
-// serve index.html on the route '/'
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../index.html'));
-});
-
-
-app.listen(3000); //listens on port 3000 -> http://localhost:3000/
-
-
 
 app.use(bodyParser.json());
 
