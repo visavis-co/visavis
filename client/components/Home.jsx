@@ -5,9 +5,20 @@ import React from 'react';
 // this month's match is...
 
 const Home = props => {
+    const data = props.pastMatches;
+    const history = [];
+    for(let i = 0; i < data.length; i++){
+        history.push(<Match user={data[i]} />);
+    }
 
-
-    return (<h1>HOME</h1>);
+    return (
+        <div>
+            <h1>MATCH</h1>
+            <MatchProfile user={props.userInfo} />
+            <h3>Past Matches</h3>
+            {history}
+        </div>
+    );
 }
 
 export default Home;

@@ -2,6 +2,9 @@ import * as types from '../constants/actionTypes';
 
 const initialState = {
   isLoggedIn: false,
+  userInfo: {},
+  currentMatch: {},
+  pastMatches: []
 }
 
 const userReducer = (state = initialState, action) => {
