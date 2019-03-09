@@ -1,7 +1,7 @@
 const { Client } = require('pg');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 const userController = {};
-
 /***********************************************/
 //
 // TABLE SCHEMAS
@@ -14,7 +14,8 @@ const userController = {};
 //   pictureUrl VARCHAR,
 //   dateJoined timestamp not null default CURRENT_TIMESTAMP,
 //   lastLogin timestamp not null default CURRENT_TIMESTAMP,
-//   matchable boolean
+//   matchable boolean,
+//   sessionToken VARCHAR
 // );
 //
 // CREATE TABLE organizations(
@@ -55,15 +56,20 @@ userController.createUser = async (req, res, next) => {
   var hashed = bcrypt.hashSync(password, salt);
 
   // insert new user into database. Return that new user's id
-  const ret = await client.query(
-    'INSERT INTO users(email, fullName, password, pictureUrl, matchable) VALUES( $1, $2, $3, $4, $5) RETURNING id',
-    [email, fullName, hashed, 'default-profile.jpg', 'true']
-  );
+  // try {
+    const ret = await client.query(
+      'INSERT INTO users(email, fullName, password, pictureUrl, matchable) VALUES( $1, $2, $3, $4, $5) RETURNING id',
+      [email, fullName, hashed, 'default-profile.jpg', 'true']
+    );
+  // } catch (err) {
+  //   throw new Error('Error adding user - ' + err);
+  // }
 
   // set the res.locals userId to be the new user's id
   res.locals.userId = ret.rows[0].id;
 
-  console.log('TCL: userController.createUser -> res.locals.userId', res.locals.userId)
+  // create unique session token for cookie and session table
+  res.locals.userToken = crypto.randomBytes(16).toString('base64');
 
   // close db connection
   await client.end();
@@ -104,14 +110,18 @@ userController.verifyUser = async (req, res, next) => {
     if (bcrypt.compareSync(password, user.password)) {
       // password matches! set the userId in res.locals and next()
       res.locals.userId = user.id;
+
+      // create unique session token for cookie and session table
+      res.locals.userToken = crypto.randomBytes(16).toString('base64');
       next();
+
     } else {
       // password doesn't match. end chain
-      res.send({ error: 'Wrong username/password' });
+      throw new Error('Wrong username/password');
     }
   } else {
     // User not found. end chain
-    res.send({ error: 'Wrong username/password' });
+    throw new Error('Wrong username/password');
   }
 };
 
@@ -124,7 +134,6 @@ userController.getUser = async (req, res, next) => {
   // connect to db
   const client = new Client();
   await client.connect();
-	console.log('TCL: userController.getUser -> res.locals.userId', res.locals.userId)
 
   // get user from database that matches res.locals.userId
   const result = await client.query('SELECT * FROM users WHERE id = $1', [res.locals.userId]);
@@ -141,7 +150,7 @@ userController.getUser = async (req, res, next) => {
     next();
   } else {
     // User not found. end chain
-    res.send({ error: 'User not found' });
+    throw new Error('User does not exist');
   }
 };
 
