@@ -30,7 +30,7 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-          <Route exact path="/" render={() => (!isLoggedIn ? <Redirect to="/login" /> : <Home />)}/>
+          <Route exact path="/" render={() => (!isLoggedIn ? <Redirect to="/login" /> : <Home home={this.props} />)}/>
 
           <Route path="/login" render={() => (isLoggedIn ? <Redirect to="/" /> : <Login logIn={logIn} isLoggedIn={isLoggedIn} />)}/>
 
