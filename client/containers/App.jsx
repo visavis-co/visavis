@@ -10,13 +10,20 @@ import Signup from '../components/Signup.jsx';
 
 const mapStateToProps = (store) => ({
   isLoggedIn: store.user.isLoggedIn,
+  email: store.user.email,
+  password: store.user.password,
 })
 
 const mapDispatchToProps = dispatch => ({
-  // after logged in, should render to show home page with current and past matches 
-  logIn: () => {
-    dispatch(actions.logIn());
+  userLogin: (email, password) => {
+    dispatch(actions.userLogin(email, password));
   },
+  enterEmail: (event) => {
+    dispatch(actions.enterEmail(event.target.value))
+  },
+  enterPassword: (event) => {
+    dispatch(actions.enterPassword(event.target.value))
+  }
 })
 
 class App extends Component {
@@ -25,14 +32,15 @@ class App extends Component {
     super(props);
   }
 
+  // add user email and log in to my state
   render() {
-    const { logIn, isLoggedIn } = this.props;
+    const { userLogin, isLoggedIn, enterEmail, enterPassword, email, password } = this.props;
     return (
       <Router>
         <Switch>
           <Route exact path="/" render={() => (!isLoggedIn ? <Redirect to="/login" /> : <Home home={this.props} />)}/>
 
-          <Route path="/login" render={() => (isLoggedIn ? <Redirect to="/" /> : <Login logIn={logIn} isLoggedIn={isLoggedIn} />)}/>
+          <Route path="/login" render={() => (isLoggedIn ? <Redirect to="/" /> : <Login userLogin={userLogin} enterEmail={enterEmail} enterPassword={enterPassword} email={email} password={password}/>)}/>
 
           <Route path="/signup" render={() => (isLoggedIn ? <Redirect to="/" /> : <Signup />)}/>
 
