@@ -25,9 +25,7 @@ const transporter = nodemailer.createTransport({
 //  fullname: String,
 //  email: String
 //  }
-
-// Test run! TODO: remove
-// mailMatch({fullName: 'tang', email: 'eytang8@gmail.com'},{fullName: 'tang2', email:'eytang8@gmail.com'})
+//TODO: add in url for our site
 
 function mailMatch(userA, userB){
   console.log(process.env.gmailPass);
