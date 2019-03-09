@@ -1,18 +1,18 @@
 import * as types from '../constants/actionTypes';
 
 const initialState = {
-  stuff: []
+  isLoggedIn: false,
+  // currentPage: 'loginPage',
 }
 
 const userReducer = (state = initialState, action) => {
-  switch (action.types) {
-
-    case types.IS_LOGGED_IN: {
-      return {
-        ...state,
-        stuff: action.payload
-      }
-    }
+  switch (action.type) {
+      case types.IS_LOGGED_IN:
+        return {
+          ...state,
+          isLoggedIn: true,
+          // currentPage: 'matchPage'
+        }
 
     default:
       return state;
