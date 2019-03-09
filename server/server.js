@@ -9,19 +9,46 @@ const email = require('./controllers/emailController');
 app.use(bodyParser.json());
 
 /**
+ * Post to /login
+ *
+ * Expecting { email, password } to be in request body
+ *
+ * 1. Verify if a user is in the database, Set res.locals to user id
+ * 2. TODO: Create a cookie / session to login the user
+ * 3. TODO: Make a match for new user if there are any other users that are matchable.
+ * 4. TODO: Return user information with matches
+ *
+ */
+
+app.post(
+  '/login',
+  user.verifyUser,
+  user.getUser,
+  (req, res) => {
+    res.send(res.locals.user);
+  }
+);
+
+/**
  * API - Post to /api/user
  *
  * Expecting { email, fullName, password } to be in request body
  *
  * 1. Create a user in the database, Set res.locals to user id that was just added
- * 2. Create a cookie / session to login the user
- * 3. Make a match for new user if there are any other users that are matchable.
+ * 2. TODO: Create a cookie / session to login the user
+ * 3. TODO: Make a match for new user if there are any other users that are matchable.
+ * 4. TODO: Return user information with matches
  *
  */
 
-app.post('/api/user', user.createUser, (req, res) => {
-  res.send({ newUserId: res.locals.newUserId });
-});
+app.post(
+  '/api/user',
+  user.createUser,
+  user.getUser,
+  (req, res) => {
+    res.send(res.locals.user);
+  }
+);
 
 
 // statically serve everything in the build folder on the route '/build'
