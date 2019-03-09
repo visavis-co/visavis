@@ -8,9 +8,18 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 /**
- * API - get
+ * API - Post to /api/user  
+ * 
+ * Expecting { email, fullName, password } to be in request body 
+ * 
+ * 1. Create a user in the database, Set res.locals to user id that was just added
+ * 2. Create a cookie / session to login the user
+ * 3. Make a match for new user if there are any other users that are matchable. 
+ * 
  */
-app.get('/api/stuff', db.getStuff);
+app.post('/api/user', db.createUser, (req, res) => {
+  res.send();
+});
 
 
 // statically serve everything in the build folder on the route '/build'
