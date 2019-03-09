@@ -14,25 +14,33 @@ const transporter = nodemailer.createTransport({
   port: '587',
   //name: process.env.emailName,
   auth: {
-  user: process.env.emailUser,
-  pass: process.env.emailPass
+    user: process.env.emailUser,
+    pass: process.env.emailPass
   }
 })
 
-//TODO: what format will the users be in? make request to db for info
+// user info format:
+//  {
+//  fullname: String,
+//  email: String
+//  }
+
+// Test run! TODO: remove
+mailMatch({fullName: 'tang', email: 'eytang8@gmail.com'},{fullName: 'tang2', email:'eytang8@gmail.com.'})
+
 function mailMatch(userA, userB){
   console.log(`sending email to ${userA} and ${userB}`)
   const emailA = {
     from:`${process.env.emailName} <test@test.com>`,
     to: `${userA.fullName} <${userA.email}>`,
     subject: `${userA.fullName}, you've got a match!`,
-    html: `<p>you've been matched with ${userB.fullName}! <a href='#'>click to view your match</a></p>`
+    html: `<p>you've been matched! <a href='#'>click to view your match</a></p>`
   }
   const emailB = {
     from:`${process.env.emailName} <test@test.com>`,
     to: `${userB.fullName} <${userB.email}>`,
     subject: `${userB.fullName}, you've got a match!`,
-    html: `<p>you've been matched with ${userA.fullName}! <a href='#'>click to view your match</a></p>`
+    html: `<p>you've been matched! <a href='#'>click to view your match</a></p>`
   }
   transporter.sendMail(emailA, (err, info)=>{
     console.log(`sent to ${userA.fullName}`)
@@ -66,7 +74,7 @@ app.get('/', (req, res) => {
 
 app.listen(3000); //listens on port 3000 -> http://localhost:3000/
 
-}
+
 
 app.use(bodyParser.json());
 
