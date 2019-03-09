@@ -8,4 +8,4 @@ const MatchDetails = props => {
     return (<h1>MATCH DETAILS</h1>);
 }
 
-module.exports = MatchDetails;
+export default MatchDetails;

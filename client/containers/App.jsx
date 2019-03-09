@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as actions from "../actions/actions";
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 // import other child components
 import Login from '../components/Login.jsx';
 import Home from '../components/Home.jsx';
@@ -30,13 +30,13 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-          <Route exact path="/" render={() => {!isLoggedIn ? <Redirect to="/login" /> : <Home />}}/>
+          <Route exact path="/" render={() => (!isLoggedIn ? <Redirect to="/login" /> : <Home />)}/>
 
-          <Route path="/login" render={() => {isLoggedIn ? <Redirect to="/" /> : <Login logIn={logIn} isLoggedIn={isLoggedIn} />}}/>
+          <Route path="/login" render={() => (isLoggedIn ? <Redirect to="/" /> : <Login logIn={logIn} isLoggedIn={isLoggedIn} />)}/>
 
-          <Route path="/signup" render={() => {isLoggedIn ? <Redirect to="/" /> : <Signup />}}/>
+          <Route path="/signup" render={() => (isLoggedIn ? <Redirect to="/" /> : <Signup />)}/>
 
-          <Route path="/match" render={() => {!isLoggedIn ? <Redirect to="/login" /> : <MatchDetails />}} />
+          <Route path="/match" render={() => (!isLoggedIn ? <Redirect to="/login" /> : <MatchDetails />)} />
         </Switch>
       </Router>
     )

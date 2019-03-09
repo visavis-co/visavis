@@ -10,4 +10,4 @@ const Home = props => {
     return (<h1>HOME</h1>);
 }
 
-module.exports = Home;
+export default Home;
