@@ -8,13 +8,13 @@ const output = {
 
 module.exports = {
   entry, output,
-
   mode: process.env.NODE_ENV,
   devServer: {
     publicPath: '/build/',
-    proxy: {
-      '/api': 'http://localhost:3000'
-    }
+    proxy: [{
+      context: ['/api', '/login', '/logout'],
+      target: 'http://localhost:3000'
+    }]
   },
   module: {
     rules: [

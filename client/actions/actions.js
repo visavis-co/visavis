@@ -1,17 +1,30 @@
 import Axios from "axios";
 import * as types from '../constants/actionTypes';
 
-export const logIn = () => ({
-  type: types.IS_LOGGED_IN,
+// success
+export const logIn = (user) => ({
+  type: types.LOG_IN,
+  payload: user,
 })
 
-// export const receiveStuff = (stuff) => ({
-//   type: RECEIVE_STUFF,
-//   payload: stuff
-// })
+// failure
+export const loginFailed = (err) => ({
+  type: LOGIN_FAILED,
+  payload: err,
+})
 
-// export const fetchStuff = () => dispatch => {
-//   return Axios.get('/api/stuff')
-//     .then(stuff => dispatch(receiveStuff(stuff)))
-//     .catch(err => { console.log(err) })
-// }
+export const userLogin = (email, password) => dispatch => {
+  return Axios.post('/login', {email: email, password: password})
+    .then(user => dispatch(logIn(user)))
+    .catch(err => dispatch(loginFailed(err)))
+}
+
+export const enterEmail = (value) => ({
+  type: types.ENTER_EMAIL,
+  payload: value,
+});
+
+export const enterPassword = (value) => ({
+  type: types.ENTER_PASSWORD,
+  payload: value,
+});

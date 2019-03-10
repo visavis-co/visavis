@@ -2,3 +2,7 @@ body {
   margin: 0;
   font-family: 'Lato', sans-serif;
 }
+
+.gitButton {
+  border: 5px solid black;
+}
