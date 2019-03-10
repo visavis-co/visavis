@@ -4,6 +4,7 @@ const path = require('path');
 const app = express();
 const cookieParser = require('cookie-parser');
 const user = require('./controllers/usersController');
+const matches = require('./controllers/matchesController');
 const auth = require('./controllers/authController');
 const bodyParser = require('body-parser');
 const email = require('./controllers/emailController');
