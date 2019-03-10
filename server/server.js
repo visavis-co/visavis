@@ -3,11 +3,13 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const user = require('./controllers/usersController');
+const matches = require('./controllers/matchesController');
 const bodyParser = require('body-parser');
 const email = require('./controllers/emailController');
 
 app.use(bodyParser.json());
 
+matches.match();
 /**
  * Post to /login
  *
