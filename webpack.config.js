@@ -12,7 +12,7 @@ module.exports = {
   devServer: {
     publicPath: '/build/',
     proxy: [{
-      context: ['/api', '/login', '/signup'],
+      context: ['/api', '/login', '/logout'],
       target: 'http://localhost:3000'
     }]
   },

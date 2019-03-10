@@ -13,8 +13,8 @@ export const loginFailed = (err) => ({
   payload: err,
 })
 
-export const userLogin = (values) => dispatch => {
-  return Axios.post('/login', values)
+export const userLogin = (email, password) => dispatch => {
+  return Axios.post('/login', {email: email, password: password})
     .then(user => dispatch(logIn(user)))
     .catch(err => dispatch(loginFailed(err)))
 }

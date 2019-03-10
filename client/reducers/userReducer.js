@@ -15,7 +15,7 @@ const userReducer = (state = initialState, action) => {
     case types.LOG_IN:
       return {
         ...state,
-        user: action.payload,
+        userInfo: action.payload,
         isLoggedIn: true,
       }
       case types.LOGIN_FAILED:

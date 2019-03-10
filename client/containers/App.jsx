@@ -10,6 +10,7 @@ import Signup from '../components/Signup.jsx';
 
 const mapStateToProps = (store) => ({
   isLoggedIn: store.user.isLoggedIn,
+  user: store.user.userInfo,
   email: store.user.email,
   password: store.user.password,
 })
