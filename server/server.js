@@ -75,6 +75,14 @@ app.get(
   }
 );
 
+/**
+ * API - POST to /logout
+ *
+ * Get userId from body and delete sessionToken from users table
+ * and clear cookie
+ */
+app.post('/logout', auth.logout);
+
 // statically serve everything in the build folder on the route '/build'
 app.use('/build', express.static(path.join(__dirname, '../build')));
 app.use('/client', express.static(path.join(__dirname, '../client')));
