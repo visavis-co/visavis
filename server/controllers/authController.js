@@ -65,4 +65,26 @@ authController.checkLogin = async (req, res, next) => {
 
 };
 
+/**
+ * logout - deletes session token for user and clears the ssid cookie
+ *
+ * @param req - expecting userId in body
+ */
+authController.logout = async (req, res, next) => {
+  // connect to db
+  const client = new Client();
+  await client.connect();
+
+  // get user from database that matches res.locals.userId
+  const result = await client.query('UPDATE users SET sessionToken = null WHERE id = $1', [req.body.userId]);
+
+  // clear the ssid cookie
+  res.clearCookie('ssid');
+
+  // close db connection
+  await client.end();
+
+  res.send('User logged out');
+}
+
 module.exports = authController;
