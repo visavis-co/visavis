@@ -1,4 +1,6 @@
 const { Client } = require('pg');
+const { Pool } = require('pg');
+const pool = new Pool();
 
 /***********************************************/
 //
@@ -13,6 +15,13 @@ const { Client } = require('pg');
 //   location VARCHAR,
 //   CONSTRAINT unique_users UNIQUE(user1_id, user2_id)
 // );
+pool.connect((err, client, done)=>{
+  if (err){
+    console.log(err);
+  } else {
+    console.log('connected');
+  }
+});
 
 async function createMatch(req, res) {
   // connect to db
@@ -27,4 +36,34 @@ async function createMatch(req, res) {
   await client.end();
 }
 
-module.exports = { createMatch };
+async function match(){
+  const client = new Client();
+  await client.connect();
+  const matchableUsers = await client.query('SELECT * FROM users WHERE "matchable"=true');
+  if (matchableUsers.rows.length){
+    const matchable = new Set();
+    for (let i = 0; i < matchableUsers.rows.length; i++){
+      matchable.add(i);
+    }
+    while (matchable.size > 1){
+      let remainingItems = Array.from(matchable);
+      const choice1 = remainingItems[Math.floor(Math.random()*matchable.size)]
+      matchable.delete(choice1);
+      remainingItems = Array.from(matchable);
+      const choice2 = remainingItems[Math.floor(Math.random()*matchable.size)]
+      matchable.delete(choice2);
+      const user1 = matchableUsers.rows[choice1];
+      const user2 = matchableUsers.rows[choice2];
+      if (user1 > user2){
+        [user1,user2] = [user2,user1]
+      }
+      const pair = await client.query('INSERT INTO matches(user1_id, user2_id) values($1, $2)', [user1.id, user2.id]);
+      const updateUser = await client.query(`UPDATE users SET "matchable"=false WHERE "id"=${user1.id} OR "id"=${user2.id}`);
+      console.log('matching', user1.fullname, 'and', user2.fullname);
+    }
+    console.log('created all matches');
+  }
+  client.end();
+}
+
+module.exports = { createMatch, match };
