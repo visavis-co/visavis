@@ -12,7 +12,6 @@ const email = require('./controllers/emailController');
 app.use(bodyParser.json());   // run body parser on all server requests
 app.use(cookieParser());      // run cookie parser on all server requests
 
-matches.match();
 /**
  * POST to /login
  *
