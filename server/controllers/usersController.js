@@ -49,7 +49,7 @@ userController.createUser = async (req, res, next) => {
   const { email, fullName, password } = req.body;
 
   // check for valid user input
-  if (!email || !fullName || !password) throw new Error('Invalid user input');
+  if (!email || !fullName || !password) next(new Error('Invalid user input'));
 
   // hash the password
   var salt = bcrypt.genSaltSync(10);
@@ -95,7 +95,7 @@ userController.verifyUser = async (req, res, next) => {
   const { email, password } = req.body;
 
   // check for valid user input
-  if (!email || !password) throw new Error('Login Error: Missing email / password');
+  if (!email || !password) next(new Error('Login Error: Missing email / password'));
 
   // get user from database that matches email
   const result = await client.query('SELECT * FROM users WHERE email = $1', [email]);
@@ -117,11 +117,11 @@ userController.verifyUser = async (req, res, next) => {
 
     } else {
       // password doesn't match. end chain
-      throw new Error('Wrong username/password');
+      next(new Error('Wrong username/password'));
     }
   } else {
     // User not found. end chain
-    throw new Error('Wrong username/password');
+    next(new Error('Wrong username/password'))
   }
 };
 
@@ -150,7 +150,7 @@ userController.getUser = async (req, res, next) => {
     next();
   } else {
     // User not found. end chain
-    throw new Error('User does not exist');
+    next(new Error('User does not exist'));
   }
 };
 

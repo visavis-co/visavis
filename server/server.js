@@ -93,6 +93,10 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../index.html'));
 });
 
+// error handling catch all
+app.use((err,req, res, next) => {
+  res.status(418).send({name: err.name, msg:err.message});
+})
 
 app.listen(3000); //listens on port 3000 -> http://localhost:3000/
 

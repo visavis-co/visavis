@@ -56,11 +56,11 @@ authController.checkLogin = async (req, res, next) => {
       next();
     } else {
       // User not found. end chain
-      throw new Error('Session does not exist');
+      next(new Error('Session does not exist'));
     }
   } else {
     // User not found. end chain
-    throw new Error('Cookie does not exist');
+    next(new Error('Cookie does not exist'));
   }
 
 };
