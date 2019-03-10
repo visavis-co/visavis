@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-// login with email & pw
-// if a user goes to "/", that will check if user is authenticated and redirect here if not
-
 const Login = props => {
   return (
     <div>
-      <input />
+      <input type='email' onChange={props.enterEmail} />
       Enter your email <br />
+      <input type='password' onChange={props.enterPassword} />
+      Enter your password <br />
+      <button onClick={() => props.userLogin(props.email, props.password)}>Log in</button>
       OR
-      <button onClick={props.logIn}>Log in</button>
-      <div>
-        <a href="/auth/github" className="btn btn-block btn-social btn-github">
-          <span className="github" />
+      <div className='gitButton'>
+        <a href='/auth/github' className='btn btn-block btn-social btn-github'>
+          <span className='github' />
           Sign in with Github
         </a>
       </div>
