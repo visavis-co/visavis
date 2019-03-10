@@ -13,10 +13,11 @@ const Home = props => {
 
     return (
         <div>
-            <h1>MATCH</h1>
+            <h1>Welcome, {props.userInfo.fullname}</h1>
             {/* <MatchProfile user={props.home.userInfo} /> */}
             <h3>Past Matches</h3>
             {/* {history} */}
+            <button onClick={props.userLogout(props.userInfo.id)}>Log Out</button>
         </div>
     );
 }

@@ -4,10 +4,8 @@ import ReactDOM from 'react-dom';
 const Login = props => {
   return (
     <div>
-      <input type='email' onChange={props.enterEmail} />
-      Enter your email <br />
-      <input type='password' onChange={props.enterPassword} />
-      Enter your password <br />
+      <input type='email' onChange={props.enterEmail} placeholder='Email'/><br />
+      <input type='password' onChange={props.enterPassword} placeholder='Password'/><br />
       <button onClick={() => props.userLogin(props.email, props.password)}>Log in</button>
       OR
       <div className='gitButton'>
