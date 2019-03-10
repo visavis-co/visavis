@@ -9,15 +9,11 @@ import Col from 'react-bootstrap/Col';
 
 const Home = (props) => {
   return (
-    <Jumbotron fluid>
-      <Container>
-        <Row>
-          <Col>
-            <h1>Visavis</h1>
-          </Col>
-        </Row>
-      </Container>
-    </Jumbotron>
+    <div>
+      <input type='text' onChange={props.enterEmail} />
+      <input type='text' onChange={props.enterEmail} />
+      <input type='text' onChange={props.enterEmail} />
+    </div>
   );
 }
 
