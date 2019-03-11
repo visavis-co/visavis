@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-d
 // import other child components
 import Login from '../components/Login.jsx';
 import Home from '../components/Home.jsx';
+import Header from '../components/Header.jsx';
 import MatchDetails from '../components/MatchDetails.jsx';
 import Signup from '../components/Signup.jsx';
 
@@ -43,14 +44,17 @@ class App extends Component {
   render() {
     const { userLogin, isLoggedIn, enterEmail, email, enterPassword, password, enterFullName, fullName, userInfo, userLogout } = this.props;
     return (
-      <Router>
-        <Switch>
-          <Route exact path="/" render={() => (!isLoggedIn ? <Redirect to="/login" /> : <Home userInfo={userInfo} userLogout={userLogout} />)}/>
-          <Route path="/login" render={() => (isLoggedIn ? <Redirect to="/" /> : <Login userLogin={userLogin} enterEmail={enterEmail} enterPassword={enterPassword} email={email} password={password}/>)}/>
-          <Route path="/signup" render={() => (isLoggedIn ? <Redirect to="/" /> : <Signup userSignup={userSignup} enterFullName={enterFullName} enterEmail={enterEmail} enterPassword={enterPassword} fullName={fullName} email={email} password={password}/>)}/>
-          <Route path="/match" render={() => (!isLoggedIn ? <Redirect to="/login" /> : <MatchDetails userLogout={userLogout} />)} />
-        </Switch>
-      </Router>
+      <div className="app">
+        {isLoggedIn ? <Header /> : ''}
+        <Router>
+          <Switch>
+            <Route exact path="/" render={() => (!isLoggedIn ? <Redirect to="/login" /> : <Home userInfo={userInfo} userLogout={userLogout} />)}/>
+            <Route path="/login" render={() => (isLoggedIn ? <Redirect to="/" /> : <Login userLogin={userLogin} enterEmail={enterEmail} enterPassword={enterPassword} email={email} password={password}/>)}/>
+            <Route path="/signup" render={() => (isLoggedIn ? <Redirect to="/" /> : <Signup userSignup={userSignup} enterFullName={enterFullName} enterEmail={enterEmail} enterPassword={enterPassword} fullName={fullName} email={email} password={password}/>)}/>
+            <Route path="/match" render={() => (!isLoggedIn ? <Redirect to="/login" /> : <MatchDetails userLogout={userLogout} />)} />
+          </Switch>
+        </Router>
+      </div>
     )
   }
 }

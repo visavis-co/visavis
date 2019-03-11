@@ -1,8 +1,40 @@
 body {
   margin: 0;
   font-family: 'Lato', sans-serif;
+  font-size: 62.5%;
 }
 
 .gitButton {
   border: 5px solid black;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav {
+  background-color: #AAAAAA;
+  height: 2em;
+  width: 100%;
+}
+
+.btnLogin {
+  justify-content: center;
+}
+
+.form {
+  justify-content: center; 
+  align-items: center;
+  align-content: space-around;
+}
+
+a#github-button {
+  border: 5px solid black;
+}
+.picGithub {
+  margin-left: 0.1em;
+  margin-top: 0.2em;
 }
