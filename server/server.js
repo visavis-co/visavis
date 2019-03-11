@@ -25,7 +25,6 @@ app.use(cookieParser());      // run cookie parser on all server requests
  */
 
 // schedules recurring rematches on monday at 9:30 AM
-matches.rematchAll();
 const rematch = schedule.scheduleJob({hour: 9, minute: 30, dayOfWeek: 1},()=>{
   matches.rematchAll();
 })
