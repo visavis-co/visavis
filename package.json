@@ -44,7 +44,6 @@
     "css-loader": "^2.1.1",
     "nodemon": "^1.18.10",
     "redux-devtools-extension": "^2.13.8",
-    "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",
