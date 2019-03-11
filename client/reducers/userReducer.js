@@ -18,7 +18,9 @@ const userReducer = (state = initialState, action) => {
         // console.log(action.payload.data);
       return {
         ...state,
-        userInfo: action.payload,
+        userInfo: action.payload.user,
+        currentMatch: action.payload.currentMatch,
+        pastMatches: action.payload.pastMatches,
         isLoggedIn: true,
       }}
       case types.LOGIN_FAILED: {
@@ -47,7 +49,7 @@ const userReducer = (state = initialState, action) => {
         ...state,
         password: action.payload,
       }
-      case types.LOGOUT: 
+      case types.LOGOUT:
       return {
         ...state,
         isLoggedIn: false,

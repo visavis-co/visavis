@@ -144,9 +144,8 @@ userController.getUser = async (req, res, next) => {
 
   // check for returned user
   if (user) {
-    // Found a user. Set res.locals.user and go next
-    res.locals.user = user;
-		console.log('TCL: userController.getUser -> res.locals.user', res.locals.user)
+    // Found a user. Set user prop in res.locals.user and go next
+    res.locals.user = { user };
     next();
   } else {
     // User not found. end chain
