@@ -8,6 +8,7 @@ const matches = require('./controllers/matchesController');
 const auth = require('./controllers/authController');
 const bodyParser = require('body-parser');
 const email = require('./controllers/emailController');
+const schedule = require('node-schedule');
 
 app.use(bodyParser.json());   // run body parser on all server requests
 app.use(cookieParser());      // run cookie parser on all server requests
@@ -23,8 +24,11 @@ app.use(cookieParser());      // run cookie parser on all server requests
  *
  */
 
-// call this to create matches and send email
-// matches.matchAndDo(email.mailMatch);
+// schedules recurring rematches on monday at 9:30 AM
+matches.rematchAll();
+const rematch = schedule.scheduleJob({hour: 9, minute: 30, dayOfWeek: 1},()=>{
+  matches.rematchAll();
+})
 
 app.post(
   '/login',
@@ -54,7 +58,7 @@ app.post(
   '/api/user',
   user.createUser,            // creates a user in the db
   user.getUser,               // gets user info matching res.locals.userId
-  //matches.makematchhere     // looks for a match for this newly created user
+  matches.matchNewUser,       // looks for a match for this newly created user
   matches.getUserMatches,     // gets user matches matching res.locals.userId
   auth.setSSIDCookie,         // sets SSID cookie on client
   auth.startSession,          // sets the session token in user db
