@@ -1,18 +1,25 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Jumbotron from 'react-bootstrap/Jumbotron';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import {Form, Button} from 'react-bootstrap';
 
-// this is bootstrap example from quoc
 // this page will be linked to '/login' if user has not yet created a username
 
 const Home = (props) => {
   return (
-    <div>
-      <input type='text' onChange={props.enterEmail} />
-      <input type='text' onChange={props.enterEmail} />
-      <input type='text' onChange={props.enterEmail} />
+    <div className="formSignup">
+    <Form>
+      <Form.Group controlId='formFullName'>
+        <Form.Control type='text' placeholder='Enter full name' onChange={props.enterFullName}/>
+      </Form.Group>
+      <Form.Group controlId='formEmail'>
+        <Form.Control type='email' placeholder='Enter email' onChange={props.enterEmail}/>
+      </Form.Group>
+      <Form.Group controlId='formPassword'>
+        <Form.Control type='password' placeholder='Password' onChange={props.enterPassword}/>
+      </Form.Group>
+      <Button  variant='primary' type='submit' className='btnLogin'
+        onClick={(e) => {e.preventDefault(); 
+        props.userSignup(props.fullName, props.email, props.password)}}>Sign up</Button> 
+    </Form>
     </div>
   );
 }
