@@ -21,28 +21,34 @@ const transporter = nodemailer.createTransport({
 
 function mailMatch(userA, userB){
   console.log(process.env.gmailPass);
-  console.log(`sending email to ${userA.fullName} and ${userB.fullName}`)
+  console.log(`sending email to ${userA.fullname} and ${userB.fullname}`)
   const emailA = {
     from:`"hello@visavis.com" <${process.env.gmailUser}>`,
-    to: `${userA.fullName} <${userA.email}>`,
-    subject: `${userA.fullName}, you've got a match!`,
+    to: `${userA.fullname} <${userA.email}>`,
+    subject: `${userA.fullname}, you've got a match!`,
     html: `<p>you've been matched! <a href='#'>click to view your match</a></p>`
   }
   const emailB = {
     from:`"hello@visavis.com" <${process.env.gmailUser}>`,
-    to: `${userB.fullName} <${userB.email}>`,
-    subject: `${userB.fullName}, you've got a match!`,
+    to: `${userB.fullname} <${userB.email}>`,
+    subject: `${userB.fullname}, you've got a match!`,
     html: `<p>you've been matched! <a href='#'>click to view your match</a></p>`
   }
   transporter.sendMail(emailA, (err, info)=>{
-    console.log(`sent to ${userA.fullName}`)
-    console.log('err', err)
-    console.log('info', info)
+    if(err){
+      console.log('err', err)
+    } else{
+      console.log(`sent to ${userA.fullName}`)
+      console.log('info', info)
+    }
   })
   transporter.sendMail(emailB, (err, info)=>{
-    console.log(`sent to ${userB.fullName}`)
-    console.log('err', err)
-    console.log('info', info)
+    if(err){
+      console.log('err', err)
+    } else {
+      console.log(`sent to ${userB.fullName}`)
+      console.log('info', info)
+    }
   })
 }
 

@@ -23,6 +23,9 @@ app.use(cookieParser());      // run cookie parser on all server requests
  *
  */
 
+// call this to create matches and send email
+// matches.matchAndDo(email.mailMatch);
+
 app.post(
   '/login',
   user.verifyUser,
