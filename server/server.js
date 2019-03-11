@@ -88,7 +88,7 @@ app.use('/build', express.static(path.join(__dirname, '../build')));
 app.use('/client', express.static(path.join(__dirname, '../client')));
 
 // serve index.html on the route '/'
-app.get('/', (req, res) => {
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../index.html'));
 });
 
