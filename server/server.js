@@ -28,11 +28,11 @@ app.use(cookieParser());      // run cookie parser on all server requests
 
 app.post(
   '/login',
-  user.verifyUser,
-  user.getUser,
-  matches.getUserMatches,
-  auth.setSSIDCookie,
-  auth.startSession,
+  user.verifyUser,          // verify user email/pw to login user
+  user.getUser,             // gets user info matching res.locals.userId
+  matches.getUserMatches,   // gets user matches matching res.locals.userId
+  auth.setSSIDCookie,       // sets SSID cookie on client
+  auth.startSession,        // sets the session token in user db
   (req, res) => {
     res.send(res.locals.user);
   }
@@ -52,11 +52,12 @@ app.post(
 
 app.post(
   '/api/user',
-  user.createUser,
-  user.getUser,
-  matches.getUserMatches,
-  auth.setSSIDCookie,
-  auth.startSession,
+  user.createUser,            // creates a user in the db
+  user.getUser,               // gets user info matching res.locals.userId
+  //matches.makematchhere     // looks for a match for this newly created user
+  matches.getUserMatches,     // gets user matches matching res.locals.userId
+  auth.setSSIDCookie,         // sets SSID cookie on client
+  auth.startSession,          // sets the session token in user db
   (req, res) => {
     res.send(res.locals.user);
   }
@@ -73,9 +74,9 @@ app.post(
 
 app.get(
   '/api/user',
-  auth.checkLogin,
-  user.getUser,
-  matches.getUserMatches,
+  auth.checkLogin,            // Check for login from client cookie
+  user.getUser,               // gets user info matching res.locals.userId
+  matches.getUserMatches,     // gets user matches matching res.locals.userId
   (req, res) => {
     res.send(res.locals.user);
   }
