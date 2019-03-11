@@ -13,6 +13,8 @@ import Signup from '../components/Signup.jsx';
 const mapStateToProps = (store) => ({
   isLoggedIn: store.user.isLoggedIn,
   userInfo: store.user.userInfo,
+  currentMatch: store.user.currentMatch,
+  pastMatches: store.user.pastMatches,
   email: store.user.email,
   fullName: store.user.fullName,
   password: store.user.password
@@ -46,7 +48,7 @@ class App extends Component {
       enterEmail, email, 
       enterPassword, password, 
       enterFullName, fullName,
-      userInfo, isLoggedIn,  } = this.props;
+      userInfo, isLoggedIn, currentMatch, pastMatches } = this.props;
 
     return (
       <div className="app">
@@ -54,7 +56,7 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path="/" render={() => (!isLoggedIn ? <Redirect to="/login" />
-                        : <Home userInfo={userInfo} userLogout={userLogout} />)}/>
+                        : <Home userInfo={userInfo} userLogout={userLogout} currentMatch={currentMatch} pastMatches={pastMatches} />)}/>
 
             <Route path="/login" render={() => (isLoggedIn ? <Redirect to="/" /> 
                         : <Login userLogin={userLogin} enterEmail={enterEmail} enterPassword={enterPassword} email={email} password={password}/>)}/>
@@ -63,8 +65,10 @@ class App extends Component {
                         : <Signup userSignup={userSignup} enterFullName={enterFullName} enterEmail={enterEmail} enterPassword={enterPassword} 
                                   fullName={fullName} email={email} password={password}/>)}/>
 
-            <Route path="/match" render={() => (!isLoggedIn ? <Redirect to="/login" /> 
-                        : <MatchDetails userLogout={userLogout} />)} />
+            {/* <Route path="/match" render={() => (!isLoggedIn ? <Redirect to="/login" /> 
+                        : <MatchDetails userInfo={userInfo} userLogout={userLogout} currentMatch={currentMatch} pastMatches={pastMatches} />)} /> */}
+            <Route path="/match" render={ () => <MatchDetails userInfo={userInfo} userLogout={userLogout} currentMatch={currentMatch} pastMatches={pastMatches} />} />
+ /> 
           </Switch>
         </Router>
       </div>

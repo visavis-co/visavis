@@ -1,4 +1,5 @@
 import * as types from '../constants/actionTypes';
+import { debug } from 'util';
 
 const initialState = {
   loginError: '',
@@ -21,6 +22,8 @@ const userReducer = (state = initialState, action) => {
         currentMatch: action.payload.currentMatch,
         pastMatches: action.payload.pastMatches,
         isLoggedIn: true,
+        email: '',
+        password: '',
       }}
       case types.LOGIN_FAILED: {
       return {
