@@ -19,8 +19,7 @@ app.use(cookieParser());      // run cookie parser on all server requests
  *
  * 1. Verify if a user is in the database, Set res.locals to user id
  * 2. Create a cookie / session to login the user
- * 3. TODO: Make a match for new user if there are any other users that are matchable.
- * 4. Return user information with matches
+ * 3. Return user information with matches
  *
  */
 
@@ -44,7 +43,7 @@ app.post(
  * 1. Create a user in the database, Set res.locals to user id that was just added
  * 2. Create a cookie / session to login the user
  * 3. TODO: Make a match for new user if there are any other users that are matchable.
- * 4. TODO: Return user information with matches
+ * 4. Return user information with matches
  *
  */
 
@@ -84,8 +83,27 @@ app.get(
  *
  * Get userId from body and delete sessionToken from users table
  * and clear cookie
+ *
  */
 app.post('/logout', auth.logout);
+
+/**
+ * API - POST to /api/match - Updates a match record to complete the match
+ *
+ * Expecting { matchId, inPerson, location } to be in request body
+ *
+ * 1. Updates the inPerson, location for a match
+ *
+ */
+
+app.post(
+  '/api/match',
+  matches.completeMatch,
+  (req, res) => {
+    res.send('Match updated');
+  }
+);
+
 
 // statically serve everything in the build folder on the route '/build'
 app.use('/build', express.static(path.join(__dirname, '../build')));

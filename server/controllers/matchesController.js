@@ -25,18 +25,6 @@ pool.connect((err, client, done)=>{
   }
 });
 
-async function createMatch(req, res) {
-  // connect to db
-  const client = new Client();
-  await client.connect();
-
-  // get stuff
-  //const allItems = await client.query('SELECT * FROM stuff');
-
-  // send back the menu items organized by category
-  res.send(allItems);
-  await client.end();
-}
 
 async function match(){
   const client = new Client();
@@ -69,6 +57,31 @@ async function match(){
 }
 
 /**
+ * completeMatch - closes out a match - updates inPerson, location, dateCompleted for a match
+ *
+ *  * @param req - expecting matchId, inPerson and location as json in body
+ *
+ */
+matchController.completeMatch = async (req, res, next) => {
+  // connect to db
+  const client = new Client();
+  await client.connect();
+
+  // get variables from req.body
+  const { matchId, inPerson, location } = req.body;
+
+  // update the match in db
+  const ret = await client.query(
+    'UPDATE matches SET inPerson = $1, location = $2, "dateCompleted" = current_timestamp WHERE id = $3',
+    [inPerson, location, matchId]
+  );
+  // close db connection
+  await client.end();
+
+  next();
+};
+
+/**
  * getUserMatches - gets user's 1 current match and all past matches that correspond to user id in res.locals.userId
  */
 matchController.getUserMatches = async (req, res, next) => {
@@ -91,7 +104,6 @@ matchController.getUserMatches = async (req, res, next) => {
       res.locals.user.currentMatch = currentMatch.rows[0];
     }
   }
-
 
   // get past matches for user res.locals.userId and set prop pastMatches if exists
   const pastMatches1 = await client.query('SELECT u.email, u.fullname, u.pictureUrl, m.* FROM matches m JOIN users u ON m.user1_id = u.id WHERE user2_id = $1 AND "dateCompleted" IS NOT NULL', [res.locals.userId]);
