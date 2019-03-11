@@ -9,11 +9,9 @@ const Login = props => {
     <div className='formLogin'>
     <Form>
       <Form.Group controlId='formEmail'>
-        {/* <Form.Label>Email</Form.Label> */}
         <Form.Control type='email' placeholder='Enter email' onChange={props.enterEmail}/>
       </Form.Group>
       <Form.Group controlId='formPassword'>
-        {/* <Form.Label>Password</Form.Label> */}
         <Form.Control type='password' placeholder='Password' onChange={props.enterPassword}/>
       </Form.Group>
       <div>
