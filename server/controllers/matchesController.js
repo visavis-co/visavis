@@ -17,13 +17,6 @@ const matchController = {};
 //   location VARCHAR,
 //   CONSTRAINT unique_users UNIQUE(user1_id, user2_id)
 // );
-pool.connect((err, client, done)=>{
-  if (err){
-    console.log(err);
-  } else {
-    console.log('connected');
-  }
-});
 
 async function createMatch(req, res) {
   // connect to db
@@ -37,8 +30,7 @@ async function createMatch(req, res) {
   res.send(allItems);
   await client.end();
 }
-
-async function match(){
+matchController.matchAndDo = async function matchAnd(cb){
   const client = new Client();
   await client.connect();
   const matchableUsers = await client.query('SELECT * FROM users WHERE "matchable"=true');
@@ -56,6 +48,7 @@ async function match(){
       matchable.delete(choice2);
       const user1 = matchableUsers.rows[choice1];
       const user2 = matchableUsers.rows[choice2];
+      cb(user1, user2);
       if (user1 > user2){
         [user1,user2] = [user2,user1]
       }
