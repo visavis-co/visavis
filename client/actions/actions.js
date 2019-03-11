@@ -25,12 +25,15 @@ export const userLogin = (email, password) => dispatch => {
 }
 export const userSignup = (fullName, email, password) => dispatch => {
   return Axios.post('/api/user', {fullName: fullName, email: email, password: password})
-    .then(user => dispatch(logIn(user)))
+    .then(userInfo => { 
+      console.log('Created User (POST: /api/user): ', userInfo); 
+      dispatch(logIn(userInfo));
+    })
     .catch(err => dispatch(signupFailed(err)))
 }
 export const inSession = () => dispatch => {
   return Axios.get('/api/user')
-    .then(user => dispatch(logIn(user)))
+    .then(userInfo => dispatch(logIn(userInfo)))
     .catch(err => dispatch(signupFailed(err)))
 }
 

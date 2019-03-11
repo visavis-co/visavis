@@ -1,6 +1,4 @@
 const { Client } = require('pg');
-const { Pool } = require('pg');
-const pool = new Pool();
 const matchController = {};
 const email = require('./emailController');
 
@@ -110,10 +108,7 @@ matchController.getUserMatches = async (req, res, next) => {
   } else {
     // didn't find current match as user 1. Check if there is a current match as user 2.
     currentMatch = await client.query('SELECT u.email, u.fullname, u.pictureUrl, m.* FROM matches m JOIN users u ON m.user1_id = u.id WHERE user2_id = $1 AND "dateCompleted" IS NULL', [res.locals.userId]);
-    if (currentMatch.rowCount > 0) {
-      // found the current match. set the user object in locals.
-      res.locals.user.currentMatch = currentMatch.rows[0];
-    }
+    res.locals.user.currentMatch = (currentMatch.rowCount > 0) ? currentMatch.rows[0] : {};
   }
 
   // get past matches for user res.locals.userId and set prop pastMatches if exists
@@ -129,10 +124,7 @@ matchController.getUserMatches = async (req, res, next) => {
     pastMatches = pastMatches2.rows;
   }
 
-  if (pastMatches.length > 0) res.locals.user.pastMatches = pastMatches;
-
-	console.log('TCL: matchController.getUserMatches -> pastMatches', pastMatches)
-  console.log('TCL: userController.getUser -> res.locals.user', res.locals.user);
+  res.locals.user.pastMatches = pastMatches;
 
   // close db connection
   await client.end();
