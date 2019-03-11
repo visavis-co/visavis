@@ -5,6 +5,7 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const user = require('./controllers/usersController');
 const matches = require('./controllers/matchesController');
+const chat = require('./controllers/chatController');
 const auth = require('./controllers/authController');
 const bodyParser = require('body-parser');
 const email = require('./controllers/emailController');
@@ -107,6 +108,22 @@ app.post(
     res.send('Match updated');
   }
 );
+
+/**
+ * API - POST to /api/chat - Inserts a chat message into the db
+ *
+ * Expecting { userId, matchId, message } to be in request body
+ *
+ */
+
+app.post(
+  '/api/chat',
+  chat.sendChatMsg,
+  (req, res) => {
+    res.send('Chat inserted');
+  }
+);
+
 
 
 // statically serve everything in the build folder on the route '/build'
