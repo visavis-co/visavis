@@ -2,9 +2,9 @@ import Axios from "axios";
 import * as types from '../constants/actionTypes';
 
 // success
-export const logIn = (user) => ({
+export const logIn = (userInfo) => ({
   type: types.LOGIN,
-  payload: user.data,
+  payload: userInfo.data,
 })
 
 // failure
@@ -20,12 +20,8 @@ export const signupFailed = (err) => ({
 
 export const userLogin = (email, password) => dispatch => {
   return Axios.post('/login', {email: email, password: password})
-    .then(user => dispatch(logIn(user)))
-    .catch(err => {
-      console.log("Login user: ", err);
-      dispatch(loginFailed(err))
-    })
-    // .catch(err => dispatch(loginFailed(err)))
+    .then(userInfo => dispatch(logIn(userInfo)))
+    .catch(err => dispatch(loginFailed(err)))
 }
 export const userSignup = (fullName, email, password) => dispatch => {
   return Axios.post('/api/user', {fullName: fullName, email: email, password: password})

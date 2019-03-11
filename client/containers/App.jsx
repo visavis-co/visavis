@@ -15,7 +15,7 @@ const mapStateToProps = (store) => ({
   userInfo: store.user.userInfo,
   email: store.user.email,
   fullName: store.user.fullName,
-  password: store.user.password,
+  password: store.user.password
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -25,7 +25,7 @@ const mapDispatchToProps = dispatch => ({
   enterEmail: (event) => { dispatch(actions.enterEmail(event.target.value)) },
   enterFullName: (event) => { dispatch(actions.enterFullName(event.target.value)) },
   enterPassword: (event) => { dispatch(actions.enterPassword(event.target.value)) },
-  userLogout: () => { dispatch(actions.userLogout()) } 
+  userLogout: (id) => { dispatch(actions.userLogout(id)) } 
 })
 
 // component did mount => post to login
