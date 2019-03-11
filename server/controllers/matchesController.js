@@ -1,5 +1,6 @@
 const { Client } = require('pg');
 const matchController = {};
+const email = require('./emailController');
 
 /***********************************************/
 //
@@ -45,6 +46,23 @@ matchController.matchAndDo = async function matchAnd(cb){
     console.log('created all matches');
   }
   client.end();
+
+}
+
+matchController.matchNewUser = (req, res, next)=>{
+  matchController.matchAndDo(email.mailMatch);
+  next();
+}
+
+matchController.rematchAll = async ()=>{
+  const client = new Client();
+  await client.connect();
+  await client.query('UPDATE users SET matchable=true')
+  await client.query('UPDATE matches SET "dateCompleted" = current_timestamp, "completed"=false WHERE "dateCompleted" is NULL',(err, res) => { 
+    console.log('err', err)
+    client.end();
+  })
+  matchController.matchAndDo(email.mailMatch);
 }
 
 /**
