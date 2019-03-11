@@ -21,6 +21,8 @@ const userReducer = (state = initialState, action) => {
         currentMatch: action.payload.currentMatch,
         pastMatches: action.payload.pastMatches,
         isLoggedIn: true,
+        email: '',
+        password: '',
       }}
       case types.LOGIN_FAILED: {
       return {
