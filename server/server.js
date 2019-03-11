@@ -65,7 +65,7 @@ app.post(
  *
  * 1. Get token information from user cookie and find user session
  * 2. Get user information and return it
- * 4. TODO: Return user information with matches
+ * 3. Return user information with matches
  *
  */
 
@@ -73,6 +73,7 @@ app.get(
   '/api/user',
   auth.checkLogin,
   user.getUser,
+  matches.getUserMatches,
   (req, res) => {
     res.send(res.locals.user);
   }
