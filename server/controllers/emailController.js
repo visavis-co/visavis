@@ -20,7 +20,6 @@ const transporter = nodemailer.createTransport({
 //TODO: add in url for our site
 
 function mailMatch(userA, userB){
-  console.log(process.env.gmailPass);
   console.log(`sending email to ${userA.fullname} and ${userB.fullname}`)
   const emailA = {
     from:`"hello@visavis.com" <${process.env.gmailUser}>`,
@@ -38,7 +37,7 @@ function mailMatch(userA, userB){
     if(err){
       console.log('err', err)
     } else{
-      console.log(`sent to ${userA.fullName}`)
+      console.log(`sent to ${userA.fullname}`)
       console.log('info', info)
     }
   })
@@ -46,7 +45,7 @@ function mailMatch(userA, userB){
     if(err){
       console.log('err', err)
     } else {
-      console.log(`sent to ${userB.fullName}`)
+      console.log(`sent to ${userB.fullname}`)
       console.log('info', info)
     }
   })
