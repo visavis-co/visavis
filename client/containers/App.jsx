@@ -65,8 +65,10 @@ class App extends Component {
                         : <Signup userSignup={userSignup} enterFullName={enterFullName} enterEmail={enterEmail} enterPassword={enterPassword} 
                                   fullName={fullName} email={email} password={password}/>)}/>
 
-            <Route path="/match" render={() => (!isLoggedIn ? <Redirect to="/login" /> 
-                        : <MatchDetails userInfo={userInfo} userLogout={userLogout} currentMatch={currentMatch} pastMatches={pastMatches} />)} />
+            {/* <Route path="/match" render={() => (!isLoggedIn ? <Redirect to="/login" /> 
+                        : <MatchDetails userInfo={userInfo} userLogout={userLogout} currentMatch={currentMatch} pastMatches={pastMatches} />)} /> */}
+            <Route path="/match" render={ () => <MatchDetails userInfo={userInfo} userLogout={userLogout} currentMatch={currentMatch} pastMatches={pastMatches} />} />
+ /> 
           </Switch>
         </Router>
       </div>
