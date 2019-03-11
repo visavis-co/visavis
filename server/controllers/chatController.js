@@ -42,9 +42,9 @@ chatController.sendChatMsg = async (req, res, next) => {
 
 
 /**
- * getChats - get all the chat messages for matchId and userId
+ * getChats - get all the chat messages for matchId
  *
- * @param req - expecting userId, matchId
+ * @param req - expecting matchId
  *
  */
 chatController.getChats = async (req, res, next) => {
@@ -52,14 +52,16 @@ chatController.getChats = async (req, res, next) => {
   const client = new Client();
   await client.connect();
 
-  // get variables from req.body
-  const { userId, matchId } = req.body;
+  // get variables from req.params
+  const { matchId } = req.params;
 
   // insert new chat msg into database.
-  const ret = await client.query(
-    'SELECT chats(user_id, match_id, message, timeStamp) VALUES( $1, $2, $3, current_timestamp)',
-    [userId, matchId, message]
+  const messages = await client.query(
+    'SELECT user_id, match_id, fullname, message, timeStamp FROM chats JOIN users ON user_id = users.id WHERE match_id = $1 ORDER BY timestamp ASC',
+    [matchId]
   );
+
+  res.locals.chats = (messages.rowCount > 0) ? messages.rows : [];
 
   // close db connection
   await client.end();

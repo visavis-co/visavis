@@ -1,5 +1,7 @@
 import React from 'react';
 import { Image, Container, Row, Col } from 'react-bootstrap';
+import Chat from './Chat.jsx'
+
 // private route
 // where the chat ui lives
 // where the "check" button and "x" button live, so a user can let us know if they've met their match
@@ -19,8 +21,8 @@ const MatchDetails = props => {
                         <Image src={matchPic} height="50%" />
                 </Row>
             </Container>
-            <div className="chatbox">
-            </div>
+
+            <Chat match={props.currentMatch} userId={props.userInfo.id} matchChats={props.matchChats} getMatchChats={props.getMatchChats} />
         </div>
     );
 }
