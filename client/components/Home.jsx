@@ -17,8 +17,7 @@ const Home = props => {
             {/* <MatchProfile user={props.home.userInfo} /> */}
             <h3>Past Matches</h3>
             {/* {history} */}
-            <button>Log Out</button>
-            {/* <button onClick={props.userLogout(props.userInfo.id)}>Log Out</button> */}
+            <button onClick={props.userLogout}>Log Out</button>
         </div>
     );
 }
