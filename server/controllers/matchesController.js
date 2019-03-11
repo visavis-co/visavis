@@ -30,8 +30,7 @@ async function createMatch(req, res) {
   res.send(allItems);
   await client.end();
 }
-
-async function matchAnd(cb){
+matchController.matchAndDo = async function matchAnd(cb){
   const client = new Client();
   await client.connect();
   const matchableUsers = await client.query('SELECT * FROM users WHERE "matchable"=true');
