@@ -18,7 +18,6 @@ const matchController = {};
 //   CONSTRAINT unique_users UNIQUE(user1_id, user2_id)
 // );
 
-
 matchController.matchAndDo = async function matchAnd(cb){
   const client = new Client();
   await client.connect();
