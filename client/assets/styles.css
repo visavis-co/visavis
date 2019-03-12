@@ -4,6 +4,15 @@ body {
   font-size: 62.5%;
   background: #CCCCCC !important;
 }
+div.dropdown{
+  text-align: right;
+}
+
+.chat-btns {
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
 
 .gitButton {
   border: 5px solid black;
@@ -50,6 +59,30 @@ body {
   align-items: center;
   align-content: space-around;
   margin-top: 4em;
+      border: 1px solid rgb(0,0,0, .2);
+    min-width: 300px;
+    padding: 30;
+    background-color: white;
+}
+
+#login-button {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  width:100%;
+}
+
+#login-github {
+  margin-bottom: 20px;
+  width:100%;
+}
+
+#create-account {
+  margin-bottom: 20px;
+  width:100%;
+}
+
+#login-form {
+  margin-top:40;
 }
 .formSignup {
   justify-content: center;
@@ -78,11 +111,16 @@ a#github-button {
 .screenMatchDetails h1 {
   text-align: center;
 }
-.linkDetails{
+.linkButton {
   color: white;
   text-decoration: none;
 }
-
+.imageProfile {
+  height: 40%;
+}
+.pastMatches {
+  justify-content: center;
+}
 .chatbox{
   border: 1px solid black;
   height: 8em;

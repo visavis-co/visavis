@@ -42,13 +42,13 @@ class Chat extends Component {
               <FormControl as="textarea" rows="3" placeholder='' onChange={chatOnChange} id='chatMessage' value={chatMessage} />
             </div>
             <Form className="justify-content-end" inline>
-            <div margin-top='10px'><Button variant="outline-info">Submit</Button></div>
+            <Button className="chat-btns" variant="outline-info">Submit</Button>
         </Form>
           </Col>
         </Row>
         <Form className="justify-content-center" inline>
-        <div margin='10px'><Button variant="success" size='lg'>✓</Button></div>
-        <div margin='10px'><Button variant="danger" size='lg'>X</Button></div>  
+        <Button className="chat-btns" variant="success" size='lg'>✓</Button>
+        <Button className="chat-btns" variant="danger" size='lg'>X</Button>
         </Form>
       </Container>
     )
