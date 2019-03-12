@@ -65,6 +65,9 @@ a#github-button {
   margin-left: 0.1em;
   margin-top: 0.2em;
 }
+.screenHome {
+  margin-top: 32px;
+}
 
 .screenMatchDetails {
   width: 80%;
@@ -74,6 +77,10 @@ a#github-button {
 
 .screenMatchDetails h1 {
   text-align: center;
+}
+.linkDetails{
+  color: white;
+  text-decoration: none;
 }
 
 .chatbox{

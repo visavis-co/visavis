@@ -18,8 +18,8 @@ const MatchDetails = props => {
                 <h1>MATCH DETAILS</h1>
                 <Container>
                     <Row className="chatmatch">
-                            <Image src={userPic} height="40%" rounded />
-                            <Image src={matchPic} height="40%" rounded />
+                            <Image src={matchPic} height="40%" roundedCircle />
+                            <Image src={userPic} height="40%" roundedCircle />
                     </Row>
                 </Container>
             </Jumbotron>
