@@ -7,12 +7,13 @@ import { Link } from 'react-router-dom';
 const Login = props => {
   return (
     <div className='formLogin'>
+      {/* <div className='loader'></div> */}
     <Form>
       <Form.Group controlId='formEmail'>
-        <Form.Control type='email' placeholder='Enter email' onChange={props.enterEmail}/>
+        <Form.Control type='email' placeholder='Enter email' onChange={props.enterEmail} />
       </Form.Group>
       <Form.Group controlId='formPassword'>
-        <Form.Control type='password' placeholder='Password' onChange={props.enterPassword}/>
+        <Form.Control type='password' placeholder='Password' onChange={props.enterPassword} />
       </Form.Group>
       <div>
       <Button  variant='primary' type='submit' className='btnLogin'

@@ -70,7 +70,6 @@ class App extends Component {
             {/* <Route path="/match" render={() => (!isLoggedIn ? <Redirect to="/login" />
                         : <MatchDetails userInfo={userInfo} userLogout={userLogout} currentMatch={currentMatch} pastMatches={pastMatches} />)} /> */}
             <Route path="/match" render={ () => <MatchDetails userInfo={userInfo} userLogout={userLogout} matchChats={matchChats} currentMatch={currentMatch} pastMatches={pastMatches} getMatchChats={getMatchChats} />} />
- />
           </Switch>
         </Router>
       </div>
