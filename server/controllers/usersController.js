@@ -1,6 +1,5 @@
 const { Client } = require('pg');
 const bcrypt = require('bcryptjs');
-const crypto = require('crypto');
 const userController = {};
 /***********************************************/
 //
@@ -68,9 +67,6 @@ userController.createUser = async (req, res, next) => {
   // set the res.locals userId to be the new user's id
   res.locals.userId = ret.rows[0].id;
 
-  // create unique session token for cookie and session table
-  res.locals.userToken = crypto.randomBytes(16).toString('base64');
-
   // close db connection
   await client.end();
   next();
@@ -110,9 +106,6 @@ userController.verifyUser = async (req, res, next) => {
     if (bcrypt.compareSync(password, user.password)) {
       // password matches! set the userId in res.locals and next()
       res.locals.userId = user.id;
-
-      // create unique session token for cookie and session table
-      res.locals.userToken = crypto.randomBytes(16).toString('base64');
       next();
 
     } else {

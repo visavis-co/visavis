@@ -10,7 +10,8 @@ const initialState = {
   password: '',
   userInfo: {},
   currentMatch: {},
-  pastMatches: []
+  pastMatches: [],
+  matchChats: [],
 }
 
 const userReducer = (state = initialState, action) => {
@@ -35,6 +36,11 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         signupError: action.payload,
+      }
+    case types.RECEIVE_CHATS:
+      return {
+        ...state,
+        matchChats: action.payload.data,
       }
       case types.ENTER_EMAIL:
       return {

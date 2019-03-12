@@ -1,5 +1,6 @@
 const authController = {};
 const { Client } = require('pg');
+const crypto = require('crypto');
 
 
 /**
@@ -21,9 +22,12 @@ authController.startSession = async (req, res, next) => {
   const client = new Client();
   await client.connect();
 
+  // create unique session token for cookie and session table
+  res.locals.userToken = crypto.randomBytes(16).toString('base64');
+
 	console.log('TCL: authController.startSession -> res.locals.userToken, res.locals.userId', res.locals.userToken, res.locals.userId)
   // Insert token Id and user id into sessions table
-  await client.query('UPDATE users SET sessionToken = $1 WHERE id = $2', [res.locals.userToken, res.locals.userId]);
+  await client.query("UPDATE users SET sessionToken = $1 WHERE id = $2", [res.locals.userToken, res.locals.userId]);
 
   // close db connection
   await client.end();
@@ -40,6 +44,7 @@ authController.checkLogin = async (req, res, next) => {
     const client = new Client();
     await client.connect();
 
+		console.log('TCL: authController.checkLogin -> req.cookies.ssid', req.cookies.ssid)
     // get user from database that matches res.locals.userId
     const result = await client.query('SELECT * FROM users WHERE sessionToken = $1', [req.cookies.ssid]);
     const user = result.rows[0];

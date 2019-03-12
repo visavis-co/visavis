@@ -49,13 +49,37 @@ div.dropdown{
 }
 
 .formLogin {
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
   align-content: space-around;
   margin-top: 4em;
+      border: 1px solid rgb(0,0,0, .2);
+    min-width: 300px;
+    padding: 30;
+    background-color: white;
+}
+
+#login-button {
+  margin-top: 30px;
+  margin-bottom: 20px;
+  width:100%;
+}
+
+#login-github {
+  margin-bottom: 20px;
+  width:100%;
+}
+
+#create-account {
+  margin-bottom: 20px;
+  width:100%;
+}
+
+#login-form {
+  margin-top:40;
 }
 .formSignup {
-  justify-content: center; 
+  justify-content: center;
   align-items: center;
   flex-direction: column;
   margin-top: 4em;
@@ -85,6 +109,49 @@ a#github-button {
   width: 100%;
 }
 
+
+#chat-main {
+  border: solid 1px rgb(0,0,0, .2);
+  border-radius: 5px;
+  padding: 20 15;
+  background-color:#e9ecef;
+}
+
+.chat-msg-you {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.chat-msg-you div {
+  width: fit-content;
+  color: white;
+  border: solid 1px #00BFFF;
+  background-color: #00BFFF;
+  border-radius: 10px;
+  padding: 5;
+}
+
+.chat-msg-me {
+  justify-content: flex-start;
+  display: flex;
+}
+
+.chat-msg-me div {
+  width: fit-content;
+  border: solid 1px #D3D3D3;
+  background-color: #D3D3D3;
+  border-radius: 10px;
+  padding: 5;
+}
+
+#chat-row {
+  justify-content: center;
+  margin-top: 30;
+}
+#chat-message {
+  display:flex;
+  justify-content: flex-start
+}
 .chatmatch {
   justify-content: space-around;
 }
