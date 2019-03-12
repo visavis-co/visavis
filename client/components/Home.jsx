@@ -14,7 +14,9 @@ const Home = props => {
 
     const history = [];
     for (let i = 0; i < props.pastMatches.length; i++) {
-        history.push(props.pastMatches[i].fullname);
+        let temp = <Row className="pastMatches" key={i * 3}><Col md={6}><h5>{props.pastMatches[i].fullname}</h5></Col><Col md={6}><Image src={assets + props.pastMatches[i].pictureurl} roundedCircle className="imageProfile" key={i * 15} /></Col></Row>
+        history.push(temp);
+        // history.push(props.pastMatches[i].fullname);
     }
 
     return (
@@ -22,9 +24,9 @@ const Home = props => {
             <Jumbotron>
                 <Container>
                     <Row>{props.userInfo.fullname}, your match for this week is...</Row>
-                    <Image src={matchPic} className="img-fluid rounded img-thumbnail" width="40%" height="auto" alt="Match's profile pic" />
+                        <Image src={matchPic} className="img-fluid rounded img-thumbnail" width="40%" height="auto" alt="Match's profile pic" />
                     <Row>{current.fullname}</Row>
-                    <Button><Link to="/match" className="linkDetails" > Cordinate with your match</Link> </Button>
+                    <Button><Link to="/match" className="linkButton" >Cordinate with your match</Link></Button>
                 </Container>
             </Jumbotron>
 

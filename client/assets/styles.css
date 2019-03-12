@@ -78,11 +78,16 @@ a#github-button {
 .screenMatchDetails h1 {
   text-align: center;
 }
-.linkDetails{
+.linkButton {
   color: white;
   text-decoration: none;
 }
-
+.imageProfile {
+  height: 40%;
+}
+.pastMatches {
+  justify-content: center;
+}
 .chatbox{
   border: 1px solid black;
   height: 8em;

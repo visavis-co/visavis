@@ -3,7 +3,6 @@ import {Form, Button} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 
-      <Link to='/match'>Testing: MATCH DETAILS</Link>
 const Login = props => {
   return (
     <div className='formLogin'>
@@ -23,7 +22,7 @@ const Login = props => {
         <FontAwesomeIcon className='picGithub' size="2x" icon={['fab', 'github']} />
           Sign in with Github
       </a>
-      <Button variant='primary' href="/signup">Create an account</Button> 
+      <Button variant='primary'><Link to="/signup" className="linkButton" >Create an account</Link></Button> 
     </Form>
     </div>
   );
