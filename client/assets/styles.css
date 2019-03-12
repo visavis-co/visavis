@@ -88,12 +88,15 @@ a#github-button {
   border: solid 1px rgb(0,0,0, .2);
   border-radius: 5px;
   padding: 20 15;
-  background-color: white;
-  display:flex;
+  background-color:#e9ecef;
 }
 
 .chat-msg-you {
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.chat-msg-you div {
   width: fit-content;
   color: white;
   border: solid 1px #00BFFF;
@@ -101,19 +104,28 @@ a#github-button {
   border-radius: 10px;
   padding: 5;
 }
+
 .chat-msg-me {
-  text-align: right;
+  justify-content: flex-start;
+  display: flex;
+}
+
+.chat-msg-me div {
   width: fit-content;
   border: solid 1px #D3D3D3;
   background-color: #D3D3D3;
   border-radius: 10px;
   padding: 5;
 }
+
 #chat-row {
   justify-content: center;
   margin-top: 30;
 }
-
+#chat-message {
+  display:flex;
+  justify-content: flex-start
+}
 .chatmatch {
   justify-content: space-around;
 }

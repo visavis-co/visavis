@@ -38,8 +38,9 @@ class Chat extends Component {
             <div id='chat-messages'>
               {chatMessages}
             </div>
-            <br />
-            <FormControl as="textarea" rows="3" placeholder='' onChange={chatOnChange} id='chatMessage' value={chatMessage} />
+            <div>
+              <FormControl as="textarea" rows="3" placeholder='' onChange={chatOnChange} id='chatMessage' value={chatMessage} />
+            </div>
           </Col>
         </Row>
       </Container>
