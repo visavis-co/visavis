@@ -3,7 +3,6 @@ import {Form, Button} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 
-      <Link to='/match'>Testing: MATCH DETAILS</Link>
 const Login = props => {
   return (
     <div className='formLogin'>

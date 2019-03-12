@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Container, Row, Jumbotron } from 'react-bootstrap';
+import { Image, Button, Container, Row, Jumbotron, Modal } from 'react-bootstrap';
 import Chat from './Chat.jsx'
 
 // private route
@@ -11,15 +11,16 @@ const MatchDetails = props => {
     const assets = '/client/assets/';
     const userPic = assets + props.currentMatch.pictureurl;
     const matchPic = assets + props.userInfo.pictureurl;
+    const matchName = props.currentMatch.fullname;
 
     return (
         <div className="screenMatchDetails">
             <Jumbotron>
-                <h1>MATCH DETAILS</h1>
+                <h1 padding="1rem">Your match with {matchName}</h1>
                 <Container>
                     <Row className="chatmatch">
-                            <Image src={matchPic} height="40%" roundedCircle />
-                            <Image src={userPic} height="40%" roundedCircle />
+                        <Image src={matchPic} height="40%" roundedCircle />
+                        <Image src={userPic} height="40%" roundedCircle />
                     </Row>
                 </Container>
             </Jumbotron>

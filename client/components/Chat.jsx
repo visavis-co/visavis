@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Container, Row, Col, FormControl } from "react-bootstrap";
+import { Button, Container, Form, Row, Col, FormControl } from "react-bootstrap";
 import ChatMessage from './ChatMessage.jsx';
 
 class Chat extends Component {
@@ -35,14 +35,21 @@ class Chat extends Component {
       <Container>
         <Row id='chat-row'>
           <Col id='chat-main' md={8} sm={12}>
-            <div id='chat-messages'>
+            <div id='chat-messages' margin='1rem'>
               {chatMessages}
             </div>
-            <div>
+            <div margin='1rem'>
               <FormControl as="textarea" rows="3" placeholder='' onChange={chatOnChange} id='chatMessage' value={chatMessage} />
             </div>
+            <Form className="justify-content-end" inline>
+            <div margin-top='10px'><Button variant="outline-info">Submit</Button></div>
+        </Form>
           </Col>
         </Row>
+        <Form className="justify-content-center" inline>
+        <div margin='10px'><Button variant="success" size='lg'>✓</Button></div>
+        <div margin='10px'><Button variant="danger" size='lg'>X</Button></div>  
+        </Form>
       </Container>
     )
   }
