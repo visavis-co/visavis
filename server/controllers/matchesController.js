@@ -14,6 +14,7 @@ const email = require('./emailController');
 //   dateCompleted TIMESTAMP,
 //   inPerson BOOLEAN,
 //   location VARCHAR,
+//   "completed" BOOLEAN,
 //   CONSTRAINT unique_users UNIQUE(user1_id, user2_id)
 // );
 
@@ -112,8 +113,8 @@ matchController.getUserMatches = async (req, res, next) => {
   }
 
   // get past matches for user res.locals.userId and set prop pastMatches if exists
-  const pastMatches1 = await client.query('SELECT u.email, u.fullname, u.pictureUrl, m.* FROM matches m JOIN users u ON m.user1_id = u.id WHERE user2_id = $1 AND "dateCompleted" IS NOT NULL', [res.locals.userId]);
-  const pastMatches2 = await client.query('SELECT u.email, u.fullname, u.pictureUrl, m.* FROM matches m JOIN users u ON m.user2_id = u.id WHERE user1_id = $1 AND "dateCompleted" IS NOT NULL', [res.locals.userId] );
+  const pastMatches1 = await client.query('SELECT u.email, u.fullname, u.pictureUrl, m.* FROM matches m JOIN users u ON m.user1_id = u.id WHERE user2_id = $1 AND "dateCompleted" IS NOT NULL AND completed = true', [res.locals.userId]);
+  const pastMatches2 = await client.query('SELECT u.email, u.fullname, u.pictureUrl, m.* FROM matches m JOIN users u ON m.user2_id = u.id WHERE user1_id = $1 AND "dateCompleted" IS NOT NULL AND completed = true', [res.locals.userId] );
   let pastMatches = [];
 
   if(pastMatches1.rowCount > 0 && pastMatches2.rowCount > 0) {

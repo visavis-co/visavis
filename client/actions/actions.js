@@ -18,6 +18,11 @@ export const signupFailed = (err) => ({
   payload: err,
 })
 
+export const receiveChats = (chats) => ({
+  type: types.RECEIVE_CHATS,
+  payload: chats,
+})
+
 export const userLogin = (email, password) => dispatch => {
   return Axios.post('/login', {email: email, password: password})
     .then(userInfo => dispatch(logIn(userInfo)))
@@ -25,8 +30,8 @@ export const userLogin = (email, password) => dispatch => {
 }
 export const userSignup = (fullName, email, password) => dispatch => {
   return Axios.post('/api/user', {fullName: fullName, email: email, password: password})
-    .then(userInfo => { 
-      console.log('Created User (POST: /api/user): ', userInfo); 
+    .then(userInfo => {
+      console.log('Created User (POST: /api/user): ', userInfo);
       dispatch(logIn(userInfo));
     })
     .catch(err => dispatch(signupFailed(err)))
@@ -57,4 +62,9 @@ export const logOut = () => ({
 export const userLogout = (userid) => dispatch => {
   return Axios.post('/logout', {id: userid})
   .then(() => dispatch(logOut()))
+}
+
+export const getChats = (matchId) => dispatch => {
+  return Axios.get('/api/chat/' + matchId)
+    .then(chats => dispatch(receiveChats(chats)))
 }
