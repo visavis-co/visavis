@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as actions from "../actions/actions";
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import { HashRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 // import other child components
 import Login from '../components/Login.jsx';
 import Home from '../components/Home.jsx';
@@ -24,7 +24,6 @@ const mapStateToProps = (store) => ({
 const mapDispatchToProps = dispatch => ({
   userLogin: (email, password) => { dispatch(actions.userLogin(email, password)) },
   userSignup: (fullName, email, password) => { dispatch(actions.userSignup(fullName, email, password)) },
-  inSession: () => { dispatch(actions.inSession()) },
   enterEmail: (event) => { dispatch(actions.enterEmail(event.target.value)) },
   enterFullName: (event) => { dispatch(actions.enterFullName(event.target.value)) },
   enterPassword: (event) => { dispatch(actions.enterPassword(event.target.value)) },
@@ -39,10 +38,6 @@ class App extends Component {
   constructor(props) {
     super(props);
   }
-  componentDidMount(){
-    console.log('DID MOUNT!');
-    this.props.inSession();
-  }
 
   // add user email and log in to my state
   render() {
@@ -53,27 +48,14 @@ class App extends Component {
       userInfo, isLoggedIn, currentMatch, pastMatches, getMatchChats } = this.props;
 
     return (
-      <div className="app">
-        {isLoggedIn ? <Header userInfo={userInfo} userLogout={userLogout} currentMatch={currentMatch} pastMatches={pastMatches}/> : ''}
-        <Router>
-          <Switch>
-            <Route exact path="/" render={() => (!isLoggedIn ? <Redirect to="/login" />
-                        : <Home userInfo={userInfo} userLogout={userLogout} currentMatch={currentMatch} pastMatches={pastMatches} />)}/>
-
-            <Route path="/login" render={() => (isLoggedIn ? <Redirect to="/" />
-                        : <Login userLogin={userLogin} enterEmail={enterEmail} enterPassword={enterPassword} email={email} password={password}/>)}/>
-
-            <Route path="/signup" render={() => (isLoggedIn ? <Redirect to="/" />
-                        : <Signup userSignup={userSignup} enterFullName={enterFullName} enterEmail={enterEmail} enterPassword={enterPassword}
-                                  fullName={fullName} email={email} password={password}/>)}/>
-
-            {/* <Route path="/match" render={() => (!isLoggedIn ? <Redirect to="/login" />
-                        : <MatchDetails userInfo={userInfo} userLogout={userLogout} currentMatch={currentMatch} pastMatches={pastMatches} />)} /> */}
-            {/* Commented out for dev, needs to use isLoggedIn once done */}
-            <Route path="/match" render={ () => <MatchDetails userInfo={userInfo} userLogout={userLogout} matchChats={matchChats} currentMatch={currentMatch} pastMatches={pastMatches} getMatchChats={getMatchChats} />} />
-          </Switch>
-        </Router>
-      </div>
+      <Router>
+        <div id='app'>
+          <Route exact path="/" render={() => (!isLoggedIn ? <Redirect to="/login" />
+            : <Home userInfo={userInfo} userLogout={userLogout} currentMatch={currentMatch} pastMatches={pastMatches} />)} />
+          <Route path="/login" render={() => (<Login userLogin={userLogin} enterEmail={enterEmail} enterPassword={enterPassword} email={email} password={password} isLoggedIn={isLoggedIn} />)} />
+          <Route path="/signup" render={() => (<Signup userSignup={userSignup} enterFullName={enterFullName} enterEmail={enterEmail} enterPassword={enterPassword} fullName={fullName} email={email} password={password} />)} />
+        </div>
+      </Router>
     )
   }
 }

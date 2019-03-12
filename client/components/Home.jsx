@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Image, Container, Row, Col, Jumbotron } from 'react-bootstrap';
+import Header from './Header.jsx';
 
 // private route
 // what a user sees when they go to "/" and are logged in
@@ -8,10 +9,8 @@ import { Button, Image, Container, Row, Col, Jumbotron } from 'react-bootstrap';
 
 const Home = props => {
     const assets = '/client/assets/';
-
     const current = props.currentMatch;
     const matchPic = assets + current.pictureurl;
-
     const history = [];
     for (let i = 0; i < props.pastMatches.length; i++) {
         let temp = <Row className="pastMatches" key={i * 3}><Col md={6}><h5>{props.pastMatches[i].fullname}</h5></Col><Col md={6}><Image src={assets + props.pastMatches[i].pictureurl} roundedCircle className="imageProfile" key={i * 15} /></Col></Row>
@@ -20,7 +19,8 @@ const Home = props => {
     }
 
     return (
-        <div className="screenHome">
+        <div className="home">
+            <Header userInfo={props.userInfo} userLogout={props.userLogout} />
             <Jumbotron>
                 <Container>
                     <h3>{props.userInfo.fullname}, your match for this week is...{current.fullname}</h3>
