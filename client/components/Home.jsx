@@ -34,7 +34,7 @@ const Home = props => {
                     {history}
                 </Container>
             </Jumbotron>
-            
+            <Link to='/match'>Testing: MATCH DETAILS</Link>
         </div>
     );
 }
