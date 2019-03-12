@@ -8,6 +8,12 @@ div.dropdown{
   text-align: right;
 }
 
+.chat-btns {
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
 .gitButton {
   border: 5px solid black;
 }
