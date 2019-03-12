@@ -52,7 +52,7 @@ class App extends Component {
 
     return (
       <div className="app">
-        {isLoggedIn ? <Header /> : ''}
+        {isLoggedIn ? <Header userInfo={userInfo} userLogout={userLogout} currentMatch={currentMatch} pastMatches={pastMatches}/> : ''}
         <Router>
           <Switch>
             <Route exact path="/" render={() => (!isLoggedIn ? <Redirect to="/login" />
