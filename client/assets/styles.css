@@ -4,6 +4,9 @@ body {
   font-size: 62.5%;
   background: #CCCCCC !important;
 }
+div.dropdown{
+  text-align: right;
+}
 
 .gitButton {
   border: 5px solid black;

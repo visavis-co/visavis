@@ -16,8 +16,8 @@ const Header = props => {
                 >
                     <Form inline>
                         <Dropdown>
-                            <Dropdown.Toggle className="m-3" variant="outline-dark" id="dropdown-basic">
-                                <Image src={myPic} width="20%" height='auto' className="roundedCircle" />
+                            <Image src={myPic} width="20%" height='auto' className="roundedCircle" />
+                            <Dropdown.Toggle className="m-4" variant="outline-dark" id="dropdown-basic">
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
                                 <Dropdown.Item href="#/action-1">Profile</Dropdown.Item>
@@ -25,8 +25,8 @@ const Header = props => {
                                 <Dropdown.Item href="#/action-3">Past Matches</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
-                        <Button className="m-3" variant="outline-dark" href="/match">Current Match</Button>
-                        <Button className="m-3" variant="outline-dark" onClick={props.userLogout}>Logout</Button>
+                        <Button className="m-4" variant="outline-dark" href="/match">Current Match</Button>
+                        <Button className="m-4" variant="outline-dark" onClick={props.userLogout}>Logout</Button>
                     </Form>
                 </Nav>
             </Navbar.Collapse>
