@@ -19,7 +19,7 @@ const Login = props => {
       <Button  variant='primary' type='submit' className='btnLogin'
         onClick={(e) => {e.preventDefault(); props.userLogin(props.email, props.password)}}>Log in</Button> 
       </div>
-      <a href="/auth/github" className="btn btn-block btn-social btn-github">
+      <a href="https://github.com/login/oauth/authorize?client_id=ce5a1d21ebdafdc7ed4b&redirect_uri=http://localhost:8080/oauth" className="btn btn-block btn-social btn-github">
         <FontAwesomeIcon className='picGithub' size="2x" icon={['fab', 'github']} />
           Sign in with Github
       </a>
