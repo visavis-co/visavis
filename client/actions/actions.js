@@ -24,6 +24,8 @@ export const receiveChats = (chats) => ({
 })
 
 export const userLogin = (email, password) => dispatch => {
+	console.log('TCL: email, password', email, password)
+
   return Axios.post('/login', {email: email, password: password})
     .then(userInfo => dispatch(logIn(userInfo)))
     .catch(err => dispatch(loginFailed(err)))
@@ -36,7 +38,7 @@ export const userSignup = (fullName, email, password) => dispatch => {
     })
     .catch(err => dispatch(signupFailed(err)))
 }
-export const inSession = () => dispatch => {
+export const checkLogin = () => dispatch => {
   return Axios.get('/api/user')
     .then(userInfo => dispatch(logIn(userInfo)))
     .catch(err => dispatch(signupFailed(err)))

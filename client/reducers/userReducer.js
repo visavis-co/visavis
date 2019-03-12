@@ -4,7 +4,7 @@ import { debug } from 'util';
 const initialState = {
   loginError: '',
   signupError: '',
-  isLoggedIn: false,
+  isLoggedIn: true,
   email: '',
   fullName: '',
   password: '',
