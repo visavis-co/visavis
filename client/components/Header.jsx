@@ -9,15 +9,15 @@ const Header = props => {
         <Navbar className="nav" expand="lg">
             <Navbar.Brand ><Image src={visavis} width='40%' /></Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
+            <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
                 <Nav
                     activeKey="/home"
                     onSelect={selectedKey => alert(`selected ${selectedKey}`)}
                 >
-                    <Form inline className="justify-content-end">
+                    <Form inline>
                         <Dropdown>
                             <Dropdown.Toggle className="m-3" variant="outline-dark" id="dropdown-basic">
-                                <Image src={myPic} width="10%" height='auto' className="roundedCircle" />
+                                <Image src={myPic} width="20%" height='auto' className="roundedCircle" />
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
                                 <Dropdown.Item href="#/action-1">Profile</Dropdown.Item>
@@ -25,7 +25,7 @@ const Header = props => {
                                 <Dropdown.Item href="#/action-3">Past Matches</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
-                        <Button className="m-3" variant="outline-dark">Current Match</Button>
+                        <Button className="m-3" variant="outline-dark" href="/match">Current Match</Button>
                         <Button className="m-3" variant="outline-dark" onClick={props.userLogout}>Logout</Button>
                     </Form>
                 </Nav>

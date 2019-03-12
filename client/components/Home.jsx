@@ -21,10 +21,10 @@ const Home = props => {
         <div>
             <Jumbotron>
                 <Container>
-                    <h1>Welcome, {props.userInfo.fullname}</h1>
-                    <Row>Your match for this week is...</Row>
+                    <Row>{props.userInfo.fullname}, your match for this week is...</Row>
                     <Image src={matchPic} className="img-fluid rounded img-thumbnail" width="40%" height="auto" alt="Match's profile pic" />
                     <Row>{current.fullname}</Row>
+                    <Button>Cordinate with your match</Button>
                 </Container>
             </Jumbotron>
 
@@ -34,7 +34,6 @@ const Home = props => {
                     {history}
                 </Container>
             </Jumbotron>
-            <Link to='/match'>Testing: MATCH DETAILS</Link>
         </div>
     );
 }

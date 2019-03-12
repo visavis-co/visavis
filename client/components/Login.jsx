@@ -23,7 +23,7 @@ const Login = props => {
         <FontAwesomeIcon className='picGithub' size="2x" icon={['fab', 'github']} />
           Sign in with Github
       </a>
-      <Link to='/signup'>Sign up</Link>
+      <Button variant='primary' href="/signup">Create an account</Button> 
     </Form>
     </div>
   );
