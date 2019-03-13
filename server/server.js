@@ -144,6 +144,16 @@ app.get(
   }
 );
 
+app.put(
+  '/api/changename',
+  user.changeName,
+  (req, res) => {
+    console.log('3, received response from db sending res.locals to client')
+    res.status(200).send('user updated')
+  }
+)
+
+
 
 // statically serve everything in the build folder on the route '/build'
 app.use('/build', express.static(path.join(__dirname, '../build')));

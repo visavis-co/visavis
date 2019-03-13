@@ -94,6 +94,10 @@ const userReducer = (state = initialState, action) => {
         ...state,
         matchLocation: action.payload,
       }
+      case types.CHANGE_NAME:
+      newState = { ...state, fullName: action.payload };
+      return Object.assign({}, state, newState);
+       
 
     // error handling
     case types.LOGIN_FAILED:

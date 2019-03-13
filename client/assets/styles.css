@@ -233,3 +233,15 @@ a#github-button {
 .chatmatch {
   justify-content: space-around;
 }
+
+.inline {
+  display: inline-flex;
+}
+
+.left-side-button {
+  margin-left: 2em;
+}
+
+.text-field-100 {
+  max-width: 300px;
+}
