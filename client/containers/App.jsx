@@ -20,6 +20,8 @@ const mapStateToProps = (store) => ({
   password: store.user.password,
   matchChats: store.user.matchChats,
   matchToView: store.user.matchToView,
+  showMatchModal: store.user.showMatchModal,
+  matchLocation: store.user.matchLocation,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -30,10 +32,12 @@ const mapDispatchToProps = dispatch => ({
   enterPassword: (event) => { dispatch(actions.enterPassword(event.target.value)) },
   userLogout: (id) => { dispatch(actions.userLogout(id)) } ,
   getMatchChats: (matchId) => { dispatch(actions.getChats(matchId)) },
-  setMatchToView: (match) => {
-    dispatch(actions.setMatchToView(match));
-    Redirect
-  },
+  toggleMatchModal: () => { dispatch(actions.toggleMatchModal()) },
+  setMatchToView: (match) => { dispatch(actions.setMatchToView(match)) },
+  updateMatchLocation: (event) => { dispatch(actions.updateMatchLocation(event.target.value)) },
+  completeMatch: (matchId, location, inPerson) => {
+    console.log('completematch in app.jsx - ', matchId, location, inPerson)
+    dispatch(actions.completeMatch(matchId, location, inPerson)) },
 })
 
 // component did mount => post to login
@@ -46,21 +50,28 @@ class App extends Component {
 
   // add user email and log in to my state
   render() {
-    const { userLogin, userSignup, userLogout,
+    const { userLogin, userSignup, userLogout, updateMatchLocation, matchLocation,
       enterEmail, email, matchChats, setMatchToView, matchToView,
-      enterPassword, password, updateChatMsg, sendChatMsg,
-      enterFullName, fullName,
+      enterPassword, password, updateChatMsg, sendChatMsg, completeMatch,
+      enterFullName, fullName, showMatchModal, toggleMatchModal,
       userInfo, isLoggedIn, currentMatch, pastMatches, getMatchChats } = this.props;
 
     return (
       <Router>
         <div id='app'>
+          {(isLoggedIn) ? <Header userInfo={userInfo} userLogout={userLogout} /> : '' }
           <Route exact path="/" render={() => (!isLoggedIn ? <Redirect to="/login" />
             : <Home userInfo={userInfo} userLogout={userLogout} setMatchToView={setMatchToView} currentMatch={currentMatch} pastMatches={pastMatches} />)} />
           <Route path="/login" render={() => (<Login userLogin={userLogin} enterEmail={enterEmail} enterPassword={enterPassword} email={email} password={password} isLoggedIn={isLoggedIn} />)} />
           <Route path="/signup" render={() => (<Signup userSignup={userSignup} enterFullName={enterFullName} enterEmail={enterEmail} enterPassword={enterPassword} fullName={fullName} email={email} password={password} />)} />
           <Route path="/match" render={() => (!isLoggedIn ? <Redirect to="/login" />
-            : <MatchDetails userInfo={userInfo} matchToView={matchToView} matchChats={matchChats} getMatchChats={getMatchChats} updateChatMsg={updateChatMsg} sendChatMsg={sendChatMsg} />)} />
+            : <MatchDetails
+                showMatchModal={showMatchModal} toggleMatchModal={toggleMatchModal}
+                matchChats={matchChats} getMatchChats={getMatchChats}
+                completeMatch={completeMatch}
+                updateChatMsg={updateChatMsg} sendChatMsg={sendChatMsg}
+                updateMatchLocation={updateMatchLocation} matchLocation={matchLocation}
+                userInfo={userInfo} matchToView={matchToView} />)} />
         </div>
       </Router>
     )

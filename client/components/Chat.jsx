@@ -46,10 +46,6 @@ class Chat extends Component {
         </Form>
           </Col>
         </Row>
-        <Form className="justify-content-center" inline>
-        <Button className="chat-btns" variant="success" size='lg'>✓</Button>
-        <Button className="chat-btns" variant="danger" size='lg'>X</Button>
-        </Form>
       </Container>
     )
   }
