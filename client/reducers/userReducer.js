@@ -55,12 +55,6 @@ const userReducer = (state = initialState, action) => {
       }
     }
 
-    // toggle show match detail modal
-    case types.TOGGLE_MATCH_MODAL:
-    return {
-      ...state,
-      showMatchModal: !state.showMatchModal,
-    }
     // setting the match to view in match details
     case types.SET_MATCH_TO_VIEW:
       return {
@@ -75,6 +69,13 @@ const userReducer = (state = initialState, action) => {
         ...state,
         matchChats: action.payload.data,
       }
+
+    // toggle show match detail modal
+    case types.TOGGLE_MATCH_MODAL:
+    return {
+      ...state,
+      showMatchModal: !state.showMatchModal,
+    }
 
     // input forms onchange updates -
     case types.ENTER_EMAIL:
@@ -102,7 +103,7 @@ const userReducer = (state = initialState, action) => {
         ...state,
         chatMsg: action.payload,
       }
-      case types.CHANGE_NAME:
+    case types.CHANGE_NAME:
       newState = { ...state, fullName: action.payload };
       return Object.assign({}, state, newState);
 
