@@ -1,6 +1,9 @@
 const { Client } = require('pg');
 const bcrypt = require('bcryptjs');
 const userController = {};
+const AWS = require('aws-sdk');
+const fs = require('fs');
+const path = require('path');
 /***********************************************/
 //
 // TABLE SCHEMAS
@@ -145,5 +148,42 @@ userController.getUser = async (req, res, next) => {
     next(new Error('User does not exist'));
   }
 };
+
+userController.addPhoto = (req, res, next) => {
+  console.log('adding photo');
+  AWS.config.update({
+    region: 'us-east-1',
+    // accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    // secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    credentials: new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: 'us-east-1:38f72510-f062-48ee-bc5f-d36abc553a38',
+    })
+  })
+  const s3 = new AWS.S3({
+    apiVersion: '2006-03-01',
+    params: {Bucket: 'vis-a-vis-photo2'}
+  });
+  
+  fs.readFile(path.resolve(__dirname, '../../client/assets/prof-pic-michael.jpg'), (error, data) => {
+    if (error) {
+      console.log(error)
+    } else {
+      let params = {
+        Bucket: 'vis-a-vis-photo2',
+        Key: 'michael-phot2o',
+        Body: data,
+      }
+      s3.upload(params, (s3err, result) => {
+        if (s3err) {
+          console.log(s3err)
+        } else {
+          console.log('Upload successful', result);
+        }
+      })
+    }
+  })
+  
+
+}
 
 module.exports = userController;

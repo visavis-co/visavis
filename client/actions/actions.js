@@ -68,3 +68,8 @@ export const getChats = (matchId) => dispatch => {
   return Axios.get('/api/chat/' + matchId)
     .then(chats => dispatch(receiveChats(chats)))
 }
+//TEST ADD PHOTO
+export const addPhoto = () => dispatch => {
+  return Axios.post('./addphoto')
+    .then(() => dispatch(addPhoto()))
+}

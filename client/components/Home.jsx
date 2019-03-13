@@ -35,6 +35,8 @@ const Home = props => {
                     {history}
                 </Container>
             </Jumbotron>
+            {/* TEST ADD PHOTO */}
+            <button onClick={(e) => {e.preventDefault(); props.addPhoto()}}>add pic to aws</button>
         </div>
     );
 }

@@ -62,6 +62,11 @@ const userReducer = (state = initialState, action) => {
         ...state,
         isLoggedIn: false,
       }
+      //TEST ADD PHOTO
+      case types.ADD_PHOTO:
+      return {
+        ...state
+      }
       default:
       return state;
   }

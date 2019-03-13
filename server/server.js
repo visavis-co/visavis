@@ -97,6 +97,9 @@ app.get(
  */
 app.post('/logout', auth.logout);
 
+// POST to /addphoto - User adding profile photo
+app.post('/addphoto', user.addPhoto)
+
 /**
  * API - POST to /api/match - Updates a match record to complete the match
  *

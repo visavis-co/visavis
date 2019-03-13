@@ -30,6 +30,7 @@ const mapDispatchToProps = dispatch => ({
   enterPassword: (event) => { dispatch(actions.enterPassword(event.target.value)) },
   userLogout: (id) => { dispatch(actions.userLogout(id)) } ,
   getMatchChats: (matchId) => { dispatch(actions.getChats(matchId)) },
+  addPhoto: (event) => {dispatch(actions.addPhoto())} // TEST ADD PHOTO
 })
 
 // component did mount => post to login
@@ -50,7 +51,7 @@ class App extends Component {
       enterEmail, email, matchChats,
       enterPassword, password,
       enterFullName, fullName,
-      userInfo, isLoggedIn, currentMatch, pastMatches, getMatchChats } = this.props;
+      userInfo, isLoggedIn, currentMatch, pastMatches, getMatchChats, addPhoto} = this.props;
 
     return (
       <div className="app">
@@ -58,7 +59,7 @@ class App extends Component {
         <Router>
           <Switch>
             <Route exact path="/" render={() => (!isLoggedIn ? <Redirect to="/login" />
-                        : <Home userInfo={userInfo} userLogout={userLogout} currentMatch={currentMatch} pastMatches={pastMatches} />)}/>
+                        : <Home userInfo={userInfo} userLogout={userLogout} currentMatch={currentMatch} pastMatches={pastMatches} addPhoto={addPhoto}/>)}/> {/*TEST ADD PHOTO*/}
 
             <Route path="/login" render={() => (isLoggedIn ? <Redirect to="/" />
                         : <Login userLogin={userLogin} enterEmail={enterEmail} enterPassword={enterPassword} email={email} password={password}/>)}/>
