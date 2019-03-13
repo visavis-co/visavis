@@ -18,13 +18,12 @@ const mapStateToProps = (store) => ({
   pastMatches: store.user.pastMatches,
   email: store.user.email,
   fullName: store.user.fullName,
-  password: store.user.password,  
+  password: store.user.password,
   matchChats: store.user.matchChats,
   matchToView: store.user.matchToView,
   showMatchModal: store.user.showMatchModal,
   matchLocation: store.user.matchLocation,
-  loader: store.user.loader,
-
+  chatMsg: store.user.chatMsg,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -33,6 +32,7 @@ const mapDispatchToProps = dispatch => ({
   enterEmail: (event) => { dispatch(actions.enterEmail(event.target.value)) },
   enterFullName: (event) => { dispatch(actions.enterFullName(event.target.value)) },
   enterPassword: (event) => { dispatch(actions.enterPassword(event.target.value)) },
+  updateChatMsg: (event) => { dispatch(actions.updateChatMsg(event.target.value)) },
   userLogout: (id) => { dispatch(actions.userLogout(id)) } ,
   getMatchChats: (matchId) => { dispatch(actions.getChats(matchId)) },
   changeName: (userInfo, fullName) => { dispatch(actions.changeNameInDb(userInfo, fullName)) },
@@ -42,6 +42,7 @@ const mapDispatchToProps = dispatch => ({
   completeMatch: (matchId, location, inPerson) => { dispatch(actions.completeMatch(matchId, location, inPerson)) },
   handleSelectedFile: (event) => {dispatch(actions.handleSelectedFile(event.target.files[0]))},
   handleUpload: (userInfo) => {dispatch(actions.handleUpload(userInfo))},
+  sendChatMsg: (userId, matchId, chatMsg) => { console.log('userId, matchId, chatMsg', userId, matchId, chatMsg); dispatch(actions.sendChatMsg(userId, matchId, chatMsg)) },
 })
 
 // component did mount => post to login
@@ -59,7 +60,7 @@ class App extends Component {
       enterPassword, password, updateChatMsg, sendChatMsg, completeMatch,
       enterFullName, fullName, showMatchModal, toggleMatchModal,
       userInfo, isLoggedIn, currentMatch, pastMatches, getMatchChats, changeName,
-      handleSelectedFile, handleUpload } = this.props;
+      handleSelectedFile, handleUpload, chatMsg } = this.props;
 
     return (
       <Router>
@@ -74,7 +75,7 @@ class App extends Component {
             : <MatchDetails
                 showMatchModal={showMatchModal} toggleMatchModal={toggleMatchModal}
                 matchChats={matchChats} getMatchChats={getMatchChats}
-                completeMatch={completeMatch}
+                completeMatch={completeMatch} chatMsg={chatMsg}
                 updateChatMsg={updateChatMsg} sendChatMsg={sendChatMsg}
                 updateMatchLocation={updateMatchLocation} matchLocation={matchLocation}
                 userInfo={userInfo} matchToView={matchToView} />)} />
