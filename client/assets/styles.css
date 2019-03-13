@@ -67,10 +67,18 @@ div.dropdown{
   height:200px;
 }
 
-#match-details img {
-
+.match-details {
+  text-align: center;
 }
 
+.match-details img {
+  padding: 0px 20px;
+  max-height: 200px;
+}
+
+#match-loc-input {
+  width:100%;
+}
 .nav {
   background-color: #ffffff;
   width: 100%;
@@ -89,6 +97,7 @@ div.dropdown{
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
 }
+
 /* Safari */
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); }
@@ -112,6 +121,7 @@ div.dropdown{
   background-color: white;
   width: 300;
   margin: auto;
+  margin-top: 10vh;
 }
 
 #login-button {
@@ -182,6 +192,7 @@ a#github-button {
   border-radius: 5px;
   padding: 20 15;
   background-color:#e9ecef;
+  margin-bottom: 30px;
 }
 
 .chat-msg-you {

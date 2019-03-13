@@ -15,8 +15,9 @@ const Home = props => {
     const matchPic = assets + props.currentMatch.pictureurl;
     const pastMatches = [];
     for (let i = 0; i < props.pastMatches.length; i++) {
-      pastMatches.push(<MatchCard className="image-card" key={i} match={props.pastMatches[i]}/>);
+      pastMatches.push(<MatchCard setMatchToView={props.setMatchToView} className="image-card" key={i} match={props.pastMatches[i]}/>);
     }
+
     const MatchButton = withRouter(({ history }) => (
       <Button
         type='button'
@@ -28,20 +29,29 @@ const Home = props => {
       </Button>
     ))
 
+    let today = new Date().getDay();
+
     return (
       <div className="home">
-        <Header userInfo={props.userInfo} userLogout={props.userLogout} />
-        <div id='current-match'>
-          <Row>
-            <Col md={6}>
-              <h4>Your current match is...</h4><br/>
-              <h2>{props.currentMatch.fullname}!</h2><br/><br/>
-              <MatchButton />
-            </Col>
-            <Col md={6}><Image className='pic-current-match' src={matchPic} roundedCircle alt="Current match's profile pic" /></Col>
-          </Row>
-        </div>
-
+          <div id='current-match'>
+            {(props.currentMatch.id) ?
+              <Row>
+                <Col md={6}>
+                  <h4>Your current match is...</h4><br/>
+                  <h2>{props.currentMatch.fullname}!</h2><br/><br/>
+                  <MatchButton />
+                </Col>
+                <Col md={6}><Image className='pic-current-match' src={matchPic} roundedCircle alt="Current match's profile pic" /></Col>
+              </Row>
+            :
+              <Row>
+                <Col>
+                  <h4>Your next match is coming in...</h4>
+                  <h2>{6-today+2} days!</h2>
+                </Col>
+              </Row>
+            }
+          </div>
         <Container className='past-matches-main'>
           <h3>Past Matches</h3>
           <div id='past-match-cards'>
