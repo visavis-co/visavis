@@ -146,4 +146,21 @@ userController.getUser = async (req, res, next) => {
   }
 };
 
+
+userController.changeName = async (req, res, next) => {
+
+  const client = new Client();
+  await client.connect();
+  console.log('2, inside userController, firing request to db')
+  await console.log('req.body', req.body)
+  const {id, fullName} = req.body;
+
+
+  const result = await client.query('UPDATE users SET fullname = $1 WHERE id = $2 ', [fullName, id]);
+  const updatedUser = result.rows[0]
+  await client.end();
+  next()
+  
+}
+
 module.exports = userController;

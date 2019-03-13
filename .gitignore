@@ -3,3 +3,4 @@ lib
 build
 .env
 package-lock.json
+notes
