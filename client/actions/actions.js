@@ -95,10 +95,7 @@ export const enterPassword = (value) => ({
   type: types.ENTER_PASSWORD,
   payload: value,
 });
-export const changeNameInState = newName => ({
-  type: types.CHANGE_NAME,
-  payload: newName
-})
+
 export const updateMatchLocation = (value) => ({
   type: types.UPDATE_MATCH_LOCATION,
   payload: value,
@@ -122,3 +119,22 @@ export const changeNameInDb = (userInfo, fullName) => dispatch => {
 .catch(e => console.error(e.stack))
 }
 
+export const changeNameInState = newName => ({
+  type: types.CHANGE_NAME,
+  payload: newName
+})
+
+
+export const handleSelectedFile = (file) =>  ({  
+  type: types.HANDLE_SELECTED_FILE,
+  payload: file,
+})
+
+export const handleUpload = (userInfo) => dispatch => {
+  const {id, picObj} = userInfo
+  const data = new FormData()
+  data.append('file', userInfo.picObj, userInfo.picObj.name)
+  const body = {id, picObj, data}
+  return Axios.post('/addphoto', body)
+  .then(res => res.status)
+}

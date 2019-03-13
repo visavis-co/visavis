@@ -98,6 +98,14 @@ const userReducer = (state = initialState, action) => {
         ...state,
         matchLocation: action.payload,
       }
+    
+    case types.HANDLE_SELECTED_FILE:{
+      console.log(action.payload);
+      let userInfo = {};
+      userInfo.picObj = action.payload;
+      let newState = { ...state, userInfo: userInfo} 
+      return Object.assign({}, state, newState);       
+      }
     case types.UPDATE_CHAT_MSG:
       return {
         ...state,

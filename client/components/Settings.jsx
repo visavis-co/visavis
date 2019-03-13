@@ -11,11 +11,15 @@ const Settings = props => {
   const userInfo = props.userInfo;
   const changeName = props.changeName;
   const enterFullName = props.enterFullName;
-
+  const imageUrl = props.imageUrl;
+  const loader= props.loader;
+  const handleSelectedFile = props.handleSelectedFile;
+  const handleUpload = props.handleUpload;
+  
 
 
   return (
-    <div>
+    <div>    
       <div className="centerElements">
 
       </div>
@@ -86,22 +90,20 @@ const Settings = props => {
           </Tab.Pane>
           <Tab.Pane eventKey="fourth">
           {/* password pane takes two inputs old and new password */}
-          <InputGroup size="md" className="text-field-100">
-              <InputGroup.Prepend>
-                <InputGroup.Text  id="inputGroup-sizing-lg">Old Password</InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl aria-label="Enter Old Password" aria-describedby="inputGroup-sizing-sm" />
-             </InputGroup>
-             <div className={'inline'}>
-             <InputGroup className="text-field-100" size="md">
-              <InputGroup.Prepend>
-                <InputGroup.Text  id="inputGroup-sizing-lg">New Password</InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl aria-label="Enter New Password" aria-describedby="inputGroup-sizing-sm" />
-             </InputGroup>
-             {/* button  */}
-             <Button className="left-side-button" variant="secondary">Update</Button>
-          </div>
+       
+              <form>
+              <div>
+                <input type="file"  name="profilePic" onChange={handleSelectedFile}/>
+                <Button className="left-side-button" onClick={e => {e.preventDefault(); handleUpload(props.userInfo)}} variant="secondary">Upload</Button>
+                <div>
+                  {loader} %
+                </div>
+              </div>
+              
+                  
+              </form>
+             
+        
           </Tab.Pane>
 
 

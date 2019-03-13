@@ -39,8 +39,10 @@ const mapDispatchToProps = dispatch => ({
   toggleMatchModal: () => { dispatch(actions.toggleMatchModal()) },
   setMatchToView: (match) => { dispatch(actions.setMatchToView(match)) },
   updateMatchLocation: (event) => { dispatch(actions.updateMatchLocation(event.target.value)) },
-  sendChatMsg: (userId, matchId, chatMsg) => { console.log('userId, matchId, chatMsg', userId, matchId, chatMsg); dispatch(actions.sendChatMsg(userId, matchId, chatMsg)) },
   completeMatch: (matchId, location, inPerson) => { dispatch(actions.completeMatch(matchId, location, inPerson)) },
+  handleSelectedFile: (event) => {dispatch(actions.handleSelectedFile(event.target.files[0]))},
+  handleUpload: (userInfo) => {dispatch(actions.handleUpload(userInfo))},
+  sendChatMsg: (userId, matchId, chatMsg) => { console.log('userId, matchId, chatMsg', userId, matchId, chatMsg); dispatch(actions.sendChatMsg(userId, matchId, chatMsg)) },
 })
 
 // component did mount => post to login
@@ -56,8 +58,9 @@ class App extends Component {
     const { userLogin, userSignup, userLogout, updateMatchLocation, matchLocation,
       enterEmail, email, matchChats, setMatchToView, matchToView,
       enterPassword, password, updateChatMsg, sendChatMsg, completeMatch,
-      enterFullName, fullName, showMatchModal, toggleMatchModal, chatMsg,
-      userInfo, isLoggedIn, currentMatch, pastMatches, getMatchChats, changeName } = this.props;
+      enterFullName, fullName, showMatchModal, toggleMatchModal,
+      userInfo, isLoggedIn, currentMatch, pastMatches, getMatchChats, changeName,
+      handleSelectedFile, handleUpload, chatMsg } = this.props;
 
     return (
       <Router>
@@ -67,7 +70,7 @@ class App extends Component {
             : <Home userInfo={userInfo} userLogout={userLogout} setMatchToView={setMatchToView} currentMatch={currentMatch} pastMatches={pastMatches} />)} />
           <Route path="/login" render={() => (<Login userLogin={userLogin} enterEmail={enterEmail} enterPassword={enterPassword} email={email} password={password} isLoggedIn={isLoggedIn} />)} />
           <Route path="/signup" render={() => (<Signup userSignup={userSignup} enterFullName={enterFullName} enterEmail={enterEmail} enterPassword={enterPassword} fullName={fullName} email={email} password={password} />)} />
-          <Route path="/settings" render={() => (<Settings fullName={fullName} email={email} password={password} userInfo={userInfo} userLogout={userLogout} changeName={changeName} enterFullName={enterFullName} />)} />
+          <Route path="/settings" render={() => (<Settings fullName={fullName} email={email} password={password} userInfo={userInfo} userLogout={userLogout} changeName={changeName} enterFullName={enterFullName} handleSelectedFile={handleSelectedFile} handleUpload={handleUpload} />)} /> 
           <Route path="/match" render={() => (!isLoggedIn ? <Redirect to="/login" />
             : <MatchDetails
                 showMatchModal={showMatchModal} toggleMatchModal={toggleMatchModal}
