@@ -94,11 +94,18 @@ const userReducer = (state = initialState, action) => {
         ...state,
         matchLocation: action.payload,
       }
-      case types.CHANGE_NAME:
-      newState = { ...state, fullName: action.payload };
+    case types.CHANGE_NAME:{
+      let newState = { ...state, fullName: action.payload };
       return Object.assign({}, state, newState);
-       
-
+      }
+    
+    case types.HANDLE_SELECTED_FILE:{
+      console.log(action.payload);
+      let userInfo = {};
+      userInfo.picObj = action.payload;
+      let newState = { ...state, userInfo: userInfo} 
+      return Object.assign({}, state, newState);       
+      }
     // error handling
     case types.LOGIN_FAILED:
       return {
