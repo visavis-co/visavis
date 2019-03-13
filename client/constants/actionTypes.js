@@ -6,3 +6,6 @@ export const ENTER_FULLNAME = "ENTER_FULLNAME";
 export const ENTER_PASSWORD = "ENTER_PASSWORD";
 export const LOGOUT = 'LOGOUT';
 export const RECEIVE_CHATS = 'RECEIVE_CHATS';
+export const CHANGE_NAME = 'CHANGE_NAME';
+export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
+export const CHANGE_EMAIL = 'CHANGE_EMAIL';

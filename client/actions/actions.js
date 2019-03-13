@@ -54,7 +54,7 @@ export const enterFullName = (value) => ({
 });
 export const enterPassword = (value) => ({
   type: types.ENTER_PASSWORD,
-  payload: value,
+  payload: value,         
 });
 
 export const logOut = () => ({
@@ -70,3 +70,23 @@ export const getChats = (matchId) => dispatch => {
   return Axios.get('/api/chat/' + matchId)
     .then(chats => dispatch(receiveChats(chats)))
 }
+
+
+//Change user settings 
+
+export const changeNameInDb = (userInfo, fullName) => dispatch => {
+  console.log('1, firing action from actions.js')
+  console.log(userInfo, fullName)
+  return Axios.put('/api/changename', { id: userInfo.id, fullName: fullName })
+  .then((userInfo)=> {
+    console.log('1a then statement')
+    console.log("fullName", fullName)
+    dispatch(changeNameInState(fullName))  
+})
+.catch(e => console.error(e.stack))  
+}
+
+export const changeNameInState = newName => ({
+  type: types.CHANGE_NAME,
+  payload: newName
+})

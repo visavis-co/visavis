@@ -4,7 +4,7 @@ import { debug } from 'util';
 const initialState = {
   loginError: '',
   signupError: '',
-  isLoggedIn: true,
+  isLoggedIn: false,
   email: '',
   fullName: '',
   password: '',
@@ -62,6 +62,11 @@ const userReducer = (state = initialState, action) => {
         ...state,
         isLoggedIn: false,
       }
+      case types.CHANGE_NAME:
+      newState = { ...state, fullName: action.payload };
+      return Object.assign({}, state, newState);
+       
+  
       default:
       return state;
   }
