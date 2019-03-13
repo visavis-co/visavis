@@ -59,7 +59,7 @@ matchController.rematchAll = async ()=>{
   const client = new Client();
   await client.connect();
   await client.query('UPDATE users SET matchable=true')
-  await client.query('UPDATE matches SET "dateCompleted" = current_timestamp, "completed"=false WHERE "dateCompleted" is NULL',(err, res) => { 
+  await client.query('UPDATE matches SET "dateCompleted" = current_timestamp, "completed"=false WHERE "dateCompleted" is NULL',(err, res) => {
     console.log('err', err)
     client.end();
   })
@@ -82,7 +82,7 @@ matchController.completeMatch = async (req, res, next) => {
 
   // update the match in db
   const ret = await client.query(
-    'UPDATE matches SET inPerson = $1, location = $2, "dateCompleted" = current_timestamp WHERE id = $3',
+    'UPDATE matches SET inPerson = $1, location = $2, "dateCompleted" = current_timestamp, completed=true WHERE id = $3',
     [inPerson, location, matchId]
   );
   // close db connection

@@ -151,6 +151,7 @@ userController.getUser = async (req, res, next) => {
 
 userController.addPhoto = (req, res, next) => {
   console.log('adding photo');
+  // Configure AWS s3 connection
   AWS.config.update({
     region: 'us-east-1',
     // accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -163,27 +164,46 @@ userController.addPhoto = (req, res, next) => {
     apiVersion: '2006-03-01',
     params: {Bucket: 'vis-a-vis-photo2'}
   });
-  
+  // Upload file to S3 Bucket
   fs.readFile(path.resolve(__dirname, '../../client/assets/prof-pic-michael.jpg'), (error, data) => {
     if (error) {
       console.log(error)
     } else {
       let params = {
         Bucket: 'vis-a-vis-photo2',
+        // Create unique key here with email + photoname
         Key: 'michael-phot2o',
         Body: data,
+        ACL: 'public-read'
       }
       s3.upload(params, (s3err, result) => {
         if (s3err) {
           console.log(s3err)
         } else {
-          console.log('Upload successful', result);
+          // Update pictureurl in users table in SQL DB 
+          console.log('Upload successful', result.Location);
         }
       })
     }
   })
+}
   
 
+
+userController.changeName = async (req, res, next) => {
+
+  const client = new Client();
+  await client.connect();
+  console.log('2, inside userController, firing request to db')
+  await console.log('req.body', req.body)
+  const {id, fullName} = req.body;
+
+
+  const result = await client.query('UPDATE users SET fullname = $1 WHERE id = $2 ', [fullName, id]);
+  const updatedUser = result.rows[0]
+  await client.end();
+  next();
+  
 }
 
 module.exports = userController;

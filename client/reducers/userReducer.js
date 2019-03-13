@@ -1,5 +1,4 @@
-import * as types from '../constants/actionTypes';
-import { debug } from 'util';
+import * as types from '../actions/actionTypes';
 
 const initialState = {
   loginError: '',
@@ -12,10 +11,15 @@ const initialState = {
   currentMatch: {},
   pastMatches: [],
   matchChats: [],
+  matchToView: {},
+  showMatchModal: false,
+  matchLocation: '',
 }
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
+
+    // logging in a user
     case types.LOGIN:{
       return {
         ...state,
@@ -25,49 +29,100 @@ const userReducer = (state = initialState, action) => {
         isLoggedIn: true,
         email: '',
         password: '',
-      }}
-      case types.LOGIN_FAILED: {
+      }
+    }
+
+    // completed a match
+    case types.COMPLETED_MATCH:{
+      const pastMatches = state.pastMatches.slice();
+
+      // need to push updated current match onto pastMatches
+      const curr = state.currentMatch;
+      curr.inperson = action.payload.inPerson;
+      curr.location = action.payload.location;
+      curr.dateCompleted = new Date();
+      pastMatches.push(curr);
+
       return {
         ...state,
-        loginError: action.payload,
+        pastMatches,
+        matchLocation: '',
+        currentMatch: {},
+        matchToView: {},
+        showMatchModal: false,
       }
-      }
-      case types.SIGNUP_FAILED:
+    }
+
+    // toggle show match detail modal
+    case types.TOGGLE_MATCH_MODAL:
+    return {
+      ...state,
+      showMatchModal: !state.showMatchModal,
+    }
+    // setting the match to view in match details
+    case types.SET_MATCH_TO_VIEW:
       return {
         ...state,
-        signupError: action.payload,
+        matchToView: action.payload,
       }
+
+    // receiving a match's chat messages
     case types.RECEIVE_CHATS:
       return {
         ...state,
         matchChats: action.payload.data,
       }
-      case types.ENTER_EMAIL:
+
+    // input forms onchange updates -
+    case types.ENTER_EMAIL:
       return {
         ...state,
         email: action.payload,
       }
-      case types.ENTER_FULLNAME:
+    case types.ENTER_FULLNAME:
       return {
         ...state,
         fullName: action.payload,
       }
-      case types.ENTER_PASSWORD:
+    case types.ENTER_PASSWORD:
       return {
         ...state,
         password: action.payload,
       }
-      case types.LOGOUT:
+    case types.UPDATE_MATCH_LOCATION:
       return {
         ...state,
-        isLoggedIn: false,
+        matchLocation: action.payload,
       }
       //TEST ADD PHOTO
-      case types.ADD_PHOTO:
+      // case types.ADD_PHOTO:
+      // return {
+      //   ...state
+      // }
+      
+      case types.CHANGE_NAME:
+      newState = { ...state, fullName: action.payload };
+      return Object.assign({}, state, newState);
+       
+
+    // error handling
+    case types.LOGIN_FAILED:
       return {
-        ...state
+        ...state,
+        loginError: action.payload,
       }
-      default:
+    case types.SIGNUP_FAILED:
+      return {
+        ...state,
+        signupError: action.payload,
+      }
+
+    // logout a user
+    case types.LOGOUT:
+      return initialState;
+
+    // initial state
+    default:
       return state;
   }
 }

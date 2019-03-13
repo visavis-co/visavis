@@ -10,7 +10,7 @@ const Home = (props) => {
     <img src='./../client/assets/visavis.jpg' width='250'></img>
       <Form id='login-form'>
       <Form.Group controlId='formFullName'>
-        <Form.Control type='text' placeholder='Enter full name' onChange={props.enterFullName}/>
+        <Form.Control type='text' placeholder='Enter first name' onChange={props.enterFullName}/>
       </Form.Group>
       <Form.Group controlId='formEmail'>
         <Form.Control type='email' placeholder='Enter email' onChange={props.enterEmail}/>
@@ -21,9 +21,8 @@ const Home = (props) => {
         <Button id='login-button' variant='primary' type='submit' className='btnLogin'
         onClick={(e) => {e.preventDefault();
         props.userSignup(props.fullName, props.email, props.password)}}>Sign up</Button><br/><br/>
-
-        <Button id='create-account' variant='primary'><Link to="/login" className="linkButton">Back to Login</Link></Button>
-
+        <hr />
+        <Link to="/login" className="linkButton"><Button id='create-account' variant='primary'>Back to Login</Button></Link>
     </Form>
     </div>
   );
