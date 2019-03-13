@@ -19,6 +19,7 @@ const mapStateToProps = (store) => ({
   fullName: store.user.fullName,
   password: store.user.password,
   matchChats: store.user.matchChats,
+  matchToView: store.user.matchToView,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -29,6 +30,10 @@ const mapDispatchToProps = dispatch => ({
   enterPassword: (event) => { dispatch(actions.enterPassword(event.target.value)) },
   userLogout: (id) => { dispatch(actions.userLogout(id)) } ,
   getMatchChats: (matchId) => { dispatch(actions.getChats(matchId)) },
+  setMatchToView: (match) => {
+    dispatch(actions.setMatchToView(match));
+    Redirect
+  },
 })
 
 // component did mount => post to login
@@ -42,8 +47,8 @@ class App extends Component {
   // add user email and log in to my state
   render() {
     const { userLogin, userSignup, userLogout,
-      enterEmail, email, matchChats,
-      enterPassword, password,
+      enterEmail, email, matchChats, setMatchToView, matchToView,
+      enterPassword, password, updateChatMsg, sendChatMsg,
       enterFullName, fullName,
       userInfo, isLoggedIn, currentMatch, pastMatches, getMatchChats } = this.props;
 
@@ -51,9 +56,11 @@ class App extends Component {
       <Router>
         <div id='app'>
           <Route exact path="/" render={() => (!isLoggedIn ? <Redirect to="/login" />
-            : <Home userInfo={userInfo} userLogout={userLogout} currentMatch={currentMatch} pastMatches={pastMatches} />)} />
+            : <Home userInfo={userInfo} userLogout={userLogout} setMatchToView={setMatchToView} currentMatch={currentMatch} pastMatches={pastMatches} />)} />
           <Route path="/login" render={() => (<Login userLogin={userLogin} enterEmail={enterEmail} enterPassword={enterPassword} email={email} password={password} isLoggedIn={isLoggedIn} />)} />
           <Route path="/signup" render={() => (<Signup userSignup={userSignup} enterFullName={enterFullName} enterEmail={enterEmail} enterPassword={enterPassword} fullName={fullName} email={email} password={password} />)} />
+          <Route path="/match" render={() => (!isLoggedIn ? <Redirect to="/login" />
+            : <MatchDetails userInfo={userInfo} matchToView={matchToView} matchChats={matchChats} getMatchChats={getMatchChats} updateChatMsg={updateChatMsg} sendChatMsg={sendChatMsg} />)} />
         </div>
       </Router>
     )

@@ -4,7 +4,7 @@ import { debug } from 'util';
 const initialState = {
   loginError: '',
   signupError: '',
-  isLoggedIn: true,
+  isLoggedIn: false,
   email: '',
   fullName: '',
   password: '',
@@ -12,6 +12,7 @@ const initialState = {
   currentMatch: {},
   pastMatches: [],
   matchChats: [],
+  matchToView: {},
 }
 
 const userReducer = (state = initialState, action) => {
@@ -32,6 +33,12 @@ const userReducer = (state = initialState, action) => {
         loginError: action.payload,
       }
       }
+      case types.SET_MATCH_TO_VIEW: {
+        return {
+          ...state,
+          matchToView: action.payload,
+        }
+        }
       case types.SIGNUP_FAILED:
       return {
         ...state,
