@@ -89,6 +89,25 @@ const Settings = props => {
              <Button className="left-side-button" variant="secondary">Update</Button>   
           </div>
           </Tab.Pane>
+          <Tab.Pane eventKey="fourth">
+          {/* password pane takes two inputs old and new password */}
+          <InputGroup size="md" className="text-field-100">
+              <InputGroup.Prepend>
+                <InputGroup.Text  id="inputGroup-sizing-lg">Old Password</InputGroup.Text>
+              </InputGroup.Prepend>
+              <FormControl aria-label="Enter Old Password" aria-describedby="inputGroup-sizing-sm" />
+             </InputGroup> 
+             <div className={'inline'}>
+             <InputGroup className="text-field-100" size="md">
+              <InputGroup.Prepend>
+                <InputGroup.Text  id="inputGroup-sizing-lg">New Password</InputGroup.Text>
+              </InputGroup.Prepend>
+              <FormControl aria-label="Enter New Password" aria-describedby="inputGroup-sizing-sm" />
+             </InputGroup>  
+             {/* button  */}
+             <Button className="left-side-button" variant="secondary">Update</Button>   
+          </div>
+          </Tab.Pane>
 
 
         </Tab.Content>

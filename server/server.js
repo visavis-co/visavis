@@ -14,6 +14,12 @@ const schedule = require('node-schedule');
 app.use(bodyParser.json());   // run body parser on all server requests
 app.use(cookieParser());      // run cookie parser on all server requests
 
+// schedules recurring rematches on monday at 9:30 AM
+const rematch = schedule.scheduleJob({hour: 9, minute: 30, dayOfWeek: 1},()=>{
+  matches.rematchAll();
+})
+
+
 /**
  * POST to /login - User login
  *
@@ -24,12 +30,6 @@ app.use(cookieParser());      // run cookie parser on all server requests
  * 3. Return user information with matches
  *
  */
-
-// schedules recurring rematches on monday at 9:30 AM
-const rematch = schedule.scheduleJob({hour: 9, minute: 30, dayOfWeek: 1},()=>{
-  matches.rematchAll();
-})
-
 app.post(
   '/login',
   user.verifyUser,          // verify user email/pw to login user

@@ -1,41 +1,64 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Button, Image, Container, Row, Col, Jumbotron } from 'react-bootstrap';
 import Header from './Header.jsx';
+import MatchCard from './MatchCard.jsx';
+import { withRouter } from 'react-router-dom'
 
 // private route
 // what a user sees when they go to "/" and are logged in
 // this month's match is...
 
+// this also works with react-router-native
+
 const Home = props => {
     const assets = '/client/assets/';
-    const current = props.currentMatch;
-    const matchPic = assets + current.pictureurl;
-    const history = [];
+    const matchPic = assets + props.currentMatch.pictureurl;
+    const pastMatches = [];
     for (let i = 0; i < props.pastMatches.length; i++) {
-        let temp = <Row className="pastMatches" key={i * 3}><Col md={6}><h5>{props.pastMatches[i].fullname}</h5></Col><Col md={6}><Image src={assets + props.pastMatches[i].pictureurl} roundedCircle className="imageProfile" key={i * 15} /></Col></Row>
-        history.push(temp);
-        // history.push(props.pastMatches[i].fullname);
+      pastMatches.push(<MatchCard setMatchToView={props.setMatchToView} className="image-card" key={i} match={props.pastMatches[i]}/>);
     }
 
-    return (
-        <div className="home">
-            <Header userInfo={props.userInfo} userLogout={props.userLogout} />
-            <Jumbotron>
-                <Container>
-                    <h3>{props.userInfo.fullname}, your match for this week is...{current.fullname}</h3>
-                        <Image src={matchPic} className="img-fluid rounded img-thumbnail" width="40%" height="auto" alt="Match's profile pic" /><br></br>
-                    <Button><Link to="/match" className="linkButton" >Cordinate with your match</Link></Button>
-                </Container>
-            </Jumbotron>
+    const MatchButton = withRouter(({ history }) => (
+      <Button
+        type='button'
+        onClick={() => {
+          props.setMatchToView(props.currentMatch);
+          history.push('/match') }}
+      >
+        Cordinate with your match
+      </Button>
+    ))
 
-            <Jumbotron>
-                <Container>
-                    <h3>Past Matches</h3>
-                    {history}
-                </Container>
-            </Jumbotron>
-        </div>
+    let today = new Date().getDay();
+
+    return (
+      <div className="home">
+          <div id='current-match'>
+            {(props.currentMatch.id) ?
+              <Row>
+                <Col md={6}>
+                  <h4>Your current match is...</h4><br/>
+                  <h2>{props.currentMatch.fullname}!</h2><br/><br/>
+                  <MatchButton />
+                </Col>
+                <Col md={6}><Image className='pic-current-match' src={matchPic} roundedCircle alt="Current match's profile pic" /></Col>
+              </Row>
+            :
+              <Row>
+                <Col>
+                  <h4>Your next match is coming in...</h4>
+                  <h2>{6-today+2} days!</h2>
+                </Col>
+              </Row>
+            }
+          </div>
+        <Container className='past-matches-main'>
+          <h3>Past Matches</h3>
+          <div id='past-match-cards'>
+            {pastMatches}
+          </div>
+        </Container>
+      </div>
     );
 }
 

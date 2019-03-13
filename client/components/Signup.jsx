@@ -10,7 +10,7 @@ const Home = (props) => {
     <img src='./../client/assets/visavis.jpg' width='250'></img>
       <Form id='login-form'>
       <Form.Group controlId='formFullName'>
-        <Form.Control type='text' placeholder='Enter full name' onChange={props.enterFullName}/>
+        <Form.Control type='text' placeholder='Enter first name' onChange={props.enterFullName}/>
       </Form.Group>
       <Form.Group controlId='formEmail'>
         <Form.Control type='email' placeholder='Enter email' onChange={props.enterEmail}/>
