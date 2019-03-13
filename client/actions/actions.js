@@ -57,6 +57,11 @@ export const enterPassword = (value) => ({
   payload: value,
 });
 
+export const setMatchToView = (value) => ({
+  type: types.SET_MATCH_TO_VIEW,
+  payload: value,
+});
+
 export const logOut = () => ({
   type: types.LOGOUT,
 })

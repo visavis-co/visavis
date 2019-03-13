@@ -4,6 +4,11 @@ body {
   font-size: 62.5%;
 }
 
+#home {
+  display: flex;
+  justify-content: center;
+}
+
 .vis-banner {
   width: 250px;
 }
@@ -11,6 +16,7 @@ body {
 .corner-pic {
   height: 45px;
 }
+
 #header-dropdown {
   color: black;
   background-color: white;
@@ -36,11 +42,33 @@ div.dropdown{
   border: 5px solid black;
 }
 
-.app {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+#current-match {
+  background-color: #EFEFEF;
+  padding: 20 30;
+  margin: 30;
+  text-align: center;
+}
+
+.pic-current-match {
+  height: auto;
+  max-width: 100%;
+  max-height: 200px;
+}
+
+.match-card {
+  width: 200px;
+}
+
+#past-match-cards {
+  display:flex;
+  justify-content: space-evenly;
+}
+.card-img-top {
+  height:200px;
+}
+
+#match-details img {
+
 }
 
 .nav {
@@ -73,8 +101,8 @@ div.dropdown{
 }
 
 #app {
-  height: 80vh;
-  display:flex;
+  min-height: 80vh;
+  width: 80%;
 }
 
 .formLogin {

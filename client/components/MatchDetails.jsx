@@ -8,25 +8,20 @@ import Chat from './Chat.jsx'
 // modal pop up asking if matches met in person/online & where
 
 const MatchDetails = props => {
-    const assets = '/client/assets/';
-    const userPic = assets + props.currentMatch.pictureurl;
-    const matchPic = assets + props.userInfo.pictureurl;
-    const matchName = props.currentMatch.fullname;
+  const assets = '/client/assets/';
+  const matchPic = assets + props.matchToView.picturerl;
+  const userPic = assets + props.userInfo.pictureurl;
+  const matchName = props.matchToView.fullname;
 
-    return (
-        <div className="screenMatchDetails">
-            <Jumbotron>
-                <h1 padding="1rem">Your match with {matchName}</h1>
-                <Container>
-                    <Row className="chatmatch">
-                        <Image src={matchPic} height="40%" roundedCircle />
-                        <Image src={userPic} height="40%" roundedCircle />
-                    </Row>
-                </Container>
-            </Jumbotron>
-            <Chat match={props.currentMatch} userId={props.userInfo.id} matchChats={props.matchChats} getMatchChats={props.getMatchChats} />
-        </div>
-    );
+  return (
+    <div className="match-details">
+      <div className='match-details-images'>
+        <Image src={matchPic} roundedCircle />
+        <Image src={userPic} roundedCircle />
+      </div>
+      <Chat match={props.matchToView} userId={props.userInfo.id} matchChats={props.matchChats} getMatchChats={props.getMatchChats} />
+    </div>
+  );
 }
 
 export default MatchDetails;
