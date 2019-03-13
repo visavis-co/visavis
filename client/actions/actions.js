@@ -64,6 +64,15 @@ export const getChats = (matchId) => dispatch => {
     .then(chats => dispatch(receiveChats(chats)))
 }
 
+export const sendChatMsg = (userId, matchId, message) => dispatch => {
+	console.log('TCL: userId, matchId, message', userId, matchId, message)
+  return Axios.post('/api/chat/', {userId, matchId, message})
+    .then(() => {
+      dispatch(updateChatMsg(''));
+      dispatch(getChats(matchId));
+    })
+}
+
 export const completeMatch = (matchId, location, inPerson) => dispatch => {
   return Axios.post('/api/match', {matchId, location, inPerson})
     .then(() => dispatch(completedMatch({matchId, location, inPerson})))
@@ -88,5 +97,9 @@ export const enterPassword = (value) => ({
 });
 export const updateMatchLocation = (value) => ({
   type: types.UPDATE_MATCH_LOCATION,
+  payload: value,
+})
+export const updateChatMsg = (value) => ({
+  type: types.UPDATE_CHAT_MSG,
   payload: value,
 })

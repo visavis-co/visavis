@@ -22,6 +22,7 @@ const mapStateToProps = (store) => ({
   matchToView: store.user.matchToView,
   showMatchModal: store.user.showMatchModal,
   matchLocation: store.user.matchLocation,
+  chatMsg: store.user.chatMsg,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -30,14 +31,14 @@ const mapDispatchToProps = dispatch => ({
   enterEmail: (event) => { dispatch(actions.enterEmail(event.target.value)) },
   enterFullName: (event) => { dispatch(actions.enterFullName(event.target.value)) },
   enterPassword: (event) => { dispatch(actions.enterPassword(event.target.value)) },
+  updateChatMsg: (event) => { dispatch(actions.updateChatMsg(event.target.value)) },
   userLogout: (id) => { dispatch(actions.userLogout(id)) } ,
   getMatchChats: (matchId) => { dispatch(actions.getChats(matchId)) },
   toggleMatchModal: () => { dispatch(actions.toggleMatchModal()) },
   setMatchToView: (match) => { dispatch(actions.setMatchToView(match)) },
   updateMatchLocation: (event) => { dispatch(actions.updateMatchLocation(event.target.value)) },
-  completeMatch: (matchId, location, inPerson) => {
-    console.log('completematch in app.jsx - ', matchId, location, inPerson)
-    dispatch(actions.completeMatch(matchId, location, inPerson)) },
+  sendChatMsg: (userId, matchId, chatMsg) => { console.log('userId, matchId, chatMsg', userId, matchId, chatMsg); dispatch(actions.sendChatMsg(userId, matchId, chatMsg)) },
+  completeMatch: (matchId, location, inPerson) => { dispatch(actions.completeMatch(matchId, location, inPerson)) },
 })
 
 // component did mount => post to login
@@ -53,7 +54,7 @@ class App extends Component {
     const { userLogin, userSignup, userLogout, updateMatchLocation, matchLocation,
       enterEmail, email, matchChats, setMatchToView, matchToView,
       enterPassword, password, updateChatMsg, sendChatMsg, completeMatch,
-      enterFullName, fullName, showMatchModal, toggleMatchModal,
+      enterFullName, fullName, showMatchModal, toggleMatchModal, chatMsg,
       userInfo, isLoggedIn, currentMatch, pastMatches, getMatchChats } = this.props;
 
     return (
@@ -68,7 +69,7 @@ class App extends Component {
             : <MatchDetails
                 showMatchModal={showMatchModal} toggleMatchModal={toggleMatchModal}
                 matchChats={matchChats} getMatchChats={getMatchChats}
-                completeMatch={completeMatch}
+                completeMatch={completeMatch} chatMsg={chatMsg}
                 updateChatMsg={updateChatMsg} sendChatMsg={sendChatMsg}
                 updateMatchLocation={updateMatchLocation} matchLocation={matchLocation}
                 userInfo={userInfo} matchToView={matchToView} />)} />

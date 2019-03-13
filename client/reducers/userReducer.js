@@ -14,6 +14,7 @@ const initialState = {
   matchToView: {},
   showMatchModal: false,
   matchLocation: '',
+  chatMsg: '',
 }
 
 const userReducer = (state = initialState, action) => {
@@ -49,6 +50,7 @@ const userReducer = (state = initialState, action) => {
         matchLocation: '',
         currentMatch: {},
         matchToView: {},
+        matchChats: [],
         showMatchModal: false,
       }
     }
@@ -63,6 +65,7 @@ const userReducer = (state = initialState, action) => {
     case types.SET_MATCH_TO_VIEW:
       return {
         ...state,
+        matchChats: [],
         matchToView: action.payload,
       }
 
@@ -93,6 +96,11 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         matchLocation: action.payload,
+      }
+    case types.UPDATE_CHAT_MSG:
+      return {
+        ...state,
+        chatMsg: action.payload,
       }
 
     // error handling

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Container, Form, Row, Col, FormControl } from "react-bootstrap";
+import { Button, Container, Form, Row, Col } from "react-bootstrap";
 import ChatMessage from './ChatMessage.jsx';
 
 class Chat extends Component {
@@ -19,8 +19,9 @@ class Chat extends Component {
     const chats = this.props.matchChats;
 		console.log('TCL: Chat -> render -> chats', chats)
 
-    for (let i = 0; i < chats.length; i += 1) {
+    if (chats.length === 0) chatMessages.push(<div>Say hi and start coordinating your vis-à-vis with {this.props.match.fullname}!</div>)
 
+    for (let i = 0; i < chats.length; i += 1) {
       chatMessages.push(<ChatMessage
         key={i}
         userId={this.props.userId}
@@ -38,12 +39,12 @@ class Chat extends Component {
             <div id='chat-messages' margin='1rem'>
               {chatMessages}
             </div>
-            <div margin='1rem'>
-              <FormControl as="textarea" rows="3" placeholder='' onChange={chatOnChange} id='chatMessage' value={chatMessage} />
+            <div>
+              <Form id='chat-input'>
+                <input type="text" id='chat-msg-input' value={this.props.chatMsg} onChange={this.props.updateChatMsg} />
+                <Button type='submit' className="chat-btns" variant="primary btn-sm" onClick={() => { this.props.sendChatMsg(this.props.userId, this.props.match.id, this.props.chatMsg)}}>Submit</Button>
+              </Form>
             </div>
-            <Form className="justify-content-end" inline>
-            <Button className="chat-btns" variant="outline-info">Submit</Button>
-        </Form>
           </Col>
         </Row>
       </Container>
