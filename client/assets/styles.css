@@ -186,11 +186,10 @@ a#github-button {
   width: 100%;
 }
 
-
 #chat-main {
   border: solid 1px rgb(0,0,0, .2);
   border-radius: 5px;
-  padding: 20 15;
+  padding: 0;
   background-color:#e9ecef;
   margin-bottom: 30px;
 }

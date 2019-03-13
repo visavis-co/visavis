@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Navbar, Form, Dropdown, Nav, Button } from 'react-bootstrap';
+import { Image, Navbar, Dropdown } from 'react-bootstrap';
 
 const Header = props => {
     const assets = '/client/assets/';
@@ -8,7 +8,6 @@ const Header = props => {
     return (
       <Navbar className="nav" expand="lg">
         <Navbar.Brand href='#'><img className='vis-banner d-none d-sm-block' src={visavis}/></Navbar.Brand>
-
         <Dropdown alignRight className='ml-auto'>
           <Dropdown.Toggle id="header-dropdown">
             <Image src={myPic} className="corner-pic roundedCircle" />

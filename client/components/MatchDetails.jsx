@@ -21,7 +21,11 @@ const MatchDetails = props => {
         <Image src={userPic} roundedCircle />
         <Image src={matchPic} roundedCircle />
       </div>
-      <Chat match={props.matchToView} userId={props.userInfo.id} matchChats={props.matchChats} getMatchChats={props.getMatchChats} />
+      <Chat
+        match={props.matchToView} userId={props.userInfo.id} matchChats={props.matchChats}
+        getMatchChats={props.getMatchChats} chatMsg={props.chatMsg} sendChatMsg={props.sendChatMsg}
+        updateChatMsg={props.updateChatMsg}
+      />
 
       <Button id='complete-match-button' variant="success" onClick={props.toggleMatchModal}> Completed Match! </Button>
 

@@ -64,6 +64,15 @@ export const getChats = (matchId) => dispatch => {
     .then(chats => dispatch(receiveChats(chats)))
 }
 
+export const sendChatMsg = (userId, matchId, message) => dispatch => {
+	console.log('TCL: userId, matchId, message', userId, matchId, message)
+  return Axios.post('/api/chat/', {userId, matchId, message})
+    .then(() => {
+      dispatch(updateChatMsg(''));
+      dispatch(getChats(matchId));
+    })
+}
+
 export const completeMatch = (matchId, location, inPerson) => dispatch => {
   return Axios.post('/api/match', {matchId, location, inPerson})
     .then(() => dispatch(completedMatch({matchId, location, inPerson})))
@@ -84,24 +93,8 @@ export const enterFullName = (value) => ({
 });
 export const enterPassword = (value) => ({
   type: types.ENTER_PASSWORD,
-  payload: value,         
+  payload: value,
 });
-
-
-//Change user settings 
-
-export const changeNameInDb = (userInfo, fullName) => dispatch => {
-  console.log('1, firing action from actions.js')
-  console.log(userInfo, fullName)
-  return Axios.put('/api/changename', { id: userInfo.id, fullName: fullName })
-  .then((userInfo)=> {
-    console.log('1a then statement')
-    console.log("fullName", fullName)
-    dispatch(changeNameInState(fullName))  
-})
-.catch(e => console.error(e.stack))  
-}
-
 export const changeNameInState = newName => ({
   type: types.CHANGE_NAME,
   payload: newName
@@ -110,3 +103,22 @@ export const updateMatchLocation = (value) => ({
   type: types.UPDATE_MATCH_LOCATION,
   payload: value,
 })
+export const updateChatMsg = (value) => ({
+  type: types.UPDATE_CHAT_MSG,
+  payload: value,
+})
+
+//Change user settings
+
+export const changeNameInDb = (userInfo, fullName) => dispatch => {
+  console.log('1, firing action from actions.js')
+  console.log(userInfo, fullName)
+  return Axios.put('/api/changename', { id: userInfo.id, fullName: fullName })
+  .then((userInfo)=> {
+    console.log('1a then statement')
+    console.log("fullName", fullName)
+    dispatch(changeNameInState(fullName))
+})
+.catch(e => console.error(e.stack))
+}
+
