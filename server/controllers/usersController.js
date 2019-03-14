@@ -163,4 +163,55 @@ userController.changeName = async (req, res, next) => {
   
 }
 
+userController.changeEmail = async (req, res, next) => {
+  const client = new Client();
+  await client.connect();
+  await console.log('2 client connected - req.body --->', req.body)
+  const id = req.body.id;
+  const email = req.body.email;
+
+  await client.query('UPDATE users SET email = $1 where id = $2', [email, id])
+  await client.end()
+  next()
+}
+
+userController.changePassword = async (req, res, next) => {
+  console.log('userController changepass1 fired')
+  const client = new Client(); 
+
+  await client.connect();
+  // await client.query('UPDATE users SET password = $1 WHERE id = $2 AND password = $3', [req.body.password, req.body.id, req.body.passwordOld]
+  result = await client.query('SELECT * FROM users WHERE id = $1', [req.body.id])
+  await client.end()
+  console.log('oldpass', req.body.passwordOld)
+  console.log('result.rows[0].password', result.rows[0].password)
+  if (result) {
+    if (bcrypt.compareSync(req.body.passwordOld ,result.rows[0].password) ){
+      res.locals.password = req.body.password;
+      res.locals.id = req.body.id;
+      next()
+    }
+  else res.status(403).send('wrong password')  
+  }
+
+}
+
+userController.changePassword2 = async (req, res, next) => {
+  console.log('userController changepass2 fired')
+  client = new Client()
+  await client.connect()
+  let newPass = res.locals.password;
+  let id = res.locals.id; 
+  console.log('changepassword2 id - newPass', id, newPass)
+  
+  var salt = bcrypt.genSaltSync(10);
+  var hash = bcrypt.hashSync(newPass, salt);
+  
+  await client.query('UPDATE users SET password = $1 WHERE id = $2', [hash, id])
+  await client.end()
+  next()
+}
+
+
+
 module.exports = userController;

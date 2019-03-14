@@ -1,20 +1,30 @@
 import React, { Component } from 'react';
 import {Nav, ListGroup, InputGroup, Col, Row, FormControl, Tab, Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom'
+import { enterEmail } from '../actions/actions';
 
 const Settings = props => {
 
   const fullName = props.fullName;
   const password = props.password;
-  const email = props.eamil;
+  const email = props.email;
   const userLogout = props.userLogout;
   const userInfo = props.userInfo;
   const changeName = props.changeName;
+  const changeEmail = props.changeEmail;
   const enterFullName = props.enterFullName;
   const imageUrl = props.imageUrl;
   const loader= props.loader;
   const handleSelectedFile = props.handleSelectedFile;
   const handleUpload = props.handleUpload;
+  const enterEmail = props.enterEmail;
+  const enterPassword = props.enterPassword;
+  const enterPasswordOld = props.enterPasswordOld;
+  const changePassword = props.changePassword;
+  const passwordOld = props.passwordOld;
+
+  console.log('settings page passwordOld', passwordOld)
+
   
 
 
@@ -44,6 +54,7 @@ const Settings = props => {
       </Col>
       <Col sm={9}>
         <Tab.Content>
+
           <Tab.Pane eventKey="first">
           <div className={'inline'}>
             <InputGroup size="md">
@@ -57,40 +68,41 @@ const Settings = props => {
                e.preventDefault(); changeName(userInfo, fullName)}} variant="secondary">Update</Button>
              </div>
           </Tab.Pane>
-          <Tab.Pane eventKey="second">
+
+          <Tab.Pane eventKey="second"> 
           <div className={'inline'}>
           <InputGroup size="md">
               <InputGroup.Prepend>
                 <InputGroup.Text id="inputGroup-sizing-lg">New Email</InputGroup.Text>
               </InputGroup.Prepend>
-              <FormControl aria-label="Enter New Email" aria-describedby="inputGroup-sizing-sm" />
+              <FormControl onChange={enterEmail} aria-label="Enter New Email" aria-describedby="inputGroup-sizing-sm" />
              </InputGroup>
              {/* Button */}
-             <Button className="left-side-button" variant="secondary">Update</Button>
+             <Button onClick={e => {e.preventDefault(); console.log('1', 'clicked button also userInfo -> ', userInfo) ; changeEmail(userInfo, email)}} className="left-side-button" variant="secondary">Update</Button>
           </div>
           </Tab.Pane>
+
           <Tab.Pane eventKey="third">
           {/* password pane takes two inputs old and new password */}
           <InputGroup size="md" className="text-field-100">
               <InputGroup.Prepend>
-                <InputGroup.Text  id="inputGroup-sizing-lg">Old Password</InputGroup.Text>
+                <InputGroup.Text id="inputGroup-sizing-lg">Old Password</InputGroup.Text>
               </InputGroup.Prepend>
-              <FormControl aria-label="Enter Old Password" aria-describedby="inputGroup-sizing-sm" />
+              <FormControl onChange={enterPasswordOld} aria-label="Enter Old Password" aria-describedby="inputGroup-sizing-sm" />
              </InputGroup>
              <div className={'inline'}>
              <InputGroup className="text-field-100" size="md">
               <InputGroup.Prepend>
-                <InputGroup.Text  id="inputGroup-sizing-lg">New Password</InputGroup.Text>
+                <InputGroup.Text   id="inputGroup-sizing-lg">New Password</InputGroup.Text>
               </InputGroup.Prepend>
-              <FormControl aria-label="Enter New Password" aria-describedby="inputGroup-sizing-sm" />
+              <FormControl onChange={enterPassword} aria-label="Enter New Password" aria-describedby="inputGroup-sizing-sm" />
              </InputGroup>
              {/* button  */}
-             <Button className="left-side-button" variant="secondary">Update</Button>
+             <Button onClick={e => {e.preventDefault(); changePassword(userInfo, password, passwordOld)}} className="left-side-button" variant="secondary">Update</Button>
           </div>
           </Tab.Pane>
-          <Tab.Pane eventKey="fourth">
-          {/* password pane takes two inputs old and new password */}
-       
+
+          <Tab.Pane eventKey="fourth">       
               <form>
               <div>
                 <input type="file"  name="profilePic" onChange={handleSelectedFile}/>
@@ -98,15 +110,9 @@ const Settings = props => {
                 <div>
                   {loader} %
                 </div>
-              </div>
-              
-                  
+              </div>           
               </form>
-             
-        
           </Tab.Pane>
-
-
         </Tab.Content>
       </Col>
     </Row>
