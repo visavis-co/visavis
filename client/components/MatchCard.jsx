@@ -6,7 +6,7 @@ const MatchCard = (props, context) => {
     const assets = '/client/assets/';
 
     const ClickDiv = withRouter(({ history }) => (
-      <div
+      <div className='past-match'
         onClick={() => {
           props.setMatchToView(props.match);
           history.push('/match') }}
@@ -15,9 +15,6 @@ const MatchCard = (props, context) => {
           <Card.Img variant="top" src={assets + props.match.pictureurl} />
           <Card.Body>
             <Card.Title>{props.match.fullname}</Card.Title>
-            <Card.Text>
-              Met {(props.match.inperson) ? 'at' : 'on'} {props.match.location} on {new Date(props.match.dateCompleted).toDateString()}
-            </Card.Text>
           </Card.Body>
         </Card>
       </div>

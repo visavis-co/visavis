@@ -25,7 +25,7 @@ const Home = props => {
           props.setMatchToView(props.currentMatch);
           history.push('/match') }}
       >
-        Cordinate with your match
+        Coordinate with your match
       </Button>
     ))
 

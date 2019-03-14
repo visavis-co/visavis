@@ -24,6 +24,8 @@ const mapStateToProps = (store) => ({
   showMatchModal: store.user.showMatchModal,
   matchLocation: store.user.matchLocation,
   chatMsg: store.user.chatMsg,
+  socket: store.user.socket,
+  matchOnline: store.user.matchOnline,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -37,10 +39,13 @@ const mapDispatchToProps = dispatch => ({
   getMatchChats: (matchId) => { dispatch(actions.getChats(matchId)) },
   changeName: (userInfo, fullName) => { dispatch(actions.changeNameInDb(userInfo, fullName)) },
   toggleMatchModal: () => { dispatch(actions.toggleMatchModal()) },
-  setMatchToView: (match) => { dispatch(actions.setMatchToView(match)) },
+  setMatchToView: (match) => { dispatch(actions.setMatchToView(match)); },
   updateMatchLocation: (event) => { dispatch(actions.updateMatchLocation(event.target.value)) },
-  sendChatMsg: (userId, matchId, chatMsg) => { console.log('userId, matchId, chatMsg', userId, matchId, chatMsg); dispatch(actions.sendChatMsg(userId, matchId, chatMsg)) },
+  sendChatMsg: (userId, matchId, chatMsg) => { dispatch(actions.sendChatMsg(userId, matchId, chatMsg)) },
+  addChatMsg: (userId, matchId, chatMsg) => { dispatch(actions.addChatMsg(userId, matchId, chatMsg)) },
   completeMatch: (matchId, location, inPerson) => { dispatch(actions.completeMatch(matchId, location, inPerson)) },
+  toggleMatchOnline: () => { dispatch(actions.toggleMatchOnline()) },
+
 })
 
 // component did mount => post to login
@@ -54,9 +59,9 @@ class App extends Component {
   // add user email and log in to my state
   render() {
     const { userLogin, userSignup, userLogout, updateMatchLocation, matchLocation,
-      enterEmail, email, matchChats, setMatchToView, matchToView,
-      enterPassword, password, updateChatMsg, sendChatMsg, completeMatch,
-      enterFullName, fullName, showMatchModal, toggleMatchModal, chatMsg,
+      enterEmail, email, matchChats, setMatchToView, matchToView, addChatMsg,
+      enterPassword, password, updateChatMsg, sendChatMsg, completeMatch, toggleMatchOnline,
+      enterFullName, fullName, showMatchModal, toggleMatchModal, chatMsg, matchOnline,
       userInfo, isLoggedIn, currentMatch, pastMatches, getMatchChats, changeName } = this.props;
 
     return (
@@ -71,11 +76,11 @@ class App extends Component {
           <Route path="/match" render={() => (!isLoggedIn ? <Redirect to="/login" />
             : <MatchDetails
                 showMatchModal={showMatchModal} toggleMatchModal={toggleMatchModal}
-                matchChats={matchChats} getMatchChats={getMatchChats}
-                completeMatch={completeMatch} chatMsg={chatMsg}
+                matchChats={matchChats} getMatchChats={getMatchChats} matchOnline={matchOnline}
+                completeMatch={completeMatch} chatMsg={chatMsg} addChatMsg={addChatMsg}
                 updateChatMsg={updateChatMsg} sendChatMsg={sendChatMsg}
                 updateMatchLocation={updateMatchLocation} matchLocation={matchLocation}
-                userInfo={userInfo} matchToView={matchToView} />)} />
+                userInfo={userInfo} matchToView={matchToView} toggleMatchOnline={toggleMatchOnline} />)} />
         </div>
       </Router>
     )

@@ -10,5 +10,5 @@ const store = createStore(
 );
 
 store.dispatch(checkLogin());
-console.log('in the store');
+
 export default store;

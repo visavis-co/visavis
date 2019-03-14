@@ -1,15 +1,60 @@
 import React, { Component } from 'react';
 import { Button, Container, Form, Row, Col } from "react-bootstrap";
 import ChatMessage from './ChatMessage.jsx';
+import io from 'socket.io-client';
 
 class Chat extends Component {
 
   constructor(props) {
     super(props);
+    this.state = { socket: null }
   }
 
   componentDidMount(){
     this.props.getMatchChats(this.props.match.id);
+
+    // create socket. request to join match id room
+    let socket = io();
+    this.setState({socket});
+    socket.emit('connect to room', {id: this.props.match.id});
+
+    // checking for # of clients connecting to this match
+    socket.on('num clients', (count)=> {
+      console.log('num clients - ' + count)
+      if (count > 1 && !this.props.matchOnline) {
+        this.props.toggleMatchOnline();
+      }
+    });
+
+    // receiving new messages from the server with userId and message
+    socket.on('new msg', (chat) =>{
+      // make sure it's not your own message then push to store
+      if (this.props.userId !== chat.userId) {
+        this.props.addChatMsg(chat.userId, this.props.match.id, chat.message);
+      }
+    })
+
+    // if someone disconnects and they are online then toggle them offline
+    socket.on('someone left', ()=> {
+      console.log('someone left');
+      if (this.props.matchOnline) {
+        this.props.toggleMatchOnline();
+      }
+    });
+
+    // if someone joins and they are offline then toggle them online
+    socket.on('someone joined', ()=> {
+      console.log('someone joined');
+      if (!this.props.matchOnline) {
+        this.props.toggleMatchOnline();
+      }
+    });
+  }
+
+  componentWillUnmount () {
+    // disconnect from socket.io
+    console.log('unmounting chat')
+    this.state.socket.close();
   }
 
   // add user email and log in to my state
@@ -17,15 +62,13 @@ class Chat extends Component {
     const { chatMessage, chatOnChange  } = this.props;
     const chatMessages = [];
     const chats = this.props.matchChats;
-		console.log('TCL: Chat -> render -> chats', chats)
 
-    if (chats.length === 0) chatMessages.push(<div>Say hi and start coordinating your vis-à-vis with {this.props.match.fullname}!</div>)
+    if (chats.length === 0) chatMessages.push(<div key='nochats'>Say hi and start coordinating your vis-à-vis with {this.props.match.fullname}!</div>)
 
     for (let i = 0; i < chats.length; i += 1) {
       chatMessages.push(<ChatMessage
         key={i}
         userId={this.props.userId}
-        msgFrom={chats[i].fullname}
         msgFromId={chats[i].user_id}
         message={chats[i].message}
         timestamp={chats[i].timestamp}
@@ -40,9 +83,9 @@ class Chat extends Component {
               {chatMessages}
             </div>
             <div>
-              <Form id='chat-input'>
+              <Form id='chat-form'>
                 <input type="text" id='chat-msg-input' value={this.props.chatMsg} onChange={this.props.updateChatMsg} />
-                <Button type='submit' className="chat-btns" variant="primary btn-sm" onClick={() => { this.props.sendChatMsg(this.props.userId, this.props.match.id, this.props.chatMsg)}}>Submit</Button>
+                <Button type='submit' className="chat-btns" variant="primary btn-sm" onClick={(e) => { e.preventDefault(); this.props.sendChatMsg(this.props.userId, this.props.match.id, this.props.chatMsg)}}>Submit</Button>
               </Form>
             </div>
           </Col>

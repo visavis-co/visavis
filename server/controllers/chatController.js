@@ -35,6 +35,12 @@ chatController.sendChatMsg = async (req, res, next) => {
     [userId, matchId, message]
   );
 
+  // set the matchId / chatMsg / chatUserId in res.locals for the websocket
+  res.locals.matchId = matchId;
+  res.locals.chatMsg = message;
+  res.locals.chatUserId = userId;
+
+	console.log('TCL: chatController.sendChatMsg -> res.locals.matchId', res.locals.matchId)
   // close db connection
   await client.end();
   next();

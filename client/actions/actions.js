@@ -54,6 +54,10 @@ export const toggleMatchModal = () => ({
   type: types.TOGGLE_MATCH_MODAL,
 });
 
+export const toggleMatchOnline = () => ({
+  type: types.TOGGLE_MATCH_ONLINE,
+});
+
 export const userLogout = (userid) => dispatch => {
   return Axios.post('/logout', {id: userid})
   .then(() => dispatch({ type: types.LOGOUT }))
@@ -63,6 +67,11 @@ export const getChats = (matchId) => dispatch => {
   return Axios.get('/api/chat/' + matchId)
     .then(chats => dispatch(receiveChats(chats)))
 }
+
+export const addChatMsg = (userId, matchId, message) => ({
+  type: types.ADD_CHAT_MESSAGE,
+  payload: {userId, matchId, message},
+})
 
 export const sendChatMsg = (userId, matchId, message) => dispatch => {
 	console.log('TCL: userId, matchId, message', userId, matchId, message)
