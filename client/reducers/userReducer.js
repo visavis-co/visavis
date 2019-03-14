@@ -14,6 +14,7 @@ const initialState = {
   matchToView: {},
   showMatchModal: false,
   matchLocation: '',
+  chatMsg: '',
 }
 
 const userReducer = (state = initialState, action) => {
@@ -49,20 +50,16 @@ const userReducer = (state = initialState, action) => {
         matchLocation: '',
         currentMatch: {},
         matchToView: {},
+        matchChats: [],
         showMatchModal: false,
       }
     }
 
-    // toggle show match detail modal
-    case types.TOGGLE_MATCH_MODAL:
-    return {
-      ...state,
-      showMatchModal: !state.showMatchModal,
-    }
     // setting the match to view in match details
     case types.SET_MATCH_TO_VIEW:
       return {
         ...state,
+        matchChats: [],
         matchToView: action.payload,
       }
 
@@ -72,6 +69,13 @@ const userReducer = (state = initialState, action) => {
         ...state,
         matchChats: action.payload.data,
       }
+
+    // toggle show match detail modal
+    case types.TOGGLE_MATCH_MODAL:
+    return {
+      ...state,
+      showMatchModal: !state.showMatchModal,
+    }
 
     // input forms onchange updates -
     case types.ENTER_EMAIL:
@@ -94,16 +98,23 @@ const userReducer = (state = initialState, action) => {
         ...state,
         matchLocation: action.payload,
       }
-      //TEST ADD PHOTO
-      // case types.ADD_PHOTO:
-      // return {
-      //   ...state
-      // }
-      
-      case types.CHANGE_NAME:
+    
+    case types.HANDLE_SELECTED_FILE:{
+      let userInfo = state.userInfo;
+      userInfo.picObj = action.payload;
+			console.log(" ~: userReducer -> userInfo.picObj", userInfo.picObj)
+      let newState = { ...state, userInfo: userInfo} 
+      return Object.assign({}, state, newState);       
+      }
+    case types.UPDATE_CHAT_MSG:
+      return {
+        ...state,
+        chatMsg: action.payload,
+      }
+    case types.CHANGE_NAME:
       newState = { ...state, fullName: action.payload };
       return Object.assign({}, state, newState);
-       
+
 
     // error handling
     case types.LOGIN_FAILED:
