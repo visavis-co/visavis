@@ -10,9 +10,13 @@ const auth = require('./controllers/authController');
 const bodyParser = require('body-parser');
 const email = require('./controllers/emailController');
 const schedule = require('node-schedule');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' })
+const cors = require('cors');
 
 app.use(bodyParser.json());   // run body parser on all server requests
 app.use(cookieParser());      // run cookie parser on all server requests
+app.use(cors());
 
 // schedules recurring rematches on monday at 9:30 AM
 const rematch = schedule.scheduleJob({hour: 9, minute: 30, dayOfWeek: 1},()=>{
@@ -96,6 +100,9 @@ app.get(
  *
  */
 app.post('/logout', auth.logout);
+
+// POST to /addphoto - User adding profile photo
+app.post('/addphoto', upload.single('profilePic'), user.addPhoto)
 
 /**
  * API - POST to /api/match - Updates a match record to complete the match

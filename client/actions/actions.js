@@ -119,11 +119,10 @@ export const changeNameInDb = (userInfo, fullName) => dispatch => {
 .catch(e => console.error(e.stack))
 }
 
-// export const changeNameInState = newName => ({
-//   type: types.CHANGE_NAME,
-//   payload: newName
-// })
-
+export const changeNameInState = newName => ({
+  type: types.CHANGE_NAME,
+  payload: newName
+})
 
 export const handleSelectedFile = (file) =>  ({  
   type: types.HANDLE_SELECTED_FILE,
@@ -131,12 +130,24 @@ export const handleSelectedFile = (file) =>  ({
 })
 
 export const handleUpload = (userInfo) => dispatch => {
-  const {id, picObj} = userInfo
-  const data = new FormData()
-  data.append('file', userInfo.picObj, userInfo.picObj.name)
-  const body = {id, picObj, data}
-  return Axios.post('/addphoto', body)
-  .then(res => res.status)
+  // console.log('userInfo from handle upload', userInfo)
+  console.log('picObj from handle upload', userInfo.picObj)
+  let data = new FormData();
+  // data.append('file', userInfo.picObj, userInfo.picObj.name);
+  data.append('profilePic', userInfo.picObj);
+  data.append('id', userInfo.id)
+  data.append('email', userInfo.email);
+  
+  fetch('http://localhost:3000/addphoto', {
+    method: 'POST',
+    body: data,
+  })
+  .then(res => console.log('fetchres', res))
+  .catch(err => console.log('fetcherr', err))
+
+  // return Axios.post('/addphoto')
+  //   .then(res => console.log('res', res))
+
 }
 
 export const changeEmailInDb = (userInfo, email) => dispatch => {

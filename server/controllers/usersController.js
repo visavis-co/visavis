@@ -1,6 +1,9 @@
 const { Client } = require('pg');
 const bcrypt = require('bcryptjs');
 const userController = {};
+const AWS = require('aws-sdk');
+const fs = require('fs');
+const path = require('path');
 /***********************************************/
 //
 // TABLE SCHEMAS
@@ -146,6 +149,49 @@ userController.getUser = async (req, res, next) => {
   }
 };
 
+userController.addPhoto = (req, res, next) => {
+  console.log('adding photo');
+  // Configure AWS s3 connection
+  AWS.config.update({
+    // region: 'us-east-1',
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    // credentials: new AWS.CognitoIdentityCredentials({
+      // IdentityPoolId: 'us-east-1:38f72510-f062-48ee-bc5f-d36abc553a38',
+    // })
+  })
+  const s3 = new AWS.S3({
+    apiVersion: '2006-03-01',
+    params: {Bucket: 'vis-a-vis-photo2'}
+  });
+
+  // Upload file to S3 Bucket
+  let partEmail = req.body.email.split('@')[0];
+  let params = {
+    Bucket: 'vis-a-vis-photo2',
+    // Create unique key here with email + photoname
+    Key: `${partEmail}${req.body.id}${req.file.originalname.split('.')[0]}`,
+    Body: fs.createReadStream(path.resolve(__dirname, `../../uploads/${req.file.filename}`)),
+    ACL: 'public-read'
+  }
+  s3.upload(params, async (s3err, result) => {
+    if (s3err) {
+      console.log(s3err)
+    } else {
+      // Update pictureurl in users table in SQL DB 
+      console.log('Upload successful, pic', result.Location);
+      const link = result.Location;
+      //connect to DB
+      const client = new Client();
+      await client.connect();
+      const dbresult = await client.query(`UPDATE users SET pictureUrl=$1 WHERE email=$2`, [link, req.body.email])
+      // res.send(link);
+      await client.end();
+    }
+  })
+}
+  
+
 
 userController.changeName = async (req, res, next) => {
 
@@ -159,7 +205,7 @@ userController.changeName = async (req, res, next) => {
   const result = await client.query('UPDATE users SET fullname = $1 WHERE id = $2 ', [fullName, id]);
   const updatedUser = result.rows[0]
   await client.end();
-  next()
+  next();
   
 }
 

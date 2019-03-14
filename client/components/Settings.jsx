@@ -10,11 +10,11 @@ const Settings = props => {
   const email = props.email;
   const userLogout = props.userLogout;
   const userInfo = props.userInfo;
+	console.log(" ~: userInfo", userInfo)
   const changeName = props.changeName;
   const changeEmail = props.changeEmail;
   const enterFullName = props.enterFullName;
   const imageUrl = props.imageUrl;
-  const loader= props.loader;
   const handleSelectedFile = props.handleSelectedFile;
   const handleUpload = props.handleUpload;
   const enterEmail = props.enterEmail;
@@ -26,8 +26,6 @@ const Settings = props => {
   console.log('settings page passwordOld', passwordOld)
 
   
-
-
   return (
     <div>    
       <div className="centerElements">
@@ -101,14 +99,15 @@ const Settings = props => {
              <Button onClick={e => {e.preventDefault(); changePassword(userInfo, password, passwordOld)}} className="left-side-button" variant="secondary">Update</Button>
           </div>
           </Tab.Pane>
-
-          <Tab.Pane eventKey="fourth">       
-              <form>
+          <Tab.Pane eventKey="fourth">
+          {/* password pane takes two inputs old and new password */}
+       
+              <form formEncType="multipart/form-data">
               <div>
-                <input type="file"  name="profilePic" onChange={handleSelectedFile}/>
-                <Button className="left-side-button" onClick={e => {e.preventDefault(); handleUpload(props.userInfo)}} variant="secondary">Upload</Button>
+                <input type="file" id="profilePic" name="profilePic" onChange={handleSelectedFile}/>
+                <Button className="left-side-button" onClick={e => {e.preventDefault(); handleUpload(props.userInfo);}} variant="secondary">Upload</Button>
                 <div>
-                  {loader} %
+                  
                 </div>
               </div>           
               </form>
@@ -116,7 +115,7 @@ const Settings = props => {
         </Tab.Content>
       </Col>
     </Row>
-    </Tab.Container>;
+    </Tab.Container>
 
     </div>
 

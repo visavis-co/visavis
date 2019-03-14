@@ -108,9 +108,9 @@ const userReducer = (state = initialState, action) => {
       }
     
     case types.HANDLE_SELECTED_FILE:{
-      console.log(action.payload);
-      let userInfo = {};
+      let userInfo = state.userInfo;
       userInfo.picObj = action.payload;
+			console.log(" ~: userReducer -> userInfo.picObj", userInfo.picObj)
       let newState = { ...state, userInfo: userInfo} 
       return Object.assign({}, state, newState);       
       }
