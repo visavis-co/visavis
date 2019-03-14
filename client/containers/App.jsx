@@ -68,7 +68,7 @@ class App extends Component {
       enterPassword, password, updateChatMsg, sendChatMsg, completeMatch, toggleMatchOnline,
       enterFullName, fullName, showMatchModal, toggleMatchModal, chatMsg, matchOnline,
       userInfo, isLoggedIn, currentMatch, pastMatches, getMatchChats, changeName,
-      handleSelectedFile, handleUpload, chatMsg, changeEmail, passwordOld, enterPasswordOld, changePassword } = this.props;
+      handleSelectedFile, handleUpload, changeEmail, passwordOld, enterPasswordOld, changePassword } = this.props;
 
 
     return (

@@ -10,8 +10,7 @@ import {Redirect} from 'react-router-dom';
 
 const MatchDetails = props => {
   const assets = '/client/assets/';
-  const matchPic = assets + props.matchToView.pictureurl;
-  const userPic = assets + props.userInfo.pictureurl;
+  const matchPic = props.matchToView.pictureurl;
 
   // redirect to homepage after closing out the match
   if (!props.matchToView.id) return <Redirect to="/" />

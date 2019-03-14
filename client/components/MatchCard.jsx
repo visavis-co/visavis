@@ -2,8 +2,7 @@ import React from 'react';
 import { Card } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom'
 
-const MatchCard = (props, context) => {
-    const assets = '/client/assets/';
+const MatchCard = (props) => {
 
     const ClickDiv = withRouter(({ history }) => (
       <div className='past-match'
@@ -12,7 +11,7 @@ const MatchCard = (props, context) => {
           history.push('/match') }}
       >
         <Card className='match-card'>
-          <Card.Img variant="top" src={assets + props.match.pictureurl} />
+          <Card.Img variant="top" src={props.match.pictureurl} />
           <Card.Body>
             <Card.Title>{props.match.fullname}</Card.Title>
           </Card.Body>
