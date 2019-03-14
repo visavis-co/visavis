@@ -11,8 +11,7 @@ import { withRouter } from 'react-router-dom'
 // this also works with react-router-native
 
 const Home = props => {
-    const assets = '/client/assets/';
-    const matchPic = assets + props.currentMatch.pictureurl;
+    const matchPic = props.currentMatch.pictureurl;
     const pastMatches = [];
     for (let i = 0; i < props.pastMatches.length; i++) {
       pastMatches.push(<MatchCard setMatchToView={props.setMatchToView} className="image-card" key={i} match={props.pastMatches[i]}/>);
@@ -25,7 +24,7 @@ const Home = props => {
           props.setMatchToView(props.currentMatch);
           history.push('/match') }}
       >
-        Cordinate with your match
+        Coordinate with your match
       </Button>
     ))
 

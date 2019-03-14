@@ -111,7 +111,7 @@ div.dropdown{
 
 #app {
   min-height: 80vh;
-  width: 1000px;
+  width: 80%;
 }
 
 .formLogin {
@@ -207,7 +207,7 @@ a#github-button {
   padding: 3;
 }
 
-.chat-msg-me {
+.chat-msg-you {
   display: flex;
   justify-content: flex-end;
 }
@@ -222,11 +222,7 @@ a#github-button {
   margin: 10;
 }
 
-#match-online-txt {
-  color:#32CD32;
-}
-
-.chat-msg-you {
+.chat-msg-me {
   justify-content: flex-start;
   display: flex;
 }

@@ -2,6 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const app = express();
+//const sockets = require('./controllers/socketsController')(app);
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 const cookieParser = require('cookie-parser');
 const user = require('./controllers/usersController');
 const matches = require('./controllers/matchesController');
@@ -13,6 +16,7 @@ const schedule = require('node-schedule');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' })
 const cors = require('cors');
+
 
 app.use(bodyParser.json());   // run body parser on all server requests
 app.use(cookieParser());      // run cookie parser on all server requests
@@ -39,6 +43,7 @@ app.post(
   user.verifyUser,          // verify user email/pw to login user
   user.getUser,             // gets user info matching res.locals.userId
   matches.getUserMatches,   // gets user matches matching res.locals.userId
+
   auth.startSession,        // sets the session token in user db
   auth.setSSIDCookie,       // sets SSID cookie on client
   (req, res) => {
@@ -132,6 +137,10 @@ app.post(
   '/api/chat',
   chat.sendChatMsg,
   (req, res) => {
+
+    // send the new chat message with userId to the client
+    io.to('match-' + res.locals.matchId).emit('new msg', { message: res.locals.chatMsg, userId:res.locals.chatUserId });
+
     res.send('Chat inserted');
   }
 );
@@ -195,5 +204,25 @@ app.use((err, req, res, next) => {
   res.status(418).send({name: err.name, msg:err.message});
 })
 
-app.listen(3000); //listens on port 3000 -> http://localhost:3000/
+
+io.on('connection', (client) => {
+  console.log('a user connected');
+  // connect client to current match's room
+  client.on('connect to room', (match) => {
+    client.join(['match-' + match.id]);
+    client.to(['match-' + match.id]).emit('someone joined');
+    io.to(['match-' + match.id]).clients((err, clients) => {
+      io.to(['match-' + match.id]).emit('num clients', clients.length);
+    })
+  })
+
+  client.on('disconnecting', ()=> {
+    const room = Object.keys(client.rooms)[1];
+    io.to(room).emit('someone left')
+    io.to(room).clients((err, clients) => {
+      io.to(room).emit('num clients', clients.length-1);
+    })
+  })
+})
+server.listen(3000); //listens on port 3000 -> http://localhost:3000/
 

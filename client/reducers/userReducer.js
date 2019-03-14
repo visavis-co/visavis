@@ -16,6 +16,7 @@ const initialState = {
   showMatchModal: false,
   matchLocation: '',
   chatMsg: '',
+  matchOnline: false,
 }
 
 const userReducer = (state = initialState, action) => {
@@ -56,6 +57,19 @@ const userReducer = (state = initialState, action) => {
       }
     }
 
+    // inserting a message from sockets into matchChats
+    case types.ADD_CHAT_MESSAGE: {
+      const matchChats = state.matchChats.slice();
+      const msgObj = {};
+      msgObj.user_id = action.payload.userId;
+      msgObj.message = action.payload.message;
+      msgObj.timestamp = new Date();
+      matchChats.push(msgObj);
+      return {
+        ...state,
+        matchChats,
+      }
+    }
     // setting the match to view in match details
     case types.SET_MATCH_TO_VIEW:
       return {
@@ -77,6 +91,11 @@ const userReducer = (state = initialState, action) => {
       ...state,
       showMatchModal: !state.showMatchModal,
     }
+    case types.TOGGLE_MATCH_ONLINE:
+      return {
+        ...state,
+        matchOnline: !state.matchOnline,
+      }
 
     // input forms onchange updates -
     case types.ENTER_EMAIL:
