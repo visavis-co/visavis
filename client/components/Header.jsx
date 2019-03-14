@@ -16,7 +16,7 @@ const Header = props => {
             <Dropdown.Item href="#/signup">Current Match</Dropdown.Item>
             <Dropdown.Item href="#/settings">Settings</Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item href="#/action-3">Logout</Dropdown.Item>
+            <Dropdown.Item as='button' onClick={() => {props.userLogout(props.userInfo.id)}}>Logout</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Navbar>
