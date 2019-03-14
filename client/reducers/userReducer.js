@@ -7,6 +7,7 @@ const initialState = {
   email: '',
   fullName: '',
   password: '',
+  passwordOld: '',
   userInfo: {},
   currentMatch: {},
   pastMatches: [],
@@ -93,6 +94,13 @@ const userReducer = (state = initialState, action) => {
         ...state,
         password: action.payload,
       }
+
+    case types.ENTER_PASSWORD_OLD:
+      return {
+        ...state, 
+        passwordOld: action.payload
+      }
+      
     case types.UPDATE_MATCH_LOCATION:
       return {
         ...state,
@@ -111,9 +119,12 @@ const userReducer = (state = initialState, action) => {
         ...state,
         chatMsg: action.payload,
       }
-    case types.CHANGE_NAME:
-      newState = { ...state, fullName: action.payload };
-      return Object.assign({}, state, newState);
+    // case types.CHANGE_NAME:
+    //   newState = { ...state, fullName: action.payload };
+    //   return Object.assign({}, state, newState);
+
+    case types.CHANGE_EMAIL:
+    newState = { ...state, email: action.payload };  
 
 
     // error handling
@@ -127,6 +138,7 @@ const userReducer = (state = initialState, action) => {
         ...state,
         signupError: action.payload,
       }
+    
 
     // logout a user
     case types.LOGOUT:

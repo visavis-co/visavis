@@ -114,15 +114,15 @@ export const changeNameInDb = (userInfo, fullName) => dispatch => {
   .then((userInfo)=> {
     console.log('1a then statement')
     console.log("fullName", fullName)
-    dispatch(changeNameInState(fullName))
+    // dispatch(changeNameInState(fullName))
 })
 .catch(e => console.error(e.stack))
 }
 
-export const changeNameInState = newName => ({
-  type: types.CHANGE_NAME,
-  payload: newName
-})
+// export const changeNameInState = newName => ({
+//   type: types.CHANGE_NAME,
+//   payload: newName
+// })
 
 
 export const handleSelectedFile = (file) =>  ({  
@@ -138,3 +138,23 @@ export const handleUpload = (userInfo) => dispatch => {
   return Axios.post('/addphoto', body)
   .then(res => res.status)
 }
+
+export const changeEmailInDb = (userInfo, email) => dispatch => {
+  const id = userInfo.id
+  console.log('changeEmailinDB --- what is userInfo ->', userInfo)
+  return Axios.put('/api/changeemail', {id: id, email: email})
+  .then( res => res.status)
+  .catch(e => console.error(e.stack))
+}
+
+export const changePasswordInDb = (userInfo, password, passwordOld) => dispatch => {
+  const id = userInfo.id;
+  return Axios.put('/api/changepassword', {id, password, passwordOld} )
+  .then( res => res.status)
+  .catch(e => console.error(e.stack))
+}
+
+export const enterPasswordOld = (passwordOld) => ({
+  type: 'ENTER_PASSWORD_OLD',
+  payload: passwordOld
+})

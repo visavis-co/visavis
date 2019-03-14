@@ -153,6 +153,25 @@ app.put(
   }
 )
 
+app.put(
+  '/api/changeemail',
+  user.changeEmail,
+  (req, res) => {
+    console.log('received response from db, exiting server.js')
+    res.status(200).send('email updated in db')
+  }
+)
+
+app.put(
+  '/api/changepassword',
+  user.changePassword,
+  user.changePassword2,
+  (req, res) => {
+    console.log('all middleware succesfully fired, will send status back')
+    console.log('here in server.js')
+    res.status(200).send('password changed successfully')
+  }
+)
 
 
 // statically serve everything in the build folder on the route '/build'
