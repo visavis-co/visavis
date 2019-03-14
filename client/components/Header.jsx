@@ -3,7 +3,7 @@ import { Image, Navbar, Dropdown } from 'react-bootstrap';
 
 const Header = props => {
     const assets = '/client/assets/';
-    const myPic = assets + props.userInfo.pictureurl;
+    const myPic = props.userInfo.pictureurl;
     const visavis = assets + 'visavis.jpg';
     return (
       <Navbar className="nav" expand="lg">
