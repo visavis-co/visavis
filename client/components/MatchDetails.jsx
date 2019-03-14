@@ -40,7 +40,7 @@ const MatchDetails = props => {
           </Col>
           <Col md={6}>
             <Image className='pic-current-match' src={matchPic} roundedCircle alt="Current match's profile pic" /><br/>
-            {(props.matchOnline) ? <span id='match-online-txt'>[{props.matchToView.fullname} is online]</span> : ''}
+            {(props.matchOnline) ? <span id='match-online-txt'>[{props.matchToView.fullname} is online]</span> : <span id='match-offline-txt'>[{props.matchToView.fullname} is offline]</span>}
           </Col>
         </Row>
       </div>
