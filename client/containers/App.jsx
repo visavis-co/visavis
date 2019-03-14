@@ -26,6 +26,7 @@ const mapStateToProps = (store) => ({
   chatMsg: store.user.chatMsg,
   socket: store.user.socket,
   matchOnline: store.user.matchOnline,
+  passwordOld: store.user.passwordOld
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -34,6 +35,7 @@ const mapDispatchToProps = dispatch => ({
   enterEmail: (event) => { dispatch(actions.enterEmail(event.target.value)) },
   enterFullName: (event) => { dispatch(actions.enterFullName(event.target.value)) },
   enterPassword: (event) => { dispatch(actions.enterPassword(event.target.value)) },
+  enterPasswordOld: (event) => { dispatch(actions.enterPasswordOld(event.target.value))},
   updateChatMsg: (event) => { dispatch(actions.updateChatMsg(event.target.value)) },
   userLogout: (id) => { dispatch(actions.userLogout(id)) } ,
   getMatchChats: (matchId) => { dispatch(actions.getChats(matchId)) },
@@ -45,7 +47,10 @@ const mapDispatchToProps = dispatch => ({
   addChatMsg: (userId, matchId, chatMsg) => { dispatch(actions.addChatMsg(userId, matchId, chatMsg)) },
   completeMatch: (matchId, location, inPerson) => { dispatch(actions.completeMatch(matchId, location, inPerson)) },
   toggleMatchOnline: () => { dispatch(actions.toggleMatchOnline()) },
-
+  handleSelectedFile: (event) => {dispatch(actions.handleSelectedFile(event.target.files[0]))},
+  handleUpload: (userInfo) => {dispatch(actions.handleUpload(userInfo))},
+  changeEmail: (userInfo, email) => {dispatch(actions.changeEmailInDb(userInfo, email))},
+  changePassword: (userInfo, password, passwordOld) => { dispatch(actions.changePasswordInDb(userInfo, password, passwordOld)) }
 })
 
 // component did mount => post to login
@@ -62,7 +67,9 @@ class App extends Component {
       enterEmail, email, matchChats, setMatchToView, matchToView, addChatMsg,
       enterPassword, password, updateChatMsg, sendChatMsg, completeMatch, toggleMatchOnline,
       enterFullName, fullName, showMatchModal, toggleMatchModal, chatMsg, matchOnline,
-      userInfo, isLoggedIn, currentMatch, pastMatches, getMatchChats, changeName } = this.props;
+      userInfo, isLoggedIn, currentMatch, pastMatches, getMatchChats, changeName,
+      handleSelectedFile, handleUpload, chatMsg, changeEmail, passwordOld, enterPasswordOld, changePassword } = this.props;
+
 
     return (
       <Router>
@@ -72,7 +79,12 @@ class App extends Component {
             : <Home userInfo={userInfo} userLogout={userLogout} setMatchToView={setMatchToView} currentMatch={currentMatch} pastMatches={pastMatches} />)} />
           <Route path="/login" render={() => (<Login userLogin={userLogin} enterEmail={enterEmail} enterPassword={enterPassword} email={email} password={password} isLoggedIn={isLoggedIn} />)} />
           <Route path="/signup" render={() => (<Signup userSignup={userSignup} enterFullName={enterFullName} enterEmail={enterEmail} enterPassword={enterPassword} fullName={fullName} email={email} password={password} />)} />
-          <Route path="/settings" render={() => (<Settings fullName={fullName} email={email} password={password} userInfo={userInfo} userLogout={userLogout} changeName={changeName} enterFullName={enterFullName} />)} />
+
+          <Route path="/settings" render={ () => (!isLoggedIn ? <Redirect to="/login" />
+          : <Settings fullName={fullName} email={email} password={password} userInfo={userInfo} userLogout={userLogout} changeName={changeName}
+           enterFullName={enterFullName} enterEmail={enterEmail} changeEmail={changeEmail} handleSelectedFile={handleSelectedFile} handleUpload={handleUpload}
+           passwordOld={passwordOld} enterPassword={enterPassword} enterPasswordOld={enterPasswordOld} changePassword={changePassword} />)} />
+
           <Route path="/match" render={() => (!isLoggedIn ? <Redirect to="/login" />
             : <MatchDetails
                 showMatchModal={showMatchModal} toggleMatchModal={toggleMatchModal}

@@ -104,10 +104,7 @@ export const enterPassword = (value) => ({
   type: types.ENTER_PASSWORD,
   payload: value,
 });
-export const changeNameInState = newName => ({
-  type: types.CHANGE_NAME,
-  payload: newName
-})
+
 export const updateMatchLocation = (value) => ({
   type: types.UPDATE_MATCH_LOCATION,
   payload: value,
@@ -126,8 +123,58 @@ export const changeNameInDb = (userInfo, fullName) => dispatch => {
   .then((userInfo)=> {
     console.log('1a then statement')
     console.log("fullName", fullName)
-    dispatch(changeNameInState(fullName))
+    // dispatch(changeNameInState(fullName))
 })
 .catch(e => console.error(e.stack))
 }
 
+export const changeNameInState = newName => ({
+  type: types.CHANGE_NAME,
+  payload: newName
+})
+
+export const handleSelectedFile = (file) =>  ({  
+  type: types.HANDLE_SELECTED_FILE,
+  payload: file,
+})
+
+export const handleUpload = (userInfo) => dispatch => {
+  // console.log('userInfo from handle upload', userInfo)
+  console.log('picObj from handle upload', userInfo.picObj)
+  let data = new FormData();
+  // data.append('file', userInfo.picObj, userInfo.picObj.name);
+  data.append('profilePic', userInfo.picObj);
+  data.append('id', userInfo.id)
+  data.append('email', userInfo.email);
+  
+  fetch('http://localhost:3000/addphoto', {
+    method: 'POST',
+    body: data,
+  })
+  .then(res => console.log('fetchres', res))
+  .catch(err => console.log('fetcherr', err))
+
+  // return Axios.post('/addphoto')
+  //   .then(res => console.log('res', res))
+
+}
+
+export const changeEmailInDb = (userInfo, email) => dispatch => {
+  const id = userInfo.id
+  console.log('changeEmailinDB --- what is userInfo ->', userInfo)
+  return Axios.put('/api/changeemail', {id: id, email: email})
+  .then( res => res.status)
+  .catch(e => console.error(e.stack))
+}
+
+export const changePasswordInDb = (userInfo, password, passwordOld) => dispatch => {
+  const id = userInfo.id;
+  return Axios.put('/api/changepassword', {id, password, passwordOld} )
+  .then( res => res.status)
+  .catch(e => console.error(e.stack))
+}
+
+export const enterPasswordOld = (passwordOld) => ({
+  type: 'ENTER_PASSWORD_OLD',
+  payload: passwordOld
+})

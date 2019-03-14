@@ -13,10 +13,14 @@ const auth = require('./controllers/authController');
 const bodyParser = require('body-parser');
 const email = require('./controllers/emailController');
 const schedule = require('node-schedule');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' })
+const cors = require('cors');
 
 
 app.use(bodyParser.json());   // run body parser on all server requests
 app.use(cookieParser());      // run cookie parser on all server requests
+app.use(cors());
 
 // schedules recurring rematches on monday at 9:30 AM
 const rematch = schedule.scheduleJob({hour: 9, minute: 30, dayOfWeek: 1},()=>{
@@ -102,6 +106,9 @@ app.get(
  */
 app.post('/logout', auth.logout);
 
+// POST to /addphoto - User adding profile photo
+app.post('/addphoto', upload.single('profilePic'), user.addPhoto)
+
 /**
  * API - POST to /api/match - Updates a match record to complete the match
  *
@@ -162,6 +169,25 @@ app.put(
   }
 )
 
+app.put(
+  '/api/changeemail',
+  user.changeEmail,
+  (req, res) => {
+    console.log('received response from db, exiting server.js')
+    res.status(200).send('email updated in db')
+  }
+)
+
+app.put(
+  '/api/changepassword',
+  user.changePassword,
+  user.changePassword2,
+  (req, res) => {
+    console.log('all middleware succesfully fired, will send status back')
+    console.log('here in server.js')
+    res.status(200).send('password changed successfully')
+  }
+)
 
 
 // statically serve everything in the build folder on the route '/build'
