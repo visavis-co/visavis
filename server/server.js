@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const app = express();
-//const sockets = require('./controllers/socketsController')(app);
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const cookieParser = require('cookie-parser');
@@ -43,7 +42,6 @@ app.post(
   user.verifyUser,          // verify user email/pw to login user
   user.getUser,             // gets user info matching res.locals.userId
   matches.getUserMatches,   // gets user matches matching res.locals.userId
-
   auth.startSession,        // sets the session token in user db
   auth.setSSIDCookie,       // sets SSID cookie on client
   (req, res) => {
