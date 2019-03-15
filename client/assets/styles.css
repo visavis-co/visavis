@@ -224,12 +224,15 @@ a#github-button {
   border: solid 1px #00BFFF;
   background-color: #00BFFF;
   border-radius: 10px;
-  padding: 5;
-  margin: 10;
+  padding: 1 5;
+  margin: 2 10;
 }
 
 #match-online-txt {
   color:#32CD32;
+}
+#match-offline-txt {
+  color:grey;
 }
 
 .chat-msg-you {
@@ -242,8 +245,8 @@ a#github-button {
   border: solid 1px #D3D3D3;
   background-color: #D3D3D3;
   border-radius: 10px;
-  padding: 5;
-  margin: 10;
+  padding: 1 5;
+  margin: 2 10;
 }
 
 #chat-msg-input {

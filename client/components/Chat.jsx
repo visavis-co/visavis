@@ -20,7 +20,6 @@ class Chat extends Component {
 
     // checking for # of clients connecting to this match
     socket.on('num clients', (count)=> {
-      console.log('num clients - ' + count)
       if (count > 1 && !this.props.matchOnline) {
         this.props.toggleMatchOnline();
       }
@@ -36,7 +35,6 @@ class Chat extends Component {
 
     // if someone disconnects and they are online then toggle them offline
     socket.on('someone left', ()=> {
-      console.log('someone left');
       if (this.props.matchOnline) {
         this.props.toggleMatchOnline();
       }
@@ -44,7 +42,6 @@ class Chat extends Component {
 
     // if someone joins and they are offline then toggle them online
     socket.on('someone joined', ()=> {
-      console.log('someone joined');
       if (!this.props.matchOnline) {
         this.props.toggleMatchOnline();
       }
@@ -53,8 +50,11 @@ class Chat extends Component {
 
   componentWillUnmount () {
     // disconnect from socket.io
-    console.log('unmounting chat')
     this.state.socket.close();
+
+    if (this.props.matchOnline) {
+      this.props.toggleMatchOnline();
+    }
   }
 
   // add user email and log in to my state

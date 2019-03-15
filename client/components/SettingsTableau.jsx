@@ -45,7 +45,7 @@ const SettingsTableau = props => {
             <Nav.Link eventKey="third">Change Password</Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="fourth">Add Photo</Nav.Link>
+            <Nav.Link eventKey="fourth">Change Profile Picture</Nav.Link>
           </Nav.Item>
         </Nav>
       </Col>
