@@ -10,7 +10,6 @@ const Settings = props => {
   const email = props.email;
   const userLogout = props.userLogout;
   const userInfo = props.userInfo;
-	console.log(" ~: userInfo", userInfo)
   const changeName = props.changeName;
   const changeEmail = props.changeEmail;
   const enterFullName = props.enterFullName;
@@ -23,9 +22,6 @@ const Settings = props => {
   const changePassword = props.changePassword;
   const passwordOld = props.passwordOld;
 
-  console.log('settings page passwordOld', passwordOld)
-
-  
   return (
     <div>    
       <div className="centerElements">
@@ -76,7 +72,7 @@ const Settings = props => {
               <FormControl onChange={enterEmail} aria-label="Enter New Email" aria-describedby="inputGroup-sizing-sm" />
              </InputGroup>
              {/* Button */}
-             <Button onClick={e => {e.preventDefault(); console.log('1', 'clicked button also userInfo -> ', userInfo) ; changeEmail(userInfo, email)}} className="left-side-button" variant="secondary">Update</Button>
+             <Button onClick={e => {e.preventDefault(); changeEmail(userInfo, email)}} className="left-side-button" variant="secondary">Update</Button>
           </div>
           </Tab.Pane>
 
