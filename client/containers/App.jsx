@@ -26,7 +26,9 @@ const mapStateToProps = (store) => ({
   chatMsg: store.user.chatMsg,
   socket: store.user.socket,
   matchOnline: store.user.matchOnline,
-  passwordOld: store.user.passwordOld
+  passwordOld: store.user.passwordOld,
+  successMessage: store.user.successMessage,
+  serverResponse: store.user.serverResponse
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -67,8 +69,8 @@ class App extends Component {
       enterEmail, email, matchChats, setMatchToView, matchToView, addChatMsg,
       enterPassword, password, updateChatMsg, sendChatMsg, completeMatch, toggleMatchOnline,
       enterFullName, fullName, showMatchModal, toggleMatchModal, chatMsg, matchOnline,
-      userInfo, isLoggedIn, currentMatch, pastMatches, getMatchChats, changeName,
-      handleSelectedFile, handleUpload, changeEmail, passwordOld, enterPasswordOld, changePassword } = this.props;
+      userInfo, isLoggedIn, currentMatch, pastMatches, getMatchChats, changeName, successMessage,
+      handleSelectedFile, handleUpload, changeEmail, passwordOld, enterPasswordOld, changePassword, serverResponse } = this.props;
 
 
     return (
@@ -83,7 +85,7 @@ class App extends Component {
           <Route path="/settings" render={ () => (!isLoggedIn ? <Redirect to="/login" />
           : <Settings fullName={fullName} email={email} password={password} userInfo={userInfo} userLogout={userLogout} changeName={changeName}
            enterFullName={enterFullName} enterEmail={enterEmail} changeEmail={changeEmail} handleSelectedFile={handleSelectedFile} handleUpload={handleUpload}
-           passwordOld={passwordOld} enterPassword={enterPassword} enterPasswordOld={enterPasswordOld} changePassword={changePassword} />)} />
+           passwordOld={passwordOld} enterPassword={enterPassword} enterPasswordOld={enterPasswordOld} changePassword={changePassword} successMessage={successMessage} serverResponse={serverResponse} />)} />
 
           <Route path="/match" render={() => (!isLoggedIn ? <Redirect to="/login" />
             : <MatchDetails

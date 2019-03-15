@@ -1,4 +1,5 @@
 import * as types from '../actions/actionTypes';
+import { toggleSuccessMessage } from '../actions/actions';
 
 const initialState = {
   loginError: '',
@@ -17,6 +18,8 @@ const initialState = {
   matchLocation: '',
   chatMsg: '',
   matchOnline: false,
+  successMessage: false,
+  serverResponse: false
 }
 
 const userReducer = (state = initialState, action) => {
@@ -142,8 +145,24 @@ const userReducer = (state = initialState, action) => {
     //   newState = { ...state, fullName: action.payload };
     //   return Object.assign({}, state, newState);
 
-    case types.CHANGE_EMAIL:
-    newState = { ...state, email: action.payload };  
+    // case types.CHANGE_EMAIL:
+    // newState = { ...state, email: action.payload };  
+
+
+    case types.TOGGLE_SUCCESS_MESSAGE:
+    console.log('dispatched the success message toggle')
+    return {
+      ...state,
+      successMessage: !state.successMessage
+    }
+
+    case types.TOGGLE_SERVER_RESPONSE:
+    console.log('dispatched the server response toggle')
+    return {
+      ...state,
+      serverResponse: !state.serverResponse
+    }
+
 
 
     // error handling

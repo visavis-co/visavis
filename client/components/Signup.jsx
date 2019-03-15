@@ -18,11 +18,11 @@ const Home = (props) => {
       <Form.Group controlId='formPassword'>
         <Form.Control type='password' placeholder='Password' onChange={props.enterPassword}/>
       </Form.Group>
-        <Button id='login-button' variant='primary' type='submit' className='btnLogin'
+        <Button id='login-button' variant='secondary' type='submit' className='btnLogin'
         onClick={(e) => {e.preventDefault();
         props.userSignup(props.fullName, props.email, props.password)}}>Sign up</Button><br/><br/>
         <hr />
-        <Link to="/login" className="linkButton"><Button id='create-account' variant='primary'>Back to Login</Button></Link>
+        <Link to="/login" className="linkButton"><Button id='create-account' variant='secondary'>Back to Login</Button></Link>
     </Form>
     </div>
   );
