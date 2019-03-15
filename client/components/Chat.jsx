@@ -85,7 +85,7 @@ class Chat extends Component {
             <div>
               <Form id='chat-form'>
                 <input type="text" id='chat-msg-input' value={this.props.chatMsg} onChange={this.props.updateChatMsg} />
-                <Button type='submit' className="chat-btns" variant="primary btn-sm" onClick={(e) => { e.preventDefault(); this.props.sendChatMsg(this.props.userId, this.props.match.id, this.props.chatMsg)}}>Submit</Button>
+                <Button type='submit' className="chat-btns" variant="secondary btn-sm" onClick={(e) => { e.preventDefault(); this.props.sendChatMsg(this.props.userId, this.props.match.id, this.props.chatMsg)}}>Submit</Button>
               </Form>
             </div>
           </Col>

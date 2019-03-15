@@ -59,8 +59,8 @@ const MatchDetails = props => {
           <input type="text" id='match-loc-input' placeholder='Starbucks, Skype, etc...' value={props.matchLocation} onChange={props.updateMatchLocation} />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={() => {props.completeMatch(props.matchToView.id, props.matchLocation, true)}}> Met in Person</Button>
-          <Button variant="primary" onClick={() => {props.completeMatch(props.matchToView.id, props.matchLocation, false)}}> Met Online </Button>
+          <Button variant="secondary" onClick={() => {props.completeMatch(props.matchToView.id, props.matchLocation, true)}}> Met in Person</Button>
+          <Button variant="secondary" onClick={() => {props.completeMatch(props.matchToView.id, props.matchLocation, false)}}> Met Online </Button>
         </Modal.Footer>
       </Modal>
     </div>

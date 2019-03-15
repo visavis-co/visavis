@@ -64,7 +64,13 @@ div.dropdown{
   justify-content: space-evenly;
 }
 .card-img-top {
-  height:200px;
+  max-height:200px;
+  border: 11px solid black;
+  object-fit: cover;
+
+}
+.card-img-top:hover {
+  border: 11px solid tomato;
 }
 
 .match-details {
@@ -273,4 +279,43 @@ a#github-button {
 
 .text-field-100 {
   max-width: 300px;
+}
+
+.settings-container {
+  padding-top: 4em;
+  text-align: left;
+  /* background-color: red  */
+}
+
+.password-container {
+  float: left;
+}
+
+.pane {
+  padding-left: 100px
+}
+
+.nav-pills .nav-link.active  {
+  background-color: tomato !important;
+}
+
+.btn-secondary {
+  background-color: tomato !important;
+  border-color: #fff !important;
+}
+
+dropdown-toggle btn btn-primary {
+  background-color: #fff !important;
+  border-color: #fff !important;
+}
+
+
+
+dropdown-toggle {
+  background-color: #fff !important 
+}
+
+
+.chat-main {
+  background-color: #fff
 }
