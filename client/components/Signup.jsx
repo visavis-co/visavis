@@ -33,10 +33,16 @@ const Home = (props) => {
         <Form.Control type='password' placeholder='Password' onChange={props.enterPassword}/>
         <p style={{color: 'red', textAlign: 'center'}}>{props.signupError}</p>
       </Form.Group>
+<<<<<<< HEAD
         <Button id='login-button' variant='primary' type='submit' className='btnLogin'
         onClick={handleSignUp}>Sign up</Button><br/><br/>
+=======
+        <Button id='login-button' variant='secondary' type='submit' className='btnLogin'
+        onClick={(e) => {e.preventDefault();
+        props.userSignup(props.fullName, props.email, props.password)}}>Sign up</Button><br/><br/>
+>>>>>>> 5dfa659d6c4d70268cf42716f1c770a0a00d0b61
         <hr />
-        <Link to="/login" className="linkButton"><Button id='create-account' variant='primary'>Back to Login</Button></Link>
+        <Link to="/login" className="linkButton"><Button id='create-account' variant='secondary'>Back to Login</Button></Link>
     </Form>
     </div>
   );

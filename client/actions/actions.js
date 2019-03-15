@@ -124,12 +124,17 @@ export const changeNameInDb = (userInfo, fullName) => dispatch => {
   console.log('1, firing action from actions.js')
   console.log(userInfo, fullName)
   return Axios.put('/api/changename', { id: userInfo.id, fullName: fullName })
-  .then((userInfo)=> {
-    console.log('1a then statement')
-    console.log("fullName", fullName)
-    // dispatch(changeNameInState(fullName))
+  .then( (res) => {
+    setTimeout(() => dispatch(toggleServerResponse), 3000);
+    dispatch(toggleServerResponse)
+    setTimeout(() => dispatch(toggleSuccessMessage), 2000);
+    dispatch(toggleSuccessMessage);
 })
-.catch(e => console.error(e.stack))
+  .catch(() => {
+    console.log('actions.js no 200')
+    setTimeout(() => dispatch(toggleSuccessMessage), 2000);
+    dispatch(toggleSuccessMessage);
+})
 }
 
 export const changeNameInState = newName => ({
@@ -167,18 +172,45 @@ export const changeEmailInDb = (userInfo, email) => dispatch => {
   const id = userInfo.id
   console.log('changeEmailinDB --- what is userInfo ->', userInfo)
   return Axios.put('/api/changeemail', {id: id, email: email})
-  .then( res => res.status)
-  .catch(e => console.error(e.stack))
+  .then( (res) => {
+    setTimeout(() => dispatch(toggleServerResponse), 3000);
+    dispatch(toggleServerResponse)
+    setTimeout(() => dispatch(toggleSuccessMessage), 2000);
+    dispatch(toggleSuccessMessage);
+})
+  .catch(() => {
+    console.log('actions.js no 200')
+    setTimeout(() => dispatch(toggleSuccessMessage), 2000);
+    dispatch(toggleSuccessMessage);
+})
 }
 
 export const changePasswordInDb = (userInfo, password, passwordOld) => dispatch => {
   const id = userInfo.id;
   return Axios.put('/api/changepassword', {id, password, passwordOld} )
-  .then( res => res.status)
-  .catch(e => console.error(e.stack))
+  .then( (res) => {
+      setTimeout(() => dispatch(toggleServerResponse), 3000);
+      dispatch(toggleServerResponse)
+      setTimeout(() => dispatch(toggleSuccessMessage), 2000);
+      dispatch(toggleSuccessMessage);
+})
+  .catch(() => {
+      console.log('actions.js no 200')
+      setTimeout(() => dispatch(toggleSuccessMessage), 2000);
+      dispatch(toggleSuccessMessage);
+})
 }
 
 export const enterPasswordOld = (passwordOld) => ({
   type: 'ENTER_PASSWORD_OLD',
   payload: passwordOld
 })
+
+export const toggleSuccessMessage = ({
+  type: 'TOGGLE_SUCCESS_MESSAGE'
+})
+
+export const toggleServerResponse = ({
+  type: 'TOGGLE_SERVER_RESPONSE'
+})
+
