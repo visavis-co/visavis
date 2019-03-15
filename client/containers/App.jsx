@@ -27,6 +27,8 @@ const mapStateToProps = (store) => ({
   socket: store.user.socket,
   matchOnline: store.user.matchOnline,
   passwordOld: store.user.passwordOld,
+  loginError: store.user.loginError,
+  signupError: store.user.signupError,
   successMessage: store.user.successMessage,
   serverResponse: store.user.serverResponse
 })
@@ -69,8 +71,8 @@ class App extends Component {
       enterEmail, email, matchChats, setMatchToView, matchToView, addChatMsg,
       enterPassword, password, updateChatMsg, sendChatMsg, completeMatch, toggleMatchOnline,
       enterFullName, fullName, showMatchModal, toggleMatchModal, chatMsg, matchOnline,
-      userInfo, isLoggedIn, currentMatch, pastMatches, getMatchChats, changeName, successMessage,
-      handleSelectedFile, handleUpload, changeEmail, passwordOld, enterPasswordOld, changePassword, serverResponse } = this.props;
+      userInfo, isLoggedIn, currentMatch, pastMatches, getMatchChats, changeName,
+      handleSelectedFile, handleUpload, changeEmail, passwordOld, enterPasswordOld, changePassword, serverResponse, loginError, signupError } = this.props;
 
 
     return (
@@ -79,8 +81,8 @@ class App extends Component {
           {(isLoggedIn) ? <Header userInfo={userInfo} userLogout={userLogout} /> : '' }
           <Route exact path="/" render={() => (!isLoggedIn ? <Redirect to="/login" />
             : <Home userInfo={userInfo} setMatchToView={setMatchToView} currentMatch={currentMatch} pastMatches={pastMatches} />)} />
-          <Route path="/login" render={() => (<Login userLogin={userLogin} enterEmail={enterEmail} enterPassword={enterPassword} email={email} password={password} isLoggedIn={isLoggedIn} />)} />
-          <Route path="/signup" render={() => (<Signup userSignup={userSignup} enterFullName={enterFullName} enterEmail={enterEmail} enterPassword={enterPassword} fullName={fullName} email={email} password={password} />)} />
+          <Route path="/login" render={() => (<Login userLogin={userLogin} enterEmail={enterEmail} enterPassword={enterPassword} email={email} password={password} isLoggedIn={isLoggedIn} loginError={loginError}/>)} />
+          <Route path="/signup" render={() => (<Signup userSignup={userSignup} enterFullName={enterFullName} enterEmail={enterEmail} enterPassword={enterPassword} fullName={fullName} email={email} password={password} signupError={signupError}/>)} />
 
           <Route path="/settings" render={ () => (!isLoggedIn ? <Redirect to="/login" />
           : <Settings fullName={fullName} email={email} password={password} userInfo={userInfo} userLogout={userLogout} changeName={changeName}

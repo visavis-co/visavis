@@ -35,6 +35,7 @@ const userReducer = (state = initialState, action) => {
         isLoggedIn: true,
         email: '',
         password: '',
+        loginError: '',
       }
     }
 

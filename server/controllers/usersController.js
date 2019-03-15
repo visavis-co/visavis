@@ -62,7 +62,8 @@ userController.createUser = async (req, res, next) => {
     const ret = await client.query(
       'INSERT INTO users(email, fullName, password, pictureUrl, matchable) VALUES( $1, $2, $3, $4, $5) RETURNING id',
       [email, fullName, hashed, 'default-profile.jpg', 'true']
-    );
+    )
+    .catch(err => next(new Error('Email already in use')));
   // } catch (err) {
   //   throw new Error('Error adding user - ' + err);
   // }
@@ -113,11 +114,11 @@ userController.verifyUser = async (req, res, next) => {
 
     } else {
       // password doesn't match. end chain
-      next(new Error('Wrong username/password'));
+      next(new Error('Incorrect password'));
     }
   } else {
     // User not found. end chain
-    next(new Error('Wrong username/password'))
+    next(new Error('User not found'))
   }
 };
 

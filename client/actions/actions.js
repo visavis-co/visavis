@@ -27,8 +27,12 @@ export const userLogin = (email, password) => dispatch => {
 	console.log('TCL: email, password', email, password)
 
   return Axios.post('/login', {email: email, password: password})
-    .then(userInfo => dispatch(logIn(userInfo)))
-    .catch(err => dispatch(loginFailed(err)))
+    .then(res => {
+      dispatch(logIn(res));
+    })
+    .catch(err => {
+      dispatch(loginFailed(err.response.data.msg));
+    })
 }
 
 export const userSignup = (fullName, email, password) => dispatch => {
@@ -37,7 +41,7 @@ export const userSignup = (fullName, email, password) => dispatch => {
       console.log('Created User (POST: /api/user): ', userInfo);
       dispatch(logIn(userInfo));
     })
-    .catch(err => dispatch(signupFailed(err)))
+    .catch(err => dispatch(signupFailed(err.response.data.msg)))
 }
 
 export const checkLogin = () => dispatch => {
